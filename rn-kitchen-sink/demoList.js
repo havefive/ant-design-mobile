@@ -1,192 +1,275 @@
+/* eslint global-require: 0 */
 module.exports = {
-  APIS: [
+  UIBARS: [
     {
-      title: 'ActionSheet', // 必须
+      title: 'NoticeBar',
+      description: '通告栏',
+      icon: 'https://os.alipayobjects.com/rmsportal/EFpWULKNsectBDK.png',
+      module: require('../components/notice-bar/demo/basic.native'),
+    },
+    {
+      title: 'SearchBar',
+      description: '搜索栏',
+      icon: 'https://os.alipayobjects.com/rmsportal/QnAmpSwlfPzjpSL.png',
+      module: require('../components/search-bar/demo/basic.native'),
+    },
+    {
+      title: 'TabBar',
+      description: '标签栏',
+      icon: 'https://zos.alipayobjects.com/rmsportal/OZInMeAaDCHtaJU.png',
+      module: require('../components/tab-bar/demo/basic.native'),
+    },
+  ],
+  UIVIEWS: [
+    {
+      title: 'Accordion',
+      description: '手风琴',
+      icon: 'https://os.alipayobjects.com/rmsportal/gfWmRfZNzMyVUss.png',
+      module: require('../components/accordion/demo/basic.native'),
+    },
+    {
+      title: 'ActionSheet',
       description: '动作面板',
-      icon: 'https://zos.alipayobjects.com/rmsportal/sTvsgvivVKnqQtS.png',
-      module: require('../components/action-sheet/demo/basic'), // 必须
+      icon: 'https://zos.alipayobjects.com/rmsportal/cYmaBafYBnAxCqQ.png',
+      module: require('../components/action-sheet/demo/basic.native'),
+    },
+    {
+      title: 'Card',
+      description: '卡片',
+      icon: 'https://os.alipayobjects.com/rmsportal/daARhPjKcxlSuuZ.png',
+      module: require('../components/card/demo/basic.native'),
+    },
+    {
+      title: 'Drawer',
+      description: '抽屉',
+      icon: 'https://os.alipayobjects.com/rmsportal/oSokuHUVgeoTLJl.png',
+      module: require('../components/drawer/demo/basic.native'),
+    },
+    {
+      title: 'Icon',
+      description: '图标',
+      icon: 'https://os.alipayobjects.com/rmsportal/yhnfleZZoezOjtU.png',
+      module: require('../components/icon/demo/basic.native'),
+    },
+    {
+      title: 'List',
+      description: '列表',
+      icon: 'https://os.alipayobjects.com/rmsportal/tiapjpdKPQGHhnC.png',
+      module: require('../components/list/demo/basic.native'),
+    },
+    {
+      title: 'ListView',
+      description: '长列表',
+      icon: 'https://zos.alipayobjects.com/rmsportal/lMztpIPTRAIWGIP.png',
+      module: require('../components/list-view/demo/basic.native'),
+    },
+    {
+      title: 'ListView (only row)',
+      description: '长列表',
+      icon: 'https://zos.alipayobjects.com/rmsportal/lMztpIPTRAIWGIP.png',
+      module: require('../components/list-view/demo/basic-row'),
+    },
+    {
+      title: 'Modal',
+      description: '对话框',
+      icon: 'https://os.alipayobjects.com/rmsportal/HzRRcuwtqUCCOBg.png',
+      module: require('../components/modal/demo/basic.native'),
+    },
+    {
+      title: 'Popover',
+      description: '气泡',
+      icon: 'https://os.alipayobjects.com/rmsportal/iIOLFHTKUCxBgUV.png',
+      module: require('../components/popover/demo/basic.native'),
+    },
+    {
+      title: 'Result', // 必须
+      description: '结果页',
+      icon: 'https://os.alipayobjects.com/rmsportal/nREwETegxvDndJZ.png',
+      module: require('../components/result/demo/basic.native'),
     },
     {
       title: 'Toast', // 必须
       description: '轻提示',
-      icon: 'https://os.alipayobjects.com/rmsportal/IptWdCkrtkAUfjE.png',
-      module: require('../components/toast/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/nREwETegxvDndJZ.png',
+      module: require('../components/toast/demo/basic.native'),
     },
   ],
-  COMPONENTS: [
+  UICONTROLS: [
     {
-      title: 'ActivityIndicator', // 必须
+      title: 'ActivityIndicator',
       description: '活动指示器',
-      icon: 'https://zos.alipayobjects.com/rmsportal/ZLKbJvxVNSmsOwW.png',
-      module: require('../components/activity-indicator/demo/basic'), // 必须
+      icon: 'https://zos.alipayobjects.com/rmsportal/yVtRfZGoDxXObTK.png',
+      module: require('../components/activity-indicator/demo/basic.native'),
     },
     {
-      title: 'Badge', // 必须
+      title: 'Badge',
       description: '徽标数',
-      icon: 'https://os.alipayobjects.com/rmsportal/nSDcLEWgUrOkCJq.png',
-      module: require('../components/badge/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/UwUpBYPYnlwVicM.png',
+      module: require('../components/badge/demo/basic.native'),
     },
     {
-      title: 'Button', // 必须
+      title: 'Button',
       description: '按钮',
-      icon: 'https://os.alipayobjects.com/rmsportal/lOXYjfSRPpkwudh.png',
-      module: require('../components/button/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/ZRDUYEzfOzKWdzE.png',
+      module: require('../components/button/demo/basic.native'),
     },
     {
-      title: 'Card', // 必须
-      description: '卡片',
-      icon: 'https://os.alipayobjects.com/rmsportal/kkQBRgZgcqSyMPS.png',
-      module: require('../components/card/demo/basic'), // 必须
+      title: 'Carousel', // 必须
+      description: '走马灯',
+      icon: 'https://os.alipayobjects.com/rmsportal/FbIGJuDaiQoKNvj.png',
+      module: require('../components/carousel/demo/basic.native'), // 必须
+    },
+    {
+      title: 'Checkbox', // 必须
+      description: '复选框',
+      icon: 'https://os.alipayobjects.com/rmsportal/dWPGltvdjaanrRd.png',
+      module: require('../components/checkbox/demo/basic.native'), // 必须
     },
     {
       title: 'DatePicker', // 必须
       description: '日期选择',
-      icon: 'https://os.alipayobjects.com/rmsportal/XjBSEKVWMeIulGv.png',
-      module: require('../components/date-picker/demo/popup'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/IQtMSWmYwLEuqln.png',
+      module: require('../components/date-picker/demo/basic.native'),
     },
     {
-      title: 'Drawer', // 必须
-      description: '抽屉',
-      icon: 'https://os.alipayobjects.com/rmsportal/kpbezGjgdRhGfMa.png',
-      module: require('../components/drawer/demo/basic'), // 必须
+      title: 'DatePickerView', // 必须
+      description: '日期选择视图',
+      icon: 'https://os.alipayobjects.com/rmsportal/IQtMSWmYwLEuqln.png',
+      module: require('../components/date-picker-view/demo/basic.native'),
     },
     {
-      title: 'Flex', // 必须
-      description: 'Flex 布局',
-      icon: 'https://os.alipayobjects.com/rmsportal/KZtGFWmnMUFpiSE.png',
-      module: require('../components/flex/demo/basic'), // 必须
-    },
-    {
-      title: 'Popover', // 必须
-      description: '浮动菜单',
-      icon: 'https://os.alipayobjects.com/rmsportal/HhilRXHawmUwlML.png',
-      module: require('../components/popover/demo/basic'), // 必须
-    },
-    {
-      title: 'ImagePicker', // 必须
+      title: 'ImagePicker',
       description: '图片选择',
-      icon: 'https://os.alipayobjects.com/rmsportal/CVHyVxhFqkhZfYs.png',
-      module: require('../components/image-picker/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/NDsSvklLUeodsHK.png',
+      module: require('../components/image-picker/demo/basic.native'),
     },
     {
-      title: 'InputItem', // 必须
+      title: 'InputItem',
       description: '文本输入',
-      icon: 'https://os.alipayobjects.com/rmsportal/aDugjLTLBeQffgX.png',
-      module: require('../components/input-item/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/SdSqpihcSBoBrFO.png',
+      module: require('../components/input-item/demo/basic.native'),
     },
     {
-      title: 'List', // 必须
-      description: '列表',
-      icon: 'https://os.alipayobjects.com/rmsportal/wlNeoTpEKIpTcOW.png',
-      module: require('../components/list/demo/basic'), // 必须
-    },
-    {
-      title: 'ListView', // 必须
-      description: '长列表',
-      icon: 'https://os.alipayobjects.com/rmsportal/wlNeoTpEKIpTcOW.png',
-      module: require('../components/list-view/demo/basic'), // 必须
-    },
-    {
-      title: 'Menu', // 必须
-      description: '菜单',
-      icon: 'https://os.alipayobjects.com/rmsportal/AMszKQQdMvMmYng.png',
-      module: require('../components/menu/demo/basic'), // 必须
-    },
-    {
-      title: 'Modal', // 必须
-      description: '对话框',
-      icon: 'https://os.alipayobjects.com/rmsportal/AMszKQQdMvMmYng.png',
-      module: require('../components/modal/demo/basic'), // 必须
-    },
-    {
-      title: 'NoticeBar', // 必须
-      description: '顶部提示',
-      icon: 'https://os.alipayobjects.com/rmsportal/AraRKTSdXQbKkGv.png',
-      module: require('../components/notice-bar/demo/basic'), // 必须
-    },
-    {
-      title: 'Pagination', // 必须
-      description: '分页器',
-      icon: 'https://zos.alipayobjects.com/rmsportal/VmTKwvaRaIWOXrh.png',
-      module: require('../components/pagination/demo/basic'), // 必须
-    },
-    {
-      title: 'Picker', // 必须
+      title: 'Picker',
       description: '选择器',
-      icon: 'https://os.alipayobjects.com/rmsportal/mioJMWDMAmiurTR.png',
-      module: require('../components/picker/demo/popup'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/STBLvEutBwPySbL.png',
+      module: require('../components/picker/demo/popup.native'),
     },
     {
-      title: 'Progress', // 必须
+      title: 'PickerView',
+      description: '选择器视图',
+      icon: 'https://os.alipayobjects.com/rmsportal/STBLvEutBwPySbL.png',
+      module: require('../components/picker-view/demo/basic.native'),
+    },
+    {
+      title: 'Progress',
       description: '进度条',
-      icon: 'https://os.alipayobjects.com/rmsportal/aIomfcRsRHmPyNo.png',
-      module: require('../components/progress/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/ihijukOXDlqXvPS.png',
+      module: require('../components/progress/demo/basic.native'),
     },
     {
-      title: 'RefreshControl', // 必须
+      title: 'Pagination',
+      description: '分页器',
+      icon: 'https://zos.alipayobjects.com/rmsportal/fOQwMYUYaRRKYtd.png',
+      module: require('../components/pagination/demo/basic.native'),
+    },
+    {
+      title: 'Radio',
+      description: '单选框',
+      icon: 'https://os.alipayobjects.com/rmsportal/MJszdVSBKhtGmIP.png',
+      module: require('../components/radio/demo/basic.native'), // 必须
+    },
+    {
+      title: 'RefreshControl',
       description: '下拉刷新',
-      icon: 'https://os.alipayobjects.com/rmsportal/kmDibjGUbFrdeeY.png',
-      module: require('../components/refresh-control/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/nUAtybajGulmcSM.png',
+      module: require('../components/refresh-control/demo/basic.native'),
     },
     {
-      title: 'SegmentedControl', // 必须
-      description: '分段控制',
-      icon: 'https://os.alipayobjects.com/rmsportal/oeOvbvMpweuBOvO.png',
-      module: require('../components/segmented-control/demo/basic'), // 必须
-    },
-    {
-      title: 'Slider', // 必须
+      title: 'Slider',
       description: '滑动输入条',
-      icon: 'https://os.alipayobjects.com/rmsportal/ViixEhXOewlupTr.png',
-      module: require('../components/slider/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/mCyccAjoVLFVhSH.png',
+      module: require('../components/slider/demo/basic.native'),
     },
     {
-      title: 'Stepper', // 必须
+      title: 'Stepper',
       description: '步进器',
-      icon: 'https://os.alipayobjects.com/rmsportal/aDugjLTLBeQffgX.png',
-      module: require('../components/stepper/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/eYnIAokGATNUxlD.png',
+      module: require('../components/stepper/demo/basic.native'),
+    },
+    {
+      title: 'Steps', // 必须
+      description: '步骤条',
+      icon: 'https://os.alipayobjects.com/rmsportal/nvQVDIUiTmXcJtO.png',
+      module: require('../components/steps/demo/basic.native'), // 必须
+    },
+    {
+      title: 'SegmentedControl',
+      description: '分段器',
+      icon: 'https://zos.alipayobjects.com/rmsportal/qCqRFuSbewqIWyv.png',
+      module: require('../components/segmented-control/demo/basic.native'),
+    },
+    {
+      title: 'Switch',
+      description: '滑动开关',
+      icon: 'https://os.alipayobjects.com/rmsportal/ITFdMlELFchsTmz.png',
+      module: require('../components/switch/demo/basic.native'),
     },
     {
       title: 'SwipeAction', // 必须
       description: '滑动或长按操作',
-      icon: 'https://os.alipayobjects.com/rmsportal/OJgqKyrKGdIEfwp.png',
-      module: require('../components/swipe-action/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/nlDYwTsLwJdnaKc.png',
+      module: require('../components/swipe-action/demo/basic.native'),
     },
     {
-      title: 'Switch', // 必须
-      description: '开关',
-      icon: 'https://os.alipayobjects.com/rmsportal/NmMXnPngqRrKHrq.png',
-      module: require('../components/switch/demo/basic'), // 必须
-    },
-    {
-      title: 'TabBar', // 必须
-      description: 'APP 选项卡',
-      icon: 'https://os.alipayobjects.com/rmsportal/oeOvbvMpweuBOvO.png',
-      module: require('../components/tab-bar/demo/basic'), // 必须
+      title: 'Tabs', // 必须
+      description: '标签页',
+      icon: 'https://os.alipayobjects.com/rmsportal/stWeDgdtEIKoiTU.png',
+      module: require('../components/tabs/demo/basic.native'), // 必须
     },
     {
       title: 'Tag', // 必须
       description: '标签',
-      icon: 'https://os.alipayobjects.com/rmsportal/AkXOzPmaytaVYLD.png',
-      module: require('../components/tag/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/gfstSzAhvXqKyEg.png',
+      module: require('../components/tag/demo/basic.native'),
     },
     {
-      title: 'TextAreaItem', // 必须
+      title: 'TextAreaItem',
       description: '多行输入',
-      icon: 'https://os.alipayobjects.com/rmsportal/aDugjLTLBeQffgX.png',
-      module: require('../components/textarea-item/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/PfzuWlDVfndrQUK.png',
+      module: require('../components/textarea-item/demo/basic.native'),
+    },
+  ],
+  OTHERS: [
+    {
+      title: 'Flex',
+      description: '布局',
+      icon: 'https://os.alipayobjects.com/rmsportal/zFqYaBWIPpYYORq.png',
+      module: require('../components/flex/demo/basic.native'),
     },
     {
-      title: 'WhiteSpace', // 必须
+      title: 'GridList',
+      description: '网格列表',
+      icon: 'https://os.alipayobjects.com/rmsportal/UBGcnLKfVQIXgUb.png',
+      module: require('../components/grid/demo/basic.native'),
+    },
+    {
+      title: 'LocaleProvider',
+      description: '国际化',
+      icon: 'https://os.alipayobjects.com/rmsportal/HzRRcuwtqUCCOBg.png',
+      module: require('../components/locale-provider/demo/basic.native'),
+    },
+    {
+      title: 'WhiteSpace',
       description: '上下留白',
-      icon: 'https://os.alipayobjects.com/rmsportal/mioJMWDMAmiurTR.png',
-      module: require('../components/white-space/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/NfomhEsOdhFxEws.png',
+      module: require('../components/white-space/demo/basic.native'),
     },
     {
-      title: 'WingBlank', // 必须
+      title: 'WingBlank',
       description: '两翼留白',
-      icon: 'https://os.alipayobjects.com/rmsportal/WzZoGzTRKzQgMWi.png',
-      module: require('../components/wing-blank/demo/basic'), // 必须
+      icon: 'https://os.alipayobjects.com/rmsportal/DUkfOYZVcLctGot.png',
+      module: require('../components/wing-blank/demo/basic.native'),
     },
   ],
 };

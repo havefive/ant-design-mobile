@@ -1,58 +1,52 @@
-import { PropTypes } from 'react';
-import * as React from 'react';
-import { View } from 'react-native';
-import ProgressStyle from './style/index';
-import ProgressProps from './ProgressPropsType';
+import React from 'react';
+import classnames from 'classnames';
+import ProgressProps from './PropsType';
 
 export default class Progress extends React.Component<ProgressProps, any> {
-  static propTypes = {
-    percent: PropTypes.number,
-    position: PropTypes.oneOf(['fixed', 'normal']),
-  };
-
   static defaultProps = {
+    prefixCls: 'am-progress',
     percent: 0,
-    position: 'normal',
+    position: 'fixed',
+    unfilled: true,
+    appearTransition: false,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      wrapWidth: 0,
-    };
+  barRef: any;
+  private noAppearTransition: any;
+
+  componentWillReceiveProps() {
+    this.noAppearTransition = true;
   }
-
-  onLayout = (e) => {
-    this.setState({
-      wrapWidth: e.nativeEvent.layout.width,
-    });
-  }
-
-  render() {
-    const { wrapWidth } = this.state;
-    const { percent, position } = this.props;
-
-    let widthPercent;
-    if (percent > 0) {
-      widthPercent = percent > 100 ? 100 : percent;
-    } else {
-      widthPercent = 0;
+  componentDidMount() {
+    if (this.props.appearTransition) {
+      setTimeout(() => {
+        this.barRef.style.width = `${this.props.percent}%`;
+      }, 10);
     }
-
-    const positionStyle =
-    position === 'fixed' ?
-    {
-      position: 'absolute',
-      top: 0,
-    } : null;
-
+  }
+  render() {
+    const { className, prefixCls, position, unfilled, style = {}, barStyle = {} } = this.props;
     const percentStyle = {
-      width: wrapWidth * (widthPercent / 100),
+      width: this.noAppearTransition || !this.props.appearTransition ? `${this.props.percent}%` : 0,
       height: 0,
     };
 
-    return (<View onLayout={(e) => {this.onLayout(e);}} style={[ProgressStyle.progressOuter, positionStyle]}>
-      <View style={[ProgressStyle.progressBar, percentStyle]}></View>
-    </View>);
+    const wrapCls = classnames(`${prefixCls}-outer`, className, {
+      [`${prefixCls}-fixed-outer`]: position === 'fixed',
+      [`${prefixCls}-hide-outer`]: !unfilled,
+    });
+
+    return (
+      <div
+        style={style}
+        className={wrapCls}
+        role="progressbar"
+        aria-valuenow={this.props.percent}
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+        <div ref={el => this.barRef = el} className={`${prefixCls}-bar`} style={{ ...barStyle, ...percentStyle }} />
+      </div>
+    );
   }
 }

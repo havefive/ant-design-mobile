@@ -1,50 +1,59 @@
 ---
 order: 0
-title: 分段控制
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
 ````jsx
-import { SegmentedControl, WhiteSpace } from 'antd-mobile';
+import { SegmentedControl, WingBlank } from 'antd-mobile';
 
-let SegmentedControlExample = React.createClass({
-  onChange(e) {
+class SegmentedControlExample extends React.Component {
+  onChange = (e) => {
     console.log(`selectedIndex:${e.nativeEvent.selectedSegmentIndex}`);
-  },
-  onValueChange(value) {
+  }
+  onValueChange = (value) => {
     console.log(value);
-  },
+  }
   render() {
     return (
-      <div>
-        <div style={{ padding: 16 }}>禁用/enabled=false</div>
+      <WingBlank size="lg" className="sc-example">
+        <p className="sub-title">Simplest</p>
+        <SegmentedControl values={['Segment1', 'Segment2']} />
+
+        <p className="sub-title">Disabled</p>
+        <SegmentedControl values={['Segment1', 'Segment2']} disabled />
+
+        <p className="sub-title">SelectedIndex</p>
+        <SegmentedControl selectedIndex={1} values={['Segment1', 'Segment2', 'Segment3']} />
+
+        <p className="sub-title">TintColor</p>
         <SegmentedControl
-          values={['切换一', '切换二']}
-          enabled={false}
-        />
-        <WhiteSpace size={20} />
-        <div style={{ padding: 16 }}>设置 tintColor/style </div>
-        <SegmentedControl
-          values={['切换一', '切换二', '切换三']}
+          values={['Segment1', 'Segment2', 'Segment3']}
           tintColor={'#ff0000'}
-          style={{ height: '0.8rem', width: '5rem' }}
+          style={{ height: '40px', width: '250px' }}
         />
-        <WhiteSpace size={20} />
-        <div style={{ padding: 16 }}>设置默认选中 selectedIndex </div>
+
+        <p className="sub-title">onChange/onValueChange</p>
         <SegmentedControl
-          selectedIndex={1}
-          values={['切换一', '切换二', '切换三']}
-        />
-        <WhiteSpace size={20} />
-        <div style={{ padding: 16 }}>事件 onChange/onValueChange </div>
-        <SegmentedControl
-          values={['切换一', '切换二', '切换三']}
+          values={['Segment1', 'Segment2', 'Segment3']}
           onChange={this.onChange}
           onValueChange={this.onValueChange}
         />
-      </div>
+      </WingBlank>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<SegmentedControlExample />, mountNode);
+````
+````css
+.sc-example {
+  padding-bottom: 13px;
+}
+.sub-title {
+  color: #888;
+  font-size: 14px;
+  padding: 30px 0 18px 0;
+}
 ````

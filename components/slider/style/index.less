@@ -3,69 +3,53 @@
 
 @sliderPrefixCls: am-slider;
 
-// tooltip
-@tooltip-color: @color-text-base-inverse;
-@tooltip-bg: @fill-mask;
-@tooltip-arrow-width: 8px;
-@tooltip-distance: @tooltip-arrow-width + @v-spacing-sm;
-@tooltip-arrow-color: @tooltip-bg;
-
 .borderBox() {
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); //  remove tap highlight color for mobile safari
 }
 
-@import './tooltip.less';
-
 .@{sliderPrefixCls} {
   position: relative;
-  margin: 32px 16px;
-  height: 4px;
-  background-color: @border-color-base;
-  box-sizing: border-box;
+
+  &-rail {
+    position: absolute;
+    width: 100%;
+    background-color: @border-color-base;
+    height: 2 * @hd;
+    box-sizing: border-box;
+  }
 
   &-track {
     position: absolute;
     left: 0;
-    height: 4px;
-    border-radius: @radius-2;
+    height: 2 * @hd;
+    border-radius: @radius-xs;
     background-color: @brand-primary;
-    z-index: 1;
   }
 
   &-handle {
     position: absolute;
-    margin-left: -24px;
-    margin-top: -24px;
-    width: 48px;
-    height: 48px;
+    margin-left: -12 * @hd;
+    margin-top: -10 * @hd;
+    width: 22 * @hd;
+    height: 22 * @hd;
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: @radius-circle;
     border: @border-width-lg solid @brand-primary;
     background-color: @fill-base;
-    z-index: 2;
+    box-sizing: border-box;
 
     &:focus {
       background-color: tint(@brand-primary, 20%);
-      background: #000;
-    }
-
-    &-active {
-      &:active {
-        background-color: tint(@brand-primary, 20%);
-        box-shadow: 0 0 5px tint(@brand-primary, 20%);
-      }
     }
   }
 
   &-mark {
     position: absolute;
-    // top: 48px;
-    top: 40px;
+    top: 20 * @hd;
     left: 0;
     width: 100%;
     font-size: @font-size-caption-sm;
-    z-index: 3;
   }
 
   &-mark-text {
@@ -84,28 +68,30 @@
   &-step {
     position: absolute;
     width: 100%;
-    height: 8px;
+    height: 4 * @hd;
     background: transparent;
-    z-index: 1;
   }
 
   &-dot {
     position: absolute;
-    bottom: -6px;
-    margin-left: -8px;
-    width: 24px;
-    height: 24px;
+    bottom: -5 * @hd;
+    margin-left: -4 * @hd;
+    width: 12 * @hd;
+    height: 12 * @hd;
     border: @border-width-lg solid @border-color-base;
     background-color: @fill-base;
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: @radius-circle;
     vertical-align: middle;
+
     &:first-child {
-      margin-left: -8px;
+      margin-left: -4 * @hd;
     }
+
     &:last-child {
-      margin-left: -8px;
+      margin-left: -4 * @hd;
     }
+
     &-active {
       border-color: @brand-primary;
     }
@@ -113,14 +99,16 @@
 
   &-disabled {
     opacity: @opacity-disabled;
+
     .@{sliderPrefixCls}-track {
-      height: 4px;
+      height: 2 * @hd;
     }
 
     .@{sliderPrefixCls}-handle,
     .@{sliderPrefixCls}-mark-text,
     .@{sliderPrefixCls}-dot {
       cursor: not-allowed;
+      box-shadow: none;
     }
   }
 }

@@ -1,51 +1,38 @@
 ---
-order: 1
-title: 无动画
+order: 2
+title:
+  zh-CN: 无动画
+  en-US: 'No animation'
 ---
 
-禁用切换动画效果
+Switch tabs without animation
 
 ````jsx
 import { Tabs, WhiteSpace } from 'antd-mobile';
-const TabPane = Tabs.TabPane;
 
-function callback(key) {
-  console.log(key);
-}
+const tabs = [
+  { title: 'First Tab' },
+  { title: 'Second Tab' },
+  { title: 'Third Tab' },
+];
 
-let TabExample = React.createClass({
-  render() {
-    return (
-      <div>
-        <WhiteSpace />
-        <Tabs defaultActiveKey="1" animation={false} onChange={callback}>
-          <TabPane tab="选项卡一" key="1">
-            <div style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100,
-            }}>
-               选项卡一内容
-            </div>
-          </TabPane>
-          <TabPane tab="选项卡二" key="2">
-            <div style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100,
-            }}>
-               选项卡二内容
-            </div>
-          </TabPane>
-          <TabPane tab="选项卡三" key="3">
-            <div style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100,
-            }}>
-               选项卡三内容
-            </div>
-          </TabPane>
-        </Tabs>
-        <WhiteSpace />
+const TabExample = () => (
+  <div>
+    <WhiteSpace />
+    <Tabs tabs={tabs} initialPage={2} animated={false} useOnPan={false}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
+        Content of First Tab
       </div>
-    );
-  },
-});
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
+        Content of Second Tab
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
+        Content of Third Tab
+      </div>
+    </Tabs>
+    <WhiteSpace />
+  </div>
+);
 
 ReactDOM.render(<TabExample />, mountNode);
 ````

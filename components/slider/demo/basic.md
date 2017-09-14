@@ -1,56 +1,79 @@
 ---
 order: 0
-title: 基本
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
+Basic slider. When `disabled` is `true`, the slider will not be interactable
 
-基本滑动条。当 `range` 为 `true` 时，渲染为双滑块。当 `disabled` 为 `true` 时，滑块处于不可用状态。
-
-
-
-```jsx
-
+````jsx
+/* eslint arrow-body-style: 0 */
 import { Slider, WingBlank, WhiteSpace } from 'antd-mobile';
 
-let App = React.createClass({
+class App extends React.Component {
+  log = (name) => {
+    return (value) => {
+      console.log(`${name}: ${value}`);
+    };
+  }
   render() {
     return (
       <div className="am-slider-example">
-        <WhiteSpace size={32} />
-        <WingBlank size={20}>
-          <p className="title">单模块</p>
-          <Slider defaultValue={26} min={0} max={100} />
+        <WhiteSpace size="lg" />
+        <WingBlank size="lg">
+          <p className="title">Slider</p>
+          <Slider defaultValue={26} min={0} max={30} onChange={this.log('change')} onAfterChange={this.log('afterChange')} />
         </WingBlank>
-        <WhiteSpace size={32} />
-        <WingBlank size={20}>
-          <p className="title">双模块</p>
-          <WhiteSpace />
-          <Slider range defaultValue={[20, 50]} />
+        <WhiteSpace size="lg" />
+        <WingBlank size="lg">
+          <p className="title">Disabled Slider</p>
+          <Slider defaultValue={26} min={0} max={30} disabled onChange={this.log('change')} onAfterChange={this.log('afterChange')} />
         </WingBlank>
-        <WhiteSpace size={32} />
-        <WingBlank size={20}>
-          <p className="title">不可用状态</p>
-          <Slider range defaultValue={[20, 50]} disabled />
+        <WhiteSpace size="lg" />
+        <WingBlank size="lg">
+          <p className="title">Slider With Customized Color</p>
+          <Slider
+            defaultValue={26}
+            min={0}
+            max={30}
+            trackStyle={{
+              backgroundColor: 'red',
+              height: '5px',
+            }}
+            railStyle={{
+              backgroundColor: 'blue',
+              height: '5px',
+            }}
+            handleStyle={{
+              borderColor: 'blue',
+              height: '14px',
+              width: '14px',
+              marginLeft: '-7px',
+              marginTop: '-4.5px',
+              backgroundColor: 'blue',
+            }}
+          />
         </WingBlank>
-        <WhiteSpace size={32} />
       </div>
     );
-  },
-});
-ReactDOM.render(<App />, mountNode);
-```
+  }
+}
 
-<style>
-.demo-preview-item * {
-  box-sizing: border-box;
+ReactDOM.render(<App />, mountNode);
+````
+
+````css
+.demo-preview-item .am-slider-wrapper {
+  margin-bottom: 15px;
 }
-.code-box-demo .am-slider {
-  margin-bottom: 80px;
+.demo-preview-item .am-slider-example {
+  overflow: hidden;
 }
-.code-box-demo .am-slider-example .title {
-  margin-bottom: 32px;
+.am-wingblank.am-wingblank-lg {
+  margin-bottom: 30px;
 }
-.code-box-demo .am-slider:last-child {
-  margin-bottom: 20px;
+.demo-preview-item .am-slider-wrapper:last-child {
+  margin-bottom: 10px;
 }
-</style>
+````

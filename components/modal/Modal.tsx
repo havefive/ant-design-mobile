@@ -1,91 +1,129 @@
-import * as React from 'react';
-import { View, Text, Modal, TouchableWithoutFeedback } from 'react-native';
-import modalStyle from './style/index';
-import ModalPropsType from './ModalPropsType';
+import React from 'react';
+import Dialog from 'rmc-dialog';
+import classnames from 'classnames';
+import { ModalProps, ModalComponent } from './PropsType';
+import TouchFeedback from 'rmc-feedback';
 
-class AntmModal extends React.Component<ModalPropsType, any> {
+export default class Modal extends ModalComponent<ModalProps, any> {
   static defaultProps = {
-    visible: false,
-    closable: false,
-    maskClosable: false,
+    prefixCls: 'am-modal',
     transparent: false,
+    popup: false,
+    animationType: 'slide-down',
     animated: true,
     style: {},
-    onClose() {},
     onShow() {},
+    footer: [],
+    closable: false,
+    operation: false,
+    platform: 'ios',
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: props.visible || false,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.visible !== this.state.visible) {
-      this.setState({
-        visible: nextProps.visible,
-      });
+  isInModal(e) {
+    if (!/\biPhone\b|\biPod\b/i.test(navigator.userAgent)) {
+      return;
     }
+    // fix touch to scroll background page on iOS
+    const prefixCls = this.props.prefixCls;
+    const pNode = (node => {
+      while ( node.parentNode && node.parentNode !== document.body ) {
+        if ( node.classList.contains(prefixCls)) {
+          return node;
+        }
+        node = node.parentNode;
+      }
+    })(e.target);
+    if (!pNode) {
+      e.preventDefault();
+    }
+    return true;
   }
 
-  onRequestClose = () => {
-    this.setState({
-      visible: false,
-    });
-  };
+  renderFooterButton(button, prefixCls, i) {
+    let buttonStyle = {};
+    if (button.style) {
+      buttonStyle = button.style;
+      if (typeof buttonStyle === 'string') {
+        const styleMap = {
+          cancel: {},
+          default: {},
+          destructive: { color: 'red' },
+        };
+        buttonStyle = styleMap[buttonStyle] || {};
+      }
+    }
 
-  onClosePress = () => {
-    this.props.onClose();
-    this.setState({
-      visible: false,
-    });
+    const onClickFn = function(e) {
+      e.preventDefault();
+      if (button.onPress) {
+        button.onPress();
+      }
+    };
+
+    return (
+      <TouchFeedback activeClassName={`${prefixCls}-button-active`} key={i}>
+        <a className={`${prefixCls}-button`} role="button" style={buttonStyle} onClick={onClickFn}>
+          {button.text || `Button`}
+        </a>
+      </TouchFeedback>
+    );
   }
 
   render() {
-    const {
-      title, closable, maskClosable, footer, animated, onShow, transparent, children, style,
-      onRequestClose,
+    let {
+      prefixCls, className, wrapClassName, transitionName, maskTransitionName, style, platform,
+      footer = [], operation, animated, transparent, popup, animationType, ...restProps,
     } = this.props;
 
-    let showModal = this.state.visible;
-    const animationType: 'fade' | 'slide' | 'none' = animated ? (transparent ? 'fade' : 'slide') : 'none';
-    const innerStyle = transparent ? {backgroundColor: 'white'} : {backgroundColor: 'transparent'};
+    const btnGroupClass = classnames(
+      `${prefixCls}-button-group-${footer.length === 2 && !operation ? 'h' : 'v'}`,
+      `${prefixCls}-button-group-${operation ? 'operation' : 'normal'}`,
+    );
+    const footerDom = footer.length ? <div className={btnGroupClass} role="group">
+      {footer.map((button: any, i) => this.renderFooterButton(button, prefixCls, i))}
+    </div> : null;
+
+    // popup 模式自动禁止 transparent
+    if (popup) {
+      transparent = false;
+    }
+
+    let transName;
+    let maskTransName;
+    if (animated) {
+      if (transparent) {
+        transName = maskTransName = 'am-fade';
+      } else {
+        transName = maskTransName = 'am-slide-up';
+      }
+      if (popup) {
+        transName = animationType === 'slide-up' ? 'am-slide-up' : 'am-slide-down';
+        maskTransName = 'am-fade';
+      }
+    }
+
+    const wrapCls = classnames(wrapClassName, {
+      [`${prefixCls}-wrap-popup`]: popup,
+    });
+    const cls = classnames(className, {
+      [`${prefixCls}-transparent`]: transparent,
+      [`${prefixCls}-popup`]: popup,
+      [`${prefixCls}-popup-${animationType}`]: popup && animationType,
+      [`${prefixCls}-android`]: platform === 'android',
+    });
 
     return (
-      <Modal
-        animationType={animationType}
-        onRequestClose={onRequestClose || this.onRequestClose}
-        onShow={onShow}
-        transparent={transparent}
-        visible={showModal}
-      >
-        { transparent ? (
-            <View style={[modalStyle.container]}>
-              {maskClosable ? <TouchableWithoutFeedback onPress={this.onClosePress}>
-                <View style={[modalStyle.maskClosable]}></View>
-              </TouchableWithoutFeedback> : null}
-              <View style={[modalStyle.innerContainer, innerStyle, style]}>
-                {title ? <Text style={[modalStyle.header]}>{title}</Text> : null}
-                <View style={modalStyle.body}>{children}</View>
-                {footer ? <View>{footer}</View> : null}
-                {closable ? <TouchableWithoutFeedback onPress={this.onClosePress}>
-                  <View style={[modalStyle.closeWrap]}>
-                    <Text style={[modalStyle.close]}>×</Text>
-                  </View>
-                </TouchableWithoutFeedback> : null}
-              </View>
-            </View>
-          ) : (
-            <View style={style}>
-              {children}
-            </View>
-          )
-        }
-      </Modal>
+      <Dialog
+        {...restProps}
+        prefixCls={prefixCls}
+        className={cls}
+        wrapClassName={wrapCls}
+        transitionName={transitionName || transName}
+        maskTransitionName={maskTransitionName || maskTransName}
+        style={style}
+        footer={footerDom}
+        wrapProps={{ onTouchStart: e => this.isInModal(e) }}
+      />
     );
   }
 }
-
-export default AntmModal;

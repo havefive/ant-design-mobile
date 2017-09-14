@@ -1,133 +1,203 @@
-import { PropTypes } from 'react';
-import * as React from 'react';
-import { View, Image, Text, TextInput, TouchableWithoutFeedback } from 'react-native';
-import variables from '../style/variables';
-import TextAreaItemProps from './TextAreaItemPropsType';
-import TextAreaItemStyle from './style/index';
+/* tslint:disable:jsx-no-multiline-js */
+import React from 'react';
+import classnames from 'classnames';
+import TextareaItemProps from './PropsType';
+import TouchFeedback from 'rmc-feedback';
 
-export default class TextAreaItem extends React.Component<TextAreaItemProps, any> {
-  static propTypes = {
-    onChange: PropTypes.func,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    onErrorClick: PropTypes.func,
-    clear: PropTypes.bool,
-    error: PropTypes.bool,
-    autoHeight: PropTypes.bool,
-    editable: PropTypes.bool,
-    rows: PropTypes.number,
-    value: PropTypes.string,
-    placeholder: PropTypes.string,
-    count: PropTypes.number,
-    keyboardType: PropTypes.string,
-  };
+function noop() {}
 
+function fixControlledValue(value) {
+  if (typeof value === 'undefined' || value === null) {
+    return '';
+  }
+  return value;
+}
+
+const regexAstralSymbols = /[\uD800-\uDBFF][\uDC00-\uDFFF]|\n/g;
+
+function countSymbols(text = '') {
+  return text.replace(regexAstralSymbols, '_').length;
+}
+
+export interface TextareaItemState {
+  focus?: boolean;
+}
+
+export default class TextareaItem extends React.Component<TextareaItemProps, TextareaItemState> {
   static defaultProps = {
-    onChange() {},
-    onFocus() {},
-    onBlur() {},
-    onErrorClick() {},
-    clear: true,
-    error: false,
-    editable: true,
-    rows: 1,
-    value: '',
-    placeholder: '',
-    count: 0,
-    keyboardType: 'default',
+    prefixCls: 'am-textarea',
+    prefixListCls: 'am-list',
     autoHeight: false,
+    editable: true,
+    disabled: false,
+    placeholder: '',
+    clear: false,
+    rows: 1,
+    onChange: noop,
+    onBlur: noop,
+    onFocus: noop,
+    onErrorClick: noop,
+    error: false,
+    labelNumber: 5,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.value,
-      inputCount: 0,
-      height: props.rows > 1 ? 6 * props.rows * variables.grid : 10 * variables.grid,
-    };
+  textareaRef: any;
+
+  state = {
+    focus: false,
+  };
+
+  private debounceTimeout: any;
+  private scrollIntoViewTimeout: any;
+
+  focus = () => {
+    this.textareaRef.focus();
+  }
+  componentDidUpdate() {
+    if (this.props.autoHeight) {
+      const textareaDom = this.textareaRef;
+      textareaDom.style.height = ''; // 字数减少时能自动减小高度
+      textareaDom.style.height = `${textareaDom.scrollHeight}px`;
+    }
   }
 
-  onChange = (event) => {
-
-    const text = event.nativeEvent.text;
-    let height;
-    const { autoHeight, rows } = this.props;
-
-    if (autoHeight) {
-      height = event.nativeEvent.contentSize.height;
-    } else if (rows > 1) {
-      height = 6 * rows * variables.grid;
-    } else {
-      height = 10 * variables.grid;
+  componentWillUnmount() {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+      this.debounceTimeout = null;
     }
 
+    if (this.scrollIntoViewTimeout) {
+      clearTimeout(this.scrollIntoViewTimeout);
+      this.scrollIntoViewTimeout = null;
+    }
+  }
+
+  onChange = (e) => {
+    let value = e.target.value;
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(value);
+    }
+    // 设置 defaultValue 时，用户输入不会触发 componentDidUpdate ，此处手工调用
+    this.componentDidUpdate();
+  }
+
+  onBlur = (e) => {
+    this.debounceTimeout = setTimeout(() => {
+      this.setState({
+        focus: false,
+      });
+    }, 100);
     this.setState({
-      value: text,
-      inputCount: text.length,
-      height,
+      focus: false,
     });
-    this.props.onChange({text});
+    const value = e.target.value;
+    if (this.props.onBlur) {
+      this.props.onBlur(value);
+    }
   }
 
-  onFocus = () => {
-    this.props.onFocus();
-  }
+  onFocus = (e) => {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+      this.debounceTimeout = null;
+    }
+    this.setState({
+      focus: true,
+    });
+    const value = e.target.value;
+    if (this.props.onFocus) {
+      this.props.onFocus(value);
+    }
 
-  onBlur = () => {
-    this.props.onBlur();
+    if (document.activeElement.tagName.toLowerCase() === 'textarea') {
+      this.scrollIntoViewTimeout = setTimeout(() => {
+        try {
+          (document.activeElement as any).scrollIntoViewIfNeeded();
+        } catch (e) { }
+      }, 100);
+    }
   }
 
   onErrorClick = () => {
-    this.props.onErrorClick();
+    if (this.props.onErrorClick) {
+      this.props.onErrorClick();
+    }
+  }
+
+  clearInput = () => {
+    if (this.props.onChange) {
+      this.props.onChange('');
+    }
   }
 
   render() {
-    const { inputCount } = this.state;
-    const { rows, error, clear, count, placeholder, autoHeight, editable } = this.props;
+    const {
+      prefixCls, prefixListCls, editable, style,
+      clear, children, error, className, count, labelNumber,
+      title, onErrorClick, autoHeight, ...otherProps,
+    } = this.props;
+    const { value, defaultValue, disabled } = otherProps;
 
-    const inputStyle = {
-      color: error ? '#f50' : variables.neutral_10,
-    };
+    let valueProps;
+    if ('value' in this.props) {
+      valueProps = {
+        value: fixControlledValue(value),
+      };
+    } else {
+      valueProps = {
+        defaultValue,
+      };
+    }
 
-    const maxLength = count > 0 ? count : null;
+    const { focus } = this.state;
+    const wrapCls = classnames(className, `${prefixListCls}-item`, `${prefixCls}-item`, {
+      [`${prefixCls}-disabled`]: disabled,
+      [`${prefixCls}-item-single-line`]: this.props.rows === 1 && !autoHeight,
+      [`${prefixCls}-error`]: error,
+      [`${prefixCls}-focus`]: focus,
+    });
 
+    const labelCls = classnames(`${prefixCls}-label`, {
+      [`${prefixCls}-label-2`]: labelNumber === 2,
+      [`${prefixCls}-label-3`]: labelNumber === 3,
+      [`${prefixCls}-label-4`]: labelNumber === 4,
+      [`${prefixCls}-label-5`]: labelNumber === 5,
+      [`${prefixCls}-label-6`]: labelNumber === 6,
+      [`${prefixCls}-label-7`]: labelNumber === 7,
+    });
+    const characterLength = countSymbols(value);
+    const lengthCtrlProps: any = {};
+    if (count! > 0) {
+      lengthCtrlProps.maxLength = (count! - characterLength) + (value ? value.length : 0);
+    }
     return (
-      <View>
-        <TextInput
-          style={[TextAreaItemStyle.input, inputStyle, {height: Math.max(35, this.state.height)}]}
-          onChange={(event) => this.onChange(event)}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          value={this.state.value}
-          placeholder = {placeholder}
-          multiline = {rows > 1 || autoHeight}
-          numberOfLines = {rows}
-          maxLength = {maxLength}
-          clearButtonMode = {clear ? 'while-editing' : 'never'}
-          editable = {editable}
-        />
-
-        {
-        error &&
-        <TouchableWithoutFeedback onPress={this.onErrorClick}>
-          <View style={[TextAreaItemStyle.errorIcon]}>
-            <Image
-              source={require('../style/images/error.png')}
-              style={{ width: 16, height:16 }}
-            />
-          </View>
-        </TouchableWithoutFeedback>
+      <div className={wrapCls}>
+        {title && <div className={labelCls}>{title}</div>}
+        <div className={`${prefixCls}-control`}>
+          <textarea
+            ref={el => this.textareaRef = el}
+            {...lengthCtrlProps}
+            {...otherProps}
+            {...valueProps}
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+            onFocus={this.onFocus}
+            readOnly={!editable}
+            style={style}
+          />
+        </div>
+        {clear && editable && value && characterLength > 0 &&
+          <TouchFeedback activeClassName={`${prefixCls}-clear-active`}>
+            <div className={`${prefixCls}-clear`} onClick={this.clearInput} onTouchStart={this.clearInput} />
+          </TouchFeedback>
         }
-
-        {
-        rows > 1 && count > 0 &&
-        <View style={[TextAreaItemStyle.count]}>
-          <Text>
-            {inputCount} / {count}
-          </Text>
-        </View>
+        {error && <div className={`${prefixCls}-error-extra`} onClick={this.onErrorClick} />}
+        {count! > 0 && this.props.rows! > 1 &&
+          <span className={`${prefixCls}-count`}><span>{value ? characterLength : 0}</span>/{count}</span>
         }
-      </View>
+      </div>
     );
   }
 }

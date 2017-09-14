@@ -11,28 +11,30 @@
   vertical-align: middle;
   width: @icon-size-xxs;
   height: @icon-size-xxs;
-  line-height: 1;
+
   &-inner {
     position: absolute;
     right: 0;
     width: @icon-size-xxs;
     height: @icon-size-xxs;
-    .box-sizing();
-    .transform(rotate(0deg));
+    box-sizing: border-box;
+    transform: rotate(0deg);
+
     &:after {
       position: absolute;
       display: none;
-      top: -5px;
-      right: 10px;
+      top: -2.5 * @hd;
+      right: 5 * @hd;
       z-index: 999;
-      width: 14px;
-      height: 28px;
+      width: 7 * @hd;
+      height: 14 * @hd;
       border-style: solid;
-      border-width: 0 3px 3px 0;
+      border-width: 0 1.5 * @hd 1.5 * @hd 0;
       content: '\0020';
-      .transform(rotate(45deg));
+      transform: rotate(45deg);
     }
   }
+
   &-input {
     position: absolute;
     top: 0;
@@ -42,17 +44,20 @@
     height: 100%;
     z-index: 2;
     border: 0 none;
-    -webkit-appearance: none;
+    appearance: none;
   }
+
   &.@{radioWarpPrefixCls}-checked {
     .@{radioInnerPrefixCls} {
       border-width: 0;
+
       &:after {
         display: block;
         border-color: @brand-primary;
       }
     }
   }
+
   &.@{radioWarpPrefixCls}-disabled {
     &.@{radioWarpPrefixCls}-checked {
       .@{radioInnerPrefixCls} {
@@ -64,12 +69,14 @@
     }
   }
 }
+
 .@{listPrefixCls} {
   & &-item {
     &.@{radioWarpPrefixCls}-item {
       .@{listPrefixCls}-line {
         .@{listPrefixCls}-extra {
           flex: 0;
+
           .@{radioWarpPrefixCls} {
             position: absolute;
             top: 0;
@@ -79,6 +86,7 @@
             width: 100%;
             height: @list-item-height;
             overflow: visible;
+
             &-inner {
               right: @v-spacing-lg;
               top: @h-spacing-lg;
@@ -86,6 +94,7 @@
           }
         }
       }
+
       &.@{radioWarpPrefixCls}-item-disabled {
         .@{listPrefixCls}-content {
           color: @color-text-disabled;
@@ -94,4 +103,3 @@
     }
   }
 }
-

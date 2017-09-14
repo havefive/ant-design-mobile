@@ -1,28 +1,16 @@
-import * as React from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
-
-export interface FlexItemProps {
-  flex?: number;
-  style?: React.CSSProperties;
-  onPress?: any;
-  children?: any;
-}
+import React from 'react';
+import classnames from 'classnames';
+import { FlexItemProps } from './PropsType';
 
 export default class FlexItem extends React.Component<FlexItemProps, any> {
   static defaultProps = {
-    flex: 1,
+    prefixCls: 'am-flexbox',
   };
   render() {
-    let { style, children, flex, onPress } = this.props;
-    const flexItemStyle = {
-      flex: flex || 1,
-    };
+    let{ children, className, prefixCls, style, ...restProps } = this.props;
+    const wrapCls = classnames(`${prefixCls}-item`, className);
     return (
-      <TouchableWithoutFeedback onPress={onPress}>
-        <View style={[flexItemStyle, style]}>
-          {children}
-        </View>
-      </TouchableWithoutFeedback>
+      <div className={wrapCls} style={style} {...restProps}>{children}</div>
     );
   }
 }

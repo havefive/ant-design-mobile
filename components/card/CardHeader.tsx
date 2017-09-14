@@ -1,44 +1,30 @@
-import * as React from 'react';
-import { View, Text, Image } from 'react-native';
-import CardStyle from './style/index';
+import React from 'react';
+import classnames from 'classnames';
+import { CardHeaderProps as BasePropsType } from './PropsType';
 
-export interface CardHeaderProps {
-  title?: any;
-  thumb?: string;
-  extra?: any;
-  thumbStyle?: {};
-  style?: any;
+export interface CardHeaderProps extends BasePropsType {
+  prefixCls?: string;
+  className?: string;
 }
 
 export default class CardHeader extends React.Component<CardHeaderProps, any> {
   static defaultProps = {
+    prefixCls: 'am-card',
     thumbStyle: {},
-    style: {},
   };
 
   render() {
-    const { title, thumb, thumbStyle, extra, style } = this.props;
-
-    const titleDom = React.isValidElement(title) ? (
-      <View style={{ flex: 1 }}>{title}</View>
-    ) : (
-      <Text style={CardStyle.headerContent}>{title}</Text>
-    );
-
-    const extraDom = React.isValidElement(extra) ? (
-      <View style={{ flex: 1 }}>{extra}</View>
-    ) : (
-      <Text style={[CardStyle.headerExtra]}>{extra}</Text>
-    );
+    const { prefixCls, className, title, thumb, thumbStyle, extra, ...restProps } = this.props;
+    const wrapCls = classnames(`${prefixCls}-header`, className);
 
     return (
-      <View style={[CardStyle.headerWrap, style]}>
-        <View style={[CardStyle.headerTitle]}>
-          { thumb ? <Image source={{ uri: thumb }} style={[CardStyle.headerImage, thumbStyle]} /> : null }
-          {titleDom}
-        </View>
-        { extra ? extraDom : null }
-      </View>
+      <div className={wrapCls} {...restProps}>
+        <div className={`${prefixCls}-header-content`}>
+          {typeof thumb === 'string' ? <img style={thumbStyle} src={thumb} /> : thumb}
+          {title}
+        </div>
+        {extra ? <div className={`${prefixCls}-header-extra`}>{extra}</div> : null}
+      </div>
     );
   }
 }

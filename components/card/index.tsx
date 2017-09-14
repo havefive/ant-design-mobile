@@ -1,17 +1,19 @@
-import * as React from 'react';
-import { View } from 'react-native';
-import CardBody from './CardBody';
+import React from 'react';
+import classnames from 'classnames';
 import CardHeader from './CardHeader';
+import CardBody from './CardBody';
 import CardFooter from './CardFooter';
-import CardStyle from './style/index';
+import { CardProps as BasePropsType } from './PropsType';
 
-export interface CardProps {
-  style?: {};
+export interface CardProps extends BasePropsType {
+  prefixCls?: string;
+  className?: string;
 }
 
 export default class Card extends React.Component<CardProps, any> {
   static defaultProps = {
-    style: {},
+    prefixCls: 'am-card',
+    full: false,
   };
 
   static Header = CardHeader;
@@ -19,10 +21,13 @@ export default class Card extends React.Component<CardProps, any> {
   static Footer = CardFooter;
 
   render() {
+    const { prefixCls, full, className, ...resetProps } = this.props;
+    const wrapCls = classnames(prefixCls, className, {
+      [`${prefixCls}-full`]: full,
+    });
+
     return (
-      <View {...this.props} style={[CardStyle.card, this.props.style]}>
-        {this.props.children}
-      </View>
+      <div className={wrapCls} {...resetProps} />
     );
   }
 }

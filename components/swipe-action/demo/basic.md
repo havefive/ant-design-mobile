@@ -1,55 +1,160 @@
 ---
 order: 0
-title: 基本使用
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
 
 ````jsx
 import { SwipeAction, List } from 'antd-mobile';
 
-let TabExample = React.createClass({
-  render() {
-    return (
-      <List>
-        <List.Body>
-          <SwipeAction
-            style={{ backgroundColor: 'gray' }}
-            right={[
-              {
-                text: 'more',
-                onPress: () => console.log('more'),
-                style: { backgroundColor: 'orange', color: 'white' },
-              },
-              {
-                text: 'delete',
-                onPress: () => console.log('删除'),
-                style: { backgroundColor: 'red', color: 'white' },
-              },
-            ]}
-            left={[
-              {
-                text: '阅读',
-                onPress: () => console.log('阅读'),
-                style: { backgroundColor: 'blue', color: 'white' },
-              },
-              {
-                text: '回复',
-                onPress: () => console.log('回复'),
-                style: { backgroundColor: 'green', color: 'white' },
-              },
-            ]}
-            onOpen={() => console.log('open')}
-            onClose={() => console.log('close')}
-          >
-            <List.Item extra="额外参数">
-                简单例子 - 左右都可操作
-            </List.Item>
-          </SwipeAction>
-        </List.Body>
-      </List>
-    );
-  },
-});
+const SwipeActionExample = () => (
+  <List>
+    <SwipeAction
+      style={{ backgroundColor: 'gray' }}
+      autoClose
+      right={[
+        {
+          text: 'Cancel',
+          onPress: () => console.log('cancel'),
+          style: { backgroundColor: '#ddd', color: 'white' },
+        },
+        {
+          text: 'Delete',
+          onPress: () => console.log('delete'),
+          style: { backgroundColor: '#F4333C', color: 'white' },
+        },
+      ]}
+      left={[
+        {
+          text: 'Reply',
+          onPress: () => console.log('reply'),
+          style: { backgroundColor: '#108ee9', color: 'white' },
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('cancel'),
+          style: { backgroundColor: '#ddd', color: 'white' },
+        },
+      ]}
+      onOpen={() => console.log('global open')}
+      onClose={() => console.log('global close')}
+    >
+      <List.Item
+        extra="More"
+        arrow="horizontal"
+        onClick={e => console.log(e)}
+      >
+        Have left and right buttons
+      </List.Item>
+    </SwipeAction>
+    <SwipeAction
+      style={{ backgroundColor: 'gray' }}
+      autoClose
+      left={[
+        {
+          text: 'Reply',
+          onPress: () => console.log('reply'),
+          style: { backgroundColor: '#108ee9', color: 'white' },
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('cancel'),
+          style: { backgroundColor: '#ddd', color: 'white' },
+        },
+      ]}
+      onOpen={() => console.log('global open')}
+      onClose={() => console.log('global close')}
+    >
+      <List.Item
+        extra="More"
+        arrow="horizontal"
+        onClick={e => console.log(e)}
+      >
+        Only left buttons
+      </List.Item>
+    </SwipeAction>
+    <SwipeAction
+      style={{ backgroundColor: 'gray' }}
+      autoClose
+      right={[
+        {
+          text: 'Cancel',
+          onPress: () => console.log('cancel'),
+          style: { backgroundColor: '#ddd', color: 'white' },
+        },
+        {
+          text: 'Delete',
+          onPress: () => console.log('delete'),
+          style: { backgroundColor: '#F4333C', color: 'white' },
+        },
+      ]}
+      onOpen={() => console.log('global open')}
+      onClose={() => console.log('global close')}
+    >
+      <List.Item
+        extra="More"
+        arrow="horizontal"
+        onClick={e => console.log(e)}
+      >
+        Only right buttons
+      </List.Item>
+    </SwipeAction>
+    <SwipeAction
+      style={{ backgroundColor: 'gray' }}
+      autoClose
+      right={[
+        {
+          text: 'short',
+          onPress: () => console.log('cancel'),
+          style: { backgroundColor: '#ddd', color: 'white' },
+        },
+        {
+          text: 'long text',
+          onPress: () => console.log('delete'),
+          style: { backgroundColor: '#F4333C', color: 'white' },
+        },
+      ]}
+      onOpen={() => console.log('global open')}
+      onClose={() => console.log('global close')}
+    >
+      <List.Item
+        extra="More"
+        arrow="horizontal"
+        onClick={e => console.log(e)}
+      >
+        Different button width
+      </List.Item>
+    </SwipeAction>
+    <SwipeAction
+      style={{ backgroundColor: 'gray' }}
+      autoClose
+      right={[
+        {
+          text: 'button1',
+          onPress: () => console.log('cancel'),
+          style: { backgroundColor: '#ddd', color: 'white' },
+        },
+        {
+          text: 'button2',
+          onPress: () => console.log('delete'),
+          style: { backgroundColor: '#F4333C', color: 'white' },
+        },
+      ]}
+      onOpen={() => console.log('global open')}
+      onClose={() => console.log('global close')}
+    >
+      <List.Item
+        extra="More"
+        arrow="horizontal"
+        onClick={() => console.log('List.Item clicked!')}
+      >
+        List.Item with onClick
+      </List.Item>
+    </SwipeAction>
+  </List>
+);
 
-ReactDOM.render(<TabExample />, mountNode);
+ReactDOM.render(<SwipeActionExample />, mountNode);
 ````

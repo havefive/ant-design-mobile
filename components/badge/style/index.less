@@ -4,7 +4,7 @@
 .am-badge {
   position: relative;
   display: inline-block;
-  line-height: 1;
+  line-height: @line-height-base;
   vertical-align: middle;
 
   &-text {
@@ -12,40 +12,51 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     position: absolute;
-    transform: translateX(-50%);
     top: -1 * @v-spacing-sm;
-    height: @v-spacing-lg;
+    height: @icon-size-xs;
+    line-height: @icon-size-xs;
+    min-width: @icon-size-xs / 2;
     border-radius: 2 * @v-spacing-sm;
-    line-height: 1.2;
+    padding: 0 @h-spacing-sm;
     text-align: center;
-    padding: 0 @h-spacing-sm @radius-md;
-    font-size: @link-button-font-size;
+    font-size: @font-size-caption-sm;
+    color: @color-text-base-inverse;
     background-color: @brand-important;
     white-space: nowrap;
+    transform: translateX(-45%);
     transform-origin: -10% center;
     z-index: 10;
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","\5FAE\8F6F\96C5\9ED1",SimSun,sans-serif;
-    color: @color-text-base-inverse;
-    a,
-    a:hover {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1", SimSun, sans-serif;
+
+    a {
       color: @color-text-base-inverse;
     }
+
     p {
       margin: 0;
       padding: 0;
     }
   }
 
+  &-hot &-text {
+    background-color: #f96268;
+  }
+
   &-dot {
-  	position: absolute;
-  	transform: translateX(-50%);
-  	transform-origin: 0 center;
+    position: absolute;
+    transform: translateX(-50%);
+    transform-origin: 0 center;
     top: -2 * @border-width-lg;
     height: 0.5 * @link-button-font-size;
     width: 0.5 * @link-button-font-size;
     border-radius: 100%;
     background: @brand-important;
     z-index: 10;
+
+    &-large {
+      height: @link-button-font-size;
+      width: @link-button-font-size;
+    }
   }
 
   &-not-a-wrapper &-text,
@@ -57,38 +68,20 @@
   }
 
   &-corner {
-  	width: 5 * @link-button-font-size;
-  	padding: 0.5 * @link-button-font-size;
-  	position: absolute;
-  	right: -2 * @link-button-font-size;
-  	top: 0.5 * @link-button-font-size;
-  	background-color: @brand-important;
-  	color: @color-text-base-inverse;
-  	white-space: nowrap;
-  	transform: rotate(45deg);
-  	text-align: center;
+    width: 5 * @link-button-font-size;
+    padding: 0.5 * @link-button-font-size;
+    position: absolute;
+    right: -2 * @link-button-font-size;
+    top: 0.5 * @link-button-font-size;
+    background-color: @brand-important;
+    color: @color-text-base-inverse;
+    white-space: nowrap;
+    transform: rotate(45deg);
+    text-align: center;
     font-size: @font-size-subhead;
-  	&-wrapper {
-  	  overflow: hidden;
-  	}
-  }
-}
 
-a & {
-  &-text:hover {
-    background: tint(@neutral-1, 20%);
-  }
-  &-text:active {
-    background: shade(@orange-8, 5%);
-  }
-}
-
-.am-scroll {
-  &-number {
-  	overflow: hidden;
-  	&-only {
-  	  display: inline-block;
-  	  transition: transform .3s cubic-bezier(0.645,0.045,0.355,1);
-  	}
+    &-wrapper {
+      overflow: hidden;
+    }
   }
 }

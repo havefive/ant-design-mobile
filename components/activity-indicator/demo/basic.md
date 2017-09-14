@@ -1,56 +1,72 @@
 ---
 order: 0
-title: 基本用法
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
-基本的活动指示器。
+Basic usage
 
 ````jsx
-import { ActivityIndicator, WhiteSpace } from 'antd-mobile';
+import { ActivityIndicator, WingBlank, WhiteSpace, Button } from 'antd-mobile';
 
-let App = React.createClass({
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      animating: false,
+    };
+  }
+  componentWillUnmount() {
+    clearTimeout(this.closeTimer);
+  }
+  showToast = () => {
+    this.setState({ animating: !this.state.animating });
+    this.closeTimer = setTimeout(() => {
+      this.setState({ animating: !this.state.animating });
+    }, 1000);
+  }
   render() {
     return (
       <div>
-        <div className="loading-container" >
-          <WhiteSpace size={20} />
-          <div className="loading-example">
-            <p className="title">icon无文案</p>
-            <ActivityIndicator animating />
+        <WingBlank>
+          <div className="loading-container">
+            <p className="sub-title">icon without text</p>
+            <div className="loading-example">
+              <ActivityIndicator animating />
+            </div>
+            <WhiteSpace size="xl" />
+            <p className="sub-title">icon with text</p>
+            <div className="loading-example">
+              <ActivityIndicator
+                text="Loading..."
+              />
+            </div>
+            <WhiteSpace size="xl" />
+            <p className="sub-title">icon with large size and customized text style</p>
+            <div className="loading-example">
+              <div className="align">
+                <ActivityIndicator size="large" />
+                <span style={{ marginTop: 8 }}>Loading...</span>
+              </div>
+            </div>
           </div>
-          <WhiteSpace size={20} />
-          <div className="loading-example">
-            <p className="title">icon带文案</p>
-            <ActivityIndicator
-              text="正在加载..."
-            />
+          <div className="toast-container">
+            <WhiteSpace size="xl" />
+            <Button onClick={this.showToast}>Click to show Toast</Button>
+            <div className="toast-example">
+              <ActivityIndicator
+                toast
+                text="Loading..."
+                animating={this.state.animating}
+              />
+            </div>
           </div>
-          <WhiteSpace size={20} />
-          <div className="loading-example white">
-            <p className="title">white</p>
-            <ActivityIndicator color="white" />
-          </div>
-          <WhiteSpace size={20} />
-          <div className="loading-example">
-            <p className="title">大号</p>
-            <ActivityIndicator
-              size="large"
-            />
-          </div>
-          <WhiteSpace size={20} />
-          <WhiteSpace size={20} />
-          <div className="toast-example">
-            <p className="title">Toast</p>
-            <ActivityIndicator
-              toast
-              text="正在加载"
-            />
-          </div>
-        </div>
+        </WingBlank>
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<App />, mountNode);
 ````
@@ -58,14 +74,15 @@ ReactDOM.render(<App />, mountNode);
 ````css
 .loading-example {
   display: flex;
-  margin-left: 20px;
-  margin-right: 20px;
+  justify-content: flex-start;
 }
-.loading-example.white {
-  color: #fff;
-  background-color: #2B2F42;
+.align {
+  display: flex;
+  flex-direction: column;
 }
-.loading-example .title {
-  margin-right: 20px;
+.sub-title {
+  color: #888;
+  font-size: 14px;
+  padding: 30px 0 18px 0;
 }
 ````

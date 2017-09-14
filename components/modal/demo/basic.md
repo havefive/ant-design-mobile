@@ -1,51 +1,84 @@
 ---
 order: 0
-title: 基本
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
-基本使用方式, 弹出一个浮层
+## zh-CN
+
+基本对话框。
+
+## en-US
+
+Basic Modal.
 
 ````jsx
-import { Modal, Button, WhiteSpace, WingBlank } from 'antd-mobile';
+import { Modal, List, Button, WhiteSpace, WingBlank } from 'antd-mobile';
 
-const App = React.createClass({
-  getInitialState() {
-    return { visible: false };
-  },
-  showModal() {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal1: false,
+      modal2: false,
+    };
+  }
+  showModal = key => (e) => {
+    e.preventDefault(); // 修复 Android 上点击穿透
     this.setState({
-      visible: true,
+      [key]: true,
     });
-  },
-  onClose() {
+  }
+  onClose = key => () => {
     this.setState({
-      visible: false,
+      [key]: false,
     });
-  },
+  }
   render() {
     return (
-      <div>
-        <WhiteSpace size={20} />
-        <WingBlank>
-          <Button type="primary" onClick={this.showModal}>
-            显示对话框
-          </Button>
-          <Modal animated transparent={false} visible={this.state.visible} >
-            <div style={{ height: '50%', paddingTop: 200 }}>
-              这是内容...<br />
-              这是内容...<br />
-            </div>
-            <Button type="primary" inline onClick={this.onClose}>close modal</Button>
-          </Modal>
-        </WingBlank>
-        <WhiteSpace size={20} />
-      </div>
+      <WingBlank>
+        <Button onClick={this.showModal('modal1')}>basic</Button>
+        <WhiteSpace />
+        <Modal
+          visible={this.state.modal1}
+          transparent
+          maskClosable={false}
+          onClose={this.onClose('modal1')}
+          title="Title"
+          footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
+        >
+          Content...<br />
+          Content...<br />
+        </Modal>
+
+        <Button onClick={this.showModal('modal2')}>popup</Button>
+        <WhiteSpace />
+        <Modal
+          popup
+          visible={this.state.modal2}
+          maskClosable={false}
+          animationType="slide-up"
+        >
+          <List renderHeader={() => <div>委托买入</div>} className="popup-list">
+            {['股票名称', '股票代码', '买入价格'].map((i, index) => (
+              <List.Item key={index}>{i}</List.Item>
+            ))}
+            <List.Item>
+              <Button type="primary" onClick={this.onClose('modal2')}>买入</Button>
+            </List.Item>
+          </List>
+        </Modal>
+      </WingBlank>
     );
-  },
-});
+  }
+}
 
-ReactDOM.render(
-  <App />
-, mountNode);
-
+ReactDOM.render(<App />, mountNode);
+````
+````css
+.popup-list .am-list-body {
+  height: 210px;
+  overflow: auto;
+}
 ````

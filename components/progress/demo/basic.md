@@ -1,59 +1,60 @@
 ---
 order: 0
-title: 基本
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
-基本功能展示
+## zh-CN
 
+进度条示例。
+
+## en-US
+
+Basic demo of Progress.
 
 ````jsx
-import { NavBar, Progress, WhiteSpace, Button, Flex, WingBlank } from 'antd-mobile';
+import { Progress, Button } from 'antd-mobile';
 
-const MyProgress = React.createClass({
-  getInitialState() {
-    return {
-      percent: 0,
-    };
-  },
-  increase() {
-    let percent = this.state.percent + 10;
-    if (percent > 100) {
-      percent = 100;
+class MyProgress extends React.Component {
+  state = {
+    percent: 50,
+  };
+  add = () => {
+    let p = this.state.percent + 10;
+    if (this.state.percent >= 100) {
+      p = 0;
     }
-    this.setState({ percent, status });
-  },
-  decline() {
-    let percent = this.state.percent - 10;
-    if (percent < 0) {
-      percent = 0;
-    }
-    this.setState({ percent, status });
-  },
+    this.setState({ percent: p });
+  }
   render() {
+    const { percent } = this.state;
     return (
       <div className="progress-container">
-        {this.state.percent === 100 ? null :
-          <div>
-            <NavBar iconName={false} mode="light">NavBar</NavBar>
-            <Progress percent={this.state.percent} position="fixed" />
-          </div>
-        }
-        <Progress percent={this.state.percent} position="normal" />
-        <WhiteSpace size={20} />
-        <WingBlank size={20}>
-          <Flex>
-            <Flex.Item>
-              <Button onClick={this.increase}> + </Button>
-            </Flex.Item>
-            <Flex.Item>
-              <Button onClick={this.decline}> - </Button>
-            </Flex.Item>
-          </Flex>
-        </WingBlank>
-        <WhiteSpace size={20} />
+        <Progress percent={30} position="fixed" />
+        <div style={{ height: 36 }} />
+        <Progress percent={40} position="normal" unfilled={false} appearTransition />
+        <div className="show-info">
+          <div className="progress"><Progress percent={percent} position="normal" /></div>
+          <div aria-hidden="true">{percent}%</div>
+        </div>
+        <Button inline style={{ marginTop: 20, marginLeft: 30 }} onClick={this.add}>(+-)10</Button>
       </div>
     );
-  },
-});
+  }
+}
+
 ReactDOM.render(<MyProgress />, mountNode);
+````
+
+````css
+.show-info {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+}
+.show-info .progress {
+  margin-right: 5px;
+  width: 100%;
+}
 ````

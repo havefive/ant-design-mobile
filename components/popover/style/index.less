@@ -1,43 +1,65 @@
 @import '../../style/mixins';
 @import '../../style/themes/default';
+
 @popoverPrefixCls: am-popover;
 
 @import './base';
 
 .@{popoverPrefixCls}-inner {
-  font-size: @font-size-base;
+  font-size: @font-size-subhead;
   color: @color-text-base;
   background-color: @fill-base;
-  border: @border-width-sm solid @border-color-base;
   border-radius: @radius-sm;
-  box-shadow: 0 0 4px @color-shadow;
+  box-shadow: 0 0 2 * @hd rgba(0, 0, 0, 0.21);
+  overflow: hidden; // for popover item active background color not overflow
 }
 
-.@{popoverPrefixCls} {
-  & &-item {
+.@{popoverPrefixCls} .@{popoverPrefixCls}-item {
+  padding: 0 @h-spacing-md;
+
+  &-container {
+    position: relative;
     display: flex;
     align-items: center;
-    margin: 0 @h-spacing-md;
-    padding: @h-spacing-md;
-    border-bottom: @border-width-sm solid @border-color-base;
-    &:last-child {
-      border-bottom: 0;
+    height: 39 * @hd;
+    box-sizing: border-box;
+    padding: 0 @h-spacing-md;
+  }
+  &:not(:first-child) {
+    .@{popoverPrefixCls}-item-container {
+      .hairline('top');
     }
-    &:active {
-      margin: 0;
-      margin-top: -@border-width-sm;
-      padding: @h-spacing-md 2*@h-spacing-md;
-      background-color: @border-color-base;
+  }
+
+  &.@{popoverPrefixCls}-item-active {
+    .@{popoverPrefixCls}-item-container {
+      .hairline-remove('top');
     }
-    &.@{popoverPrefixCls}-item-disabled {
-      color: @color-text-disabled;
-      &.@{popoverPrefixCls}-item:active {
-        background-color: transparent;
-      }
+  }
+
+  &.@{popoverPrefixCls}-item-active + .@{popoverPrefixCls}-item .@{popoverPrefixCls}-item-container {
+    .hairline-remove('top');
+  }
+
+  &.@{popoverPrefixCls}-item-active {
+    background-color: @border-color-base;
+  }
+
+  &.@{popoverPrefixCls}-item-active.@{popoverPrefixCls}-item-fix-active-arrow {
+    position: relative;
+  }
+
+  &.@{popoverPrefixCls}-item-disabled {
+    color: @color-text-disabled;
+
+    &.@{popoverPrefixCls}-item-active {
+      background-color: transparent;
     }
-    &-icon {
-      margin-right: @h-spacing-md;
-      font-size: @icon-size-md;
-    }
+  }
+
+  &-icon {
+    margin-right: @h-spacing-md;
+    width: @icon-size-xs;
+    height: @icon-size-xs;
   }
 }

@@ -1,11 +1,27 @@
-@popover-arrow-width: 20px;
+@popover-arrow-width: 7 * @hd;
 
 // Base class
 .@{popoverPrefixCls} {
   position: absolute;
-  z-index: 1070;
+  z-index: @popover-zindex;
+
   &-hidden {
     display: none;
+  }
+
+  &-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: @fill-mask;
+    height: 100%;
+    z-index: @popup-zindex;
+
+    &-hidden {
+      display: none;
+    }
   }
 }
 
@@ -14,12 +30,10 @@
   position: absolute;
   width: @popover-arrow-width;
   height: @popover-arrow-width;
-  border-top: 1px solid @border-color-base;
-  border-left: 1px solid @border-color-base;
-  border-bottom: 0;
-  border-right: 0;
+  border-radius: 1PX;
   background-color: @fill-base;
   transform: rotate(45deg);
+  z-index: 0;
 }
 
 .@{popoverPrefixCls} {
@@ -33,11 +47,13 @@
   &-placement-top &-arrow {
     left: 50%;
   }
+
   &-placement-topLeft &-arrow {
-    left: 15%;
+    left: @h-spacing-md;
   }
+
   &-placement-topRight &-arrow {
-    right: 15%;
+    right: @h-spacing-md;
   }
 
   &-placement-right &-arrow,
@@ -50,11 +66,13 @@
   &-placement-right &-arrow {
     top: 50%;
   }
+
   &-placement-rightTop &-arrow {
-    top: 15%;
+    top: @h-spacing-md;
   }
+
   &-placement-rightBottom &-arrow {
-    bottom: 15%;
+    bottom: @h-spacing-md;
   }
 
   &-placement-left &-arrow,
@@ -67,11 +85,13 @@
   &-placement-left &-arrow {
     top: 50%;
   }
+
   &-placement-leftTop &-arrow {
-    top: 15%;
+    top: @h-spacing-md;
   }
+
   &-placement-leftBottom &-arrow {
-    bottom: 15%;
+    bottom: @h-spacing-md;
   }
 
   &-placement-bottom &-arrow,
@@ -83,10 +103,12 @@
   &-placement-bottom &-arrow {
     left: 50%;
   }
+
   &-placement-bottomLeft &-arrow {
-    left: 15%;
+    left: @h-spacing-md;
   }
+
   &-placement-bottomRight &-arrow {
-    right: 15%;
+    right: @h-spacing-md;
   }
 }

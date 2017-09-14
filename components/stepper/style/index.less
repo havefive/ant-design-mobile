@@ -2,172 +2,108 @@
 @import "../../style/mixins";
 
 @stepperPrefixCls: am-stepper;
-@border-color-base: @neutral-5;
-@border-radius-base: @radius-2;
-
-.iconfont-mixin() {
-  display: inline-block;
-  font-style: normal;
-  vertical-align: baseline;
-  text-align: center;
-  text-transform: none;
-  text-rendering: auto;
-
-  &:before {
-    display: block;
-    font-family: "anticon" !important;
-  }
-}
 
 .@{stepperPrefixCls} {
   position: relative;
   margin: 0;
-  padding: 4px 0;
+  padding: 2 * @hd 0;
   display: inline-block;
   box-sizing: content-box;
-  width: @segmented-control-height * 2 + 6;
-  height: @segmented-control-height;
+  width: 63 * @hd;
+  height: 35 * @hd;
+  line-height: 35 * @hd;
   font-size: @font-size-base;
-  line-height: @segmented-control-height;
   vertical-align: middle;
   overflow: hidden;
 
   &-handler-wrap {
     position: absolute;
     width: 100%;
+    font-size: 24 * @hd;
   }
 
   &-handler,
   &-handler-up-inner,
   &-handler-down-inner {
-    width: @segmented-control-height;
-    height: @segmented-control-height;
-    line-height: @segmented-control-height;
+    width: 30 * @hd;
+    height: 30 * @hd;
+    line-height: 30 * @hd;
   }
 
   &-handler {
     text-align: center;
-    border: @border-width-md solid @input-color-icon;
+    border: @border-width-md solid @border-color-base;
     border-radius: @radius-md;
     overflow: hidden;
     color: @color-text-base;
     position: absolute;
     display: inline-block;
     box-sizing: content-box;
-    &:active {
+
+    &-active {
       z-index: 2;
-    }
-    &:active &-up-inner,
-    &:active &-down-inner {
-      background: @fill-tap;
+      background-color: @fill-tap;
     }
   }
-  &-handler-up {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  &-handler-down {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
+
   &-handler-up-inner,
   &-handler-down-inner {
-    .iconfont-mixin();
+
     user-select: none;
-    right: 4px;
-    color: @neutral-7;
+    right: 2 * @hd;
+    color: @color-text-base;
   }
 
   &-input-wrap {
     display: none;
     width: 100%;
-    height: @segmented-control-height;
-    line-height: @segmented-control-height;
+    height: 30 * @hd;
+    line-height: 30 * @hd;
     text-align: center;
     overflow: hidden;
   }
 
   &-input {
     display: none;
-    width: @segmented-control-height * 2;
-    font-size: @font-size-base;
+    width: 60 * @hd;
+    font-size: 16 * @hd;
     color: @color-text-base;
     text-align: center;
     border: 0;
     padding: 0;
     background: none;
+    vertical-align: middle;
+
+    &[disabled] {
+      opacity: 1;
+      color: @color-text-base;
+    }
   }
 
   &.showNumber {
-    width: @segmented-control-height * 2 + 112;
+    width: 138 * @hd;
+
     .@{stepperPrefixCls}-input-wrap {
       display: inline-block;
     }
+
     .@{stepperPrefixCls}-input {
       display: inline-block;
     }
-    .@{stepperPrefixCls}-handler-up {
-      border-top-left-radius: @radius-md;
-      border-bottom-left-radius: @radius-md;
-    }
-    .@{stepperPrefixCls}-handler-down {
-      border-top-right-radius: @radius-md;
-      border-bottom-right-radius: @radius-md;
-      border-right: @border-width-md solid @input-color-icon;
-    }
+
     .@{stepperPrefixCls}-handler-down-disabled {
-      right: -2px;
-    }
-  }
-
-  &-lg {
-    width: @button-height * 2 + 6;
-    height: @button-height;
-    line-height: @button-height;
-    font-size: @font-size-display-sm;
-    .@{stepperPrefixCls}-handler-wrap,
-    .@{stepperPrefixCls}-handler,
-    .@{stepperPrefixCls}-handler-up-inner,
-    .@{stepperPrefixCls}-handler-down-inner {
-      width: @button-height;
-      height: @button-height;
-      line-height: @button-height;
-    }
-
-    .@{stepperPrefixCls}-handler-wrap {
-      position: absolute;
-      width: 100%;
-    }
-
-    .@{stepperPrefixCls}-input-wrap {
-      height: @button-height;
-      line-height: @button-height;
-    }
-
-    &.showNumber {
-      width: @button-height * 2 + 172;
-    }
-
-    input {
-      font-size: @font-size-display-sm;
-      width: @button-height * 2;
-      height: @button-height;
-      line-height: @button-height;
-      vertical-align: middle;
-    }
-
-    .@{stepperPrefixCls}-handler-down:active .@{stepperPrefixCls}-handler-down-inner {
-      background-color: @fill-tap;
+      right: -1PX;
     }
   }
 
   &-handler-up {
     cursor: pointer;
     right: 0;
+
     &-inner {
       &:before {
         text-align: center;
-        content: "\E63E";
+        content: "+";
       }
     }
   }
@@ -175,25 +111,37 @@
   &-handler-down {
     cursor: pointer;
     left: 0;
+
     &-inner {
       &:before {
         text-align: center;
-        content: "\E63B";
+        content: "-";
       }
     }
   }
 
   &-handler-down-disabled,
-  &-handler-up-disabled,
+  &-handler-up-disabled {
+    opacity: @opacity-disabled;
+  }
+
+  &-handler-up-disabled &-handler-active {
+    background: none;
+  }
+
   &-disabled {
-    .@{stepperPrefixCls}-handler-down-inner,
-    .@{stepperPrefixCls}-handler-up-inner {
+    .@{stepperPrefixCls}-handler-down,
+    .@{stepperPrefixCls}-handler-up {
       opacity: @opacity-disabled;
+      background: none;
     }
   }
 
   &-disabled {
-    .@{stepperPrefixCls}-handler,
+    .@{stepperPrefixCls}-handler {
+      opacity: @opacity-disabled;
+    }
+
     .@{stepperPrefixCls}-input-wrap {
       opacity: @opacity-disabled;
     }

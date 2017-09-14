@@ -1,40 +1,25 @@
-import * as React from 'react';
-import { View, Text } from 'react-native';
-import CardStyle from './style/index';
+import React from 'react';
+import classnames from 'classnames';
+import { CardFooterProps as BasePropsType } from './PropsType';
 
-export interface CardFooterProps {
-  content?: any;
-  extra?: any;
-  style?: {};
+export interface CardFooterProps extends BasePropsType {
+  prefixCls?: string;
 }
 
 export default class CardFooter extends React.Component<CardFooterProps, any> {
   static defaultProps = {
-    style: {},
+    prefixCls: 'am-card',
   };
 
   render() {
-    const { content, extra, style } = this.props;
-
-    const contentDom = React.isValidElement(content) ? (
-      <View style={{ flex: 1 }}>{content}</View>
-    ) : (
-      <Text style={CardStyle.footerContent}>{content}</Text>
-    );
-
-    const extraDom = React.isValidElement(extra) ? (
-      <View style={{ flex: 1 }}>{content}</View>
-    ) : (
-      <Text style={[CardStyle.footerExtra]}>{extra}</Text>
-    );
+    const { prefixCls, content, className, extra, ...restProps } = this.props;
+    const wrapCls = classnames(`${prefixCls}-footer`, className);
 
     return (
-      <View style={[CardStyle.footerWrap, style]}>
-        {contentDom}
-        {
-          extra ? extraDom : null
-        }
-      </View>
+      <div className={wrapCls} {...restProps}>
+        <div className={`${prefixCls}-footer-content`}>{content}</div>
+        {extra && <div className={`${prefixCls}-footer-extra`}>{extra}</div>}
+      </div>
     );
   }
 }

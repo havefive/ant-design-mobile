@@ -1,12 +1,21 @@
-/* tslint:disable:no-switch-case-fall-through */
-import * as React from 'react';
-import NoticeBarProps from './NoticeBarPropsType';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import NoticeStyle from './style';
+import React from 'react';
+import classnames from 'classnames';
+import Icon from '../icon';
+import NoticeBarProps from './PropsType';
+import Marquee, { IMarqueeProps } from './Marquee';
 
-export default class NoticeBar extends React.Component<NoticeBarProps, any> {
+export interface INoticeWebProps extends NoticeBarProps {
+  marqueeProps?: IMarqueeProps;
+  className?: string;
+  prefixCls?: string;
+  style?: {};
+}
+
+export default class NoticeBar extends React.Component<INoticeWebProps, any> {
   static defaultProps = {
+    prefixCls: 'am-notice-bar',
     mode: '',
+    icon: <Icon type="voice" size="xxs"/>,
     onClick() {},
   };
 
@@ -19,7 +28,9 @@ export default class NoticeBar extends React.Component<NoticeBarProps, any> {
 
   onClick = () => {
     const { mode, onClick } = this.props;
-    onClick();
+    if (onClick) {
+      onClick();
+    }
     if (mode === 'closable') {
       this.setState({
         show: false,
@@ -28,61 +39,37 @@ export default class NoticeBar extends React.Component<NoticeBarProps, any> {
   }
 
   render() {
-    const { children, mode, type, style } = this.props;
-    let operationDom;
-    switch (mode) {
-      case 'closable':
+    const { mode, icon, onClick, children, className, prefixCls, marqueeProps, ...restProps } = this.props;
+
+    const extraProps: any = {};
+    let operationDom: any = null;
+    if (mode === 'closable') {
+      operationDom = (
+        <div className={`${prefixCls}-operation`} onClick={this.onClick} role="button" aria-label="close">
+          <Icon type="cross" size="md" />
+        </div>
+      );
+    } else {
+      if (mode === 'link') {
         operationDom = (
-          <TouchableOpacity onPress={this.onClick}>
-            <Text style={[NoticeStyle.close]}>×</Text>
-          </TouchableOpacity>
+          <div className={`${prefixCls}-operation`} role="button" aria-label="go to detail">
+            <Icon type="right" size="md" />
+          </div>
         );
-        break;
-      case 'link':
-        operationDom = (
-          <TouchableOpacity onPress={this.onClick}>
-            <Text style={[NoticeStyle.link]}>∟</Text>
-          </TouchableOpacity>
-        );
-        break;
-      default:
-        operationDom = null;
-        break;
+      }
+      extraProps.onClick = onClick;
     }
 
-    let iconType = '';
-    switch (type) {
-      case 'success':
-        iconType = 'dHVDErPWEJtMlmn';
-        break;
-      case 'error':
-        iconType = 'LvckcvVesFNgvpV';
-        break;
-      case 'warn':
-        iconType = 'bRnouywfdRsCcLU';
-        break;
-      case 'question':
-        iconType = 'JNRDCOIzgNJGnZt';
-        break;
-      case 'info':
-      default:
-        iconType = 'baPKdUnrQFvLyHS';
-        break;
-    }
+    const wrapCls = classnames(prefixCls, className);
 
-    const iconDom = type ? <View style={[NoticeStyle.left15]}>
-      <Image
-        source={{uri: `https://zos.alipayobjects.com/rmsportal/${iconType}.png`}}
-        style={{ width: 12, height:12 }} />
-    </View> : null;
-
-    const contentMarginLeftStyle = type ? NoticeStyle.left6 : NoticeStyle.left15;
     return this.state.show ? (
-      <View style={[NoticeStyle.notice, style]}>
-        {iconDom}
-        <Text style={[NoticeStyle.content, contentMarginLeftStyle]}>{children}</Text>
+      <div className={wrapCls} {...restProps} {...extraProps} role="alert">
+        {icon && <div className={`${prefixCls}-icon`} aria-hidden="true"> {icon} </div>}
+        <div className={`${prefixCls}-content`}>
+          <Marquee prefixCls={prefixCls} text={children as string} {...marqueeProps} />
+        </div>
         {operationDom}
-      </View>
+      </div>
     ) : null;
   }
 }

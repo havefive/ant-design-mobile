@@ -1,188 +1,164 @@
-import * as React from 'react';
-import {
-  View,
-  Modal,
-  TouchableWithoutFeedback,
-  Animated,
-  Dimensions,
-  DeviceEventEmitter,
-  ActionSheetIOS,
-  Platform,
-  Text,
-  TouchableHighlight,
-} from 'react-native';
-import styles, { vars as variables } from './style/index';
-import topView from 'rn-topview';
+/* tslint:disable:jsx-no-multiline-js */
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Dialog from 'rmc-dialog';
+import classnames from 'classnames';
+import Icon from '../icon';
+import getDataAttr from '../_util/getDataAttr';
+import TouchFeedback from 'rmc-feedback';
 
-const WIN_HEIGHT = Dimensions.get('window').height;
+const NORMAL = 'NORMAL';
+const SHARE = 'SHARE';
+function noop() { }
+const queue: any[] = [];
 
-function noop(a: any) {
+function createActionSheet(flag, config, callback) {
+  const props = {
+    prefixCls: 'am-action-sheet',
+    cancelButtonText: '取消',
+    ...config,
+  };
+  const { prefixCls, className, transitionName, maskTransitionName, maskClosable = true } = props;
+
+  let div: any = document.createElement('div');
+  document.body.appendChild(div);
+
+  queue.push(close);
+
+  function close() {
+    if (div) {
+      ReactDOM.unmountComponentAtNode(div);
+      div.parentNode.removeChild(div);
+      div = null;
+      const index = queue.indexOf(close);
+      if (index !== -1) {
+        queue.splice(index, 1);
+      }
+    }
+  }
+
+  function cb(index, rowIndex = 0) {
+    const res = callback(index, rowIndex);
+    if (res && res.then) {
+      res.then(() => {
+        close();
+      });
+    } else {
+      close();
+    }
+  }
+
+  const { title, message, options, destructiveButtonIndex, cancelButtonIndex, cancelButtonText } = props;
+  const titleMsg = [
+    title ? <h3 key="0" className={`${prefixCls}-title`}>{title}</h3> : null,
+    message ? <div key="1" className={`${prefixCls}-message`}>{message}</div> : null,
+  ];
+  let children: React.ReactElement<any> | null = null;
+  let mode = 'normal';
+  switch (flag) {
+    case NORMAL:
+      mode = 'normal';
+      children = (<div {...getDataAttr(props)}>
+        {titleMsg}
+        <div className={`${prefixCls}-button-list`} role="group">
+          {options.map((item, index) => {
+            const itemProps = {
+              className: classnames(`${prefixCls}-button-list-item`, {
+                [`${prefixCls}-destructive-button`]: destructiveButtonIndex === index,
+                [`${prefixCls}-cancel-button`]: cancelButtonIndex === index,
+              }),
+              onClick: () => cb(index),
+              role: 'button',
+            };
+            let bItem = (
+              <TouchFeedback key={index} activeClassName={`${prefixCls}-button-list-item-active`}>
+                <div {...itemProps}>{item}</div>
+              </TouchFeedback>
+            );
+            if (cancelButtonIndex === index || destructiveButtonIndex === index) {
+              bItem = (
+                <TouchFeedback key={index} activeClassName={`${prefixCls}-button-list-item-active`}>
+                  <div {...itemProps}>
+                    {item}
+                    {cancelButtonIndex === index ?
+                    <span className={`${prefixCls}-cancel-button-mask`} /> : null}
+                  </div>
+                </TouchFeedback>
+              );
+            }
+            return bItem;
+          })}
+        </div>
+      </div>);
+      break;
+    case SHARE:
+      mode = 'share';
+      const multipleLine = options.length && Array.isArray(options[0]) || false;
+      const createList = (item, index, rowIndex = 0) => (
+        <div className={`${prefixCls}-share-list-item`} role="button" key={index} onClick={() => cb(index, rowIndex)}>
+          <div className={`${prefixCls}-share-list-item-icon`}>
+            {item.iconName ? <Icon type={item.iconName}/> : item.icon}
+          </div>
+          <div className={`${prefixCls}-share-list-item-title`}>{item.title}</div>
+        </div>
+      );
+      children = (<div {...getDataAttr(props)}>
+        {titleMsg}
+        <div className={`${prefixCls}-share`}>
+          {multipleLine ? options.map((item, index) => (
+            <div key={index} className={`${prefixCls}-share-list`}>
+              {item.map((ii, ind) => createList(ii, ind, index))}
+            </div>
+          )) : (
+            <div className={`${prefixCls}-share-list`}>
+                {options.map((item, index) => createList(item, index))}
+            </div>
+          )}
+          <TouchFeedback activeClassName={`${prefixCls}-share-cancel-button-active`}>
+            <div className={`${prefixCls}-share-cancel-button`} role="button" onClick={() => cb(-1)}>
+              {cancelButtonText}
+            </div>
+          </TouchFeedback>
+        </div>
+      </div>);
+      break;
+    default:
+      break;
+  }
+
+  const rootCls = classnames(`${prefixCls}-${mode}`, className);
+
+  ReactDOM.render(
+    <Dialog
+      visible
+      title=""
+      footer=""
+      prefixCls={prefixCls}
+      className={rootCls}
+      transitionName={transitionName || `am-slide-up`}
+      maskTransitionName={maskTransitionName || `am-fade`}
+      onClose={() => cb(cancelButtonIndex || -1)}
+      maskClosable={maskClosable}
+      wrapProps={props.wrapProps || {}}
+    >
+      {children}
+    </Dialog>,
+    div,
+  );
+
+  return {
+    close,
+  };
 }
 
-export interface Props {
-  maskClosable?: boolean;
-}
-
-class ActionSheetAndroid extends React.Component<Props, any> {
-  static defaultProps = {
-    maskClosable: true,
-  };
-
-  timer: number;
-
-  anim: any;
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      translateY: new Animated.Value(0),
-    };
-  }
-
-  componentWillMount() {
-    DeviceEventEmitter.addListener('antActionSheetHide', () => {
-      this.animatedHide();
-    });
-  }
-
-  componentDidMount() {
-    this.state.translateY.setValue(WIN_HEIGHT);
-    this.anim = Animated.timing(this.state.translateY, {
-      duration: 200,
-      toValue: 0,
-      delay: 5,
-    });
-    this.anim.start(() => {
-      this.anim = null;
-    });
-  }
-
-  componentWillUnmount() {
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-    if (this.anim) {
-      this.anim.stop();
-      this.anim = null;
-    }
-    DeviceEventEmitter.removeAllListeners('antActionSheetHide');
-  }
-
-  onMaskClose = () => {
-    if (this.props.maskClosable) {
-      this.animatedHide();
-    }
-  };
-
-  animatedHide = () => {
-    this.state.translateY.setValue(0);
-    this.anim = Animated.timing(this.state.translateY, {
-      duration: 200,
-      toValue: WIN_HEIGHT,
-      delay: 5,
-    });
-    this.anim.start(() => {
-      this.anim = null;
-      topView.remove();
-    });
-  };
-
-  render() {
-    return (
-      <View style={styles.wrap}>
-        <Modal
-          animationType={'none'}
-          transparent
-          visible
-          onRequestClose={Platform.OS === 'android' ? this.animatedHide : undefined}
-        >
-          <TouchableWithoutFeedback onPress={this.onMaskClose}>
-            <View style={styles.mask}/>
-          </TouchableWithoutFeedback>
-          <Animated.View style={[styles.content, {
-            transform: [
-              { translateY: this.state.translateY },
-            ],
-          }]}>
-            {this.props.children}
-          </Animated.View>
-        </Modal>
-      </View>
-    );
-  }
-}
-
-const ActionSheetCross = {
+export default {
   showActionSheetWithOptions(config, callback = noop) {
-    const {title, message, options, destructiveButtonIndex, cancelButtonIndex} = config;
-    const titleMsg = [
-      title ? <View style={styles.title} key="0"><Text style={styles.titleText}>{title}</Text></View> : null,
-      message ? <View style={styles.message} key="1"><Text>{message}</Text></View> : null,
-    ];
-    const cb = (index) => {
-      DeviceEventEmitter.emit('antActionSheetHide');
-      callback(index);
-    };
-    const children = (
-      <View>
-        {titleMsg}
-        <View>
-          {options.map((item, index) => (
-            <View key={index} style={[cancelButtonIndex === index ? styles.cancelBtn : null]}>
-              <TouchableHighlight
-                style={[
-                  styles.btn,
-                ]}
-                underlayColor={variables.neutral_2}
-                onPress={() => cb(index) }
-              >
-                <Text
-                  style={[
-                    destructiveButtonIndex === index ? styles.destructiveBtn : null,
-                  ]}
-                >
-                  {item}
-                </Text>
-              </TouchableHighlight>
-              {cancelButtonIndex === index ? <View style={styles.cancelBtnMask}/> : null}
-            </View>
-          ))}
-        </View>
-      </View>
-    );
-    topView.set(
-      <ActionSheetAndroid>
-        {children}
-      </ActionSheetAndroid>
-    );
+    createActionSheet(NORMAL, config, callback);
   },
-  showShareActionSheetWithOptions(config) {
-    const {url, message, excludedActivityTypes} = config;
-    const titleMsg = [
-      url ? <View style={styles.title} key="0"><Text>{url}</Text></View> : null,
-      message ? <View style={styles.message} key="1"><Text>{message}</Text></View> : null,
-    ];
-    const children = (
-      <View>
-        {titleMsg}
-        <View>
-          {excludedActivityTypes.map((item, index) => <View key={index}>{item}</View>)}
-        </View>
-      </View>
-    );
-    topView.set(
-      <ActionSheetAndroid>
-        {children}
-      </ActionSheetAndroid>
-    );
+  showShareActionSheetWithOptions(config, callback = noop) {
+    createActionSheet(SHARE, config, callback);
+  },
+  close() {
+    queue.forEach(q => q());
   },
 };
-
-let ActionSheet;
-if (Platform.OS === 'ios') {
-  ActionSheet = ActionSheetIOS;
-} else {
-  ActionSheet = ActionSheetCross;
-}
-
-export default ActionSheet;

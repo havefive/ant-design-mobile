@@ -1,51 +1,64 @@
 ---
 order: 0
-title: 选项卡
+title:
+  zh-CN: 基本用法
+  en-US: Basic Usage
 ---
 
-多用于页面的内容区块，起着控制小范围内的大块内容的分组和隐藏，起着保持界面整洁的作用。
+Basic Usage.
 
 
 ````jsx
-import { Tabs, WhiteSpace } from 'antd-mobile';
-const TabPane = Tabs.TabPane;
+import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
 
-function callback(key) {
-  console.log(key);
-}
+const tabs = [
+  { title: <Badge text={'3'}>First Tab</Badge> },
+  { title: <Badge text={'今日(20)'}>Second Tab</Badge> },
+  { title: <Badge dot>Third Tab</Badge> },
+];
 
-let TabExample = React.createClass({
-  render() {
-    return (
-      <div>
-        <Tabs defaultActiveKey="1" onChange={callback}>
-          <TabPane tab="选项卡一" key="1">
-            <div style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100,
-            }}>
-               选项卡一内容
-            </div>
-          </TabPane>
-          <TabPane tab="选项卡二" key="2">
-            <div style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100,
-            }}>
-               选项卡二内容
-            </div>
-          </TabPane>
-          <TabPane tab="选项卡三" key="3">
-            <div style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100,
-            }}>
-               选项卡三内容
-            </div>
-          </TabPane>
-        </Tabs>
-        <WhiteSpace />
+const tabs2 = [
+  { title: 'First Tab', sub: '1' },
+  { title: 'Second Tab', sub: '2' },
+  { title: 'Third Tab', sub: '3' },
+];
+
+const TabExample = () => (
+  <div>
+    <Tabs tabs={tabs}
+      initialPage={1}
+      onChange={(tab, index) => { console.log('onChange', index, tab); }}
+      onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '150px', backgroundColor: '#fff' }}>
+        Content of First Tab
       </div>
-    );
-  },
-});
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '150px', backgroundColor: '#fff' }}>
+        Content of Second Tab
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '150px', backgroundColor: '#fff' }}>
+        Content of Third Tab
+      </div>
+    </Tabs>
+    <WhiteSpace />
+    <Tabs tabs={tabs2}
+      initialPage={1}
+      tabBarPosition="bottom"
+      renderTab={tab => <span>{tab.title}-{tab.sub}</span>}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '150px', backgroundColor: '#fff' }}>
+        Content of First Tab
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '150px', backgroundColor: '#fff' }}>
+        Content of Second Tab
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '150px', backgroundColor: '#fff' }}>
+        Content of Third Tab
+      </div>
+    </Tabs>
+    <WhiteSpace />
+  </div>
+);
 
 ReactDOM.render(<TabExample />, mountNode);
 ````

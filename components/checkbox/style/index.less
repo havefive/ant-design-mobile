@@ -11,29 +11,32 @@
   vertical-align: middle;
   width: @icon-size-sm;
   height: @icon-size-sm;
+
   &-inner {
     position: absolute;
     right: 0;
     width: @icon-size-sm;
     height: @icon-size-sm;
-    border: 3px solid @color-text-caption;
-    .border-radius(50%);
-    .box-sizing();
-    .transform(rotate(0deg));
+    border: 1.5 * @hd solid @color-text-caption;
+    border-radius: @radius-circle;
+    transform: rotate(0deg);
+    box-sizing: border-box;
+
     &:after {
       position: absolute;
       display: none;
-      top: 4px;
-      right: 12px;
+      top: 1.5 * @hd;
+      right: 6 * @hd;
       z-index: 999;
-      width: 10px;
-      height: 22px;
+      width: 5 * @hd;
+      height: 11 * @hd;
       border-style: solid;
-      border-width: 0 3px 3px 0;
+      border-width: 0 1.5 * @hd 1.5 * @hd 0;
       content: '\0020';
-      .transform(rotate(45deg));
+      transform: rotate(45deg);
     }
   }
+
   &-input {
     position: absolute;
     top: 0;
@@ -43,50 +46,31 @@
     height: 100%;
     z-index: 2;
     border: 0 none;
-    -webkit-appearance: none;
+    appearance: none;
   }
+
   &.@{checkboxWarpPrefixCls}-checked {
     .@{checkboxInnerPrefixCls} {
       border-color: @brand-primary;
-      background-color: @fill-base;
+
       &:after {
         display: block;
         border-color: @brand-primary;
       }
     }
   }
+
   &.@{checkboxWarpPrefixCls}-disabled {
     opacity: @opacity-disabled;
-  }
-}
 
+    &.@{checkboxWarpPrefixCls}-checked {
+      .@{checkboxInnerPrefixCls} {
+        border-color: @color-text-caption;
 
-.@{checkboxWarpPrefixCls}-agree {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  margin-left: @h-spacing-lg;
-  .@{checkboxWarpPrefixCls} {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    &-inner {
-      left: 0;
-      top: @v-spacing-xs;
-    }
-  }
-  .@{checkboxWarpPrefixCls}-agree-label {
-    font-size: @font-size-subhead;
-    color: @color-text-base;
-    line-height: 1.8;
-    padding-left: 2 * @h-spacing-lg;
-    margin-top: 0;
-    margin-left: 0;
-    a {
-      position: relative;
-      z-index: 99;
+        &:after {
+          border-color: @color-text-caption;
+        }
+      }
     }
   }
 }
@@ -97,6 +81,7 @@
       .@{listPrefixCls}-thumb {
         width: @icon-size-sm;
         height: @icon-size-sm;
+
         .@{checkboxWarpPrefixCls} {
           position: absolute;
           top: 0;
@@ -105,17 +90,50 @@
           bottom: 0;
           width: 100%;
           height: @list-item-height;
+
           &-inner {
             left: @h-spacing-lg;
-            top: 24px;
+            top: 12 * @hd;
           }
         }
       }
+
       &.@{checkboxWarpPrefixCls}-item-disabled {
         .@{listPrefixCls}-content {
           color: @color-text-disabled;
         }
       }
     }
+  }
+}
+
+.@{checkboxWarpPrefixCls}-agree {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  margin-left: @h-spacing-lg;
+  padding-top: @v-spacing-md;
+  padding-bottom: @v-spacing-md;
+
+  .@{checkboxWarpPrefixCls} {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2 * @h-spacing-lg;
+    height: 100%;
+
+    &-inner {
+      left: 0;
+      top: @v-spacing-xs + @v-spacing-md;
+    }
+  }
+
+  .@{checkboxWarpPrefixCls}-agree-label {
+    display: inline-block;
+    font-size: @font-size-subhead;
+    color: @color-text-base;
+    line-height: @line-height-paragraph;
+    margin-left: 2 * @h-spacing-lg;
+    margin-top: 1PX;
   }
 }

@@ -1,152 +1,98 @@
 ---
-order: 1
-title: 基本
+order: 0
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
-最简单的用法。
 
 ````jsx
-import { List, Switch } from 'antd-mobile';
-import { createForm } from 'rc-form';
+import { List } from 'antd-mobile';
 
-let ListExample = React.createClass({
+const Item = List.Item;
+const Brief = Item.Brief;
+
+class ListExample extends React.Component {
+  state = {
+    disabled: false,
+  }
+
   render() {
-    const { getFieldProps } = this.props.form;
-    return (<form>
-      <List
-        title="列表头部"
-        footer="列表尾部"
-      >
-        <List.Body>
-          <List.Item>标题文字,没有设置onClick则点击无反馈效果</List.Item>
-          <List.Item
-            onClick={() => {}}
-            extra={undefined}
-          >标题文字</List.Item>
-          <List.Item
-            extra="内容内容"
-            onClick={() => {}}
-            arrow="horizontal"
-          >标题文字</List.Item>
-          <List.Item
-            extra="内容内容"
-            onClick={() => {}}
-            arrow="up"
-          >标题文字</List.Item>
-          <List.Item
-            extra="内容内容"
-            onClick={() => {}}
-            arrow="down"
-          >标题文字</List.Item>
-        </List.Body>
+    return (<div>
+      <List renderHeader={() => 'Basic Style'} className="my-list">
+        <Item extra={'extra content'}>Title</Item>
       </List>
-      <List
-        title="下拉框"
-      >
-        <List.Body>
-          <List.Item
-            extra={<select style={{ direction: 'rtl' }}
-              {...getFieldProps('select1', {
-                initialValue: 1,
-              })}
-            >
-              <option value="1">选项1</option>
-              <option value="2">选项2</option>
-              <option value="3">选项3</option>
-            </select>}
-            arrow="horizontal"
-          >下拉框</List.Item>
-          <List.Item
-            extra={<select style={{ direction: 'rtl' }} defaultValue="2">
-              <option value="1">选项1</option>
-              <option value="2">选项2</option>
-              <option value="3" disabled>选项3不可选</option>
-            </select>}
-            arrow="horizontal"
-          >下拉框</List.Item>
-          <List.Item
-            arrow="horizontal"
-          >
-            <select defaultValue="3">
-              <option value="1">选项1</option>
-              <option value="2" disabled>选项2不可选</option>
-              <option value="3">选项3</option>
-            </select>
-          </List.Item>
-        </List.Body>
+      <List renderHeader={() => 'Subtitle'} className="my-list">
+        <Item arrow="horizontal" multipleLine>
+          Title <Brief>subtitle</Brief>
+        </Item>
+        <Item
+          arrow="horizontal"
+          multipleLine
+          onClick={() => {}}
+          platform="android"
+        >
+          ListItem （Android）<Brief>There may have water ripple effect of <br /> material if you set the click event.</Brief>
+        </Item>
+        <Item
+          arrow="horizontal"
+          thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
+          multipleLine
+          onClick={() => {}}
+        >
+          Title <Brief>subtitle</Brief>
+        </Item>
       </List>
-      <List
-        title="滑动开关Switch"
-      >
-        <List.Body>
-          <List.Item
-            extra={<Switch
-              {...getFieldProps('1', {
-                initialValue: true,
-                valuePropName: 'checked',
-              })}
-            />}
-          >默认开</List.Item>
-          <List.Item
-            extra={<Switch
-              {...getFieldProps('2', {
-                initialValue: false,
-                valuePropName: 'checked',
-              })}
-            />}
-          >默认关</List.Item>
-          <List.Item
-            extra={<Switch
-              {...getFieldProps('3', {
-                initialValue: false,
-                valuePropName: 'checked',
-              })}
-              disabled
-            />}
-          >默认关,不可修改</List.Item>
-          <List.Item
-            extra={<Switch
-              {...getFieldProps('4', {
-                initialValue: true,
-                valuePropName: 'checked',
-              })}
-              disabled
-            />}
-          >默认开,不可修改</List.Item>
-        </List.Body>
+      <List renderHeader={() => 'Customized Right Side（Empty Content / Text / Image）'} className="my-list">
+        <Item>Title</Item>
+        <Item arrow="horizontal" onClick={() => {}}>Title</Item>
+        <Item extra="extra content" arrow="horizontal" onClick={() => {}}>Title</Item>
+        <Item extra="10:30" align="top" thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png" multipleLine>
+          Title <Brief>subtitle</Brief>
+        </Item>
       </List>
-      <List
-        title="带缩略图"
-      >
-        <List.Body>
-          <List.Item
-            thumb="https://zos.alipayobjects.com/rmsportal/zotStpFiYpNtZNl.png"
-            arrow="horizontal"
-          >thumb</List.Item>
-          <List.Item
-            thumb="https://zos.alipayobjects.com/rmsportal/zotStpFiYpNtZNl.png"
-          >thumb</List.Item>
-          <List.Item
-            icon=""
-            extra={<img src="https://zos.alipayobjects.com/rmsportal/zotStpFiYpNtZNl.png" width="28" height="28" />}
-            arrow="horizontal"
-          >extra为img标签</List.Item>
-        </List.Body>
+      <List renderHeader={() => 'Align Vertical Center'} className="my-list">
+        <Item multipleLine extra="extra content">
+          Title <Brief>subtitle</Brief>
+        </Item>
       </List>
-    </form>);
-  },
-});
-
-ListExample = createForm()(ListExample);
+      <List renderHeader={() => 'Icon in the left'}>
+        <Item
+          thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
+          arrow="horizontal"
+          onClick={() => {}}
+        >My wallet</Item>
+        <Item thumb="https://zos.alipayobjects.com/rmsportal/UmbJMbWOejVOpxe.png" arrow="horizontal">My Cost Ratio</Item>
+      </List>
+      <List renderHeader={() => 'Text Wrapping'} className="my-list">
+        <Item data-seed="logId">Single line，long text will be hidden with ellipsis；</Item>
+        <Item wrap>Multiple line，long text will wrap；Long Text Long Text Long Text Long Text Long Text Long Text</Item>
+        <Item extra="extra content" multipleLine align="top" wrap>
+          Multiple line and long text will wrap. Long Text Long Text Long Text
+        </Item>
+        <Item extra="no arrow" arrow="empty" className="spe" wrap>
+          In rare cases, the text of right side will wrap in the single line with long text. long text long text long text
+        </Item>
+      </List>
+      <List renderHeader={() => 'Other'} className="my-list">
+        <Item disabled={this.state.disabled} extra="" onClick={() => { console.log('click', this.state.disabled); this.setState({ disabled: true }); }}>Click to disable</Item>
+        <Item>
+          <select defaultValue="1">
+            <option value="1">html select element</option>
+            <option value="2" disabled>Unable to select</option>
+            <option value="3">option 3</option>
+          </select>
+        </Item>
+      </List>
+    </div>);
+  }
+}
 
 ReactDOM.render(<ListExample />, mountNode);
 ````
 
-```css
-/** hack for antd responsive conflict */ 
-@media only screen and (max-width: 767px) and (min-width: 320px) {
-#list {
-    display: block;
+````css
+.my-list .spe .am-list-extra {
+  flex-basis: initial;
 }
-}
-```
+````

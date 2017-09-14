@@ -1,48 +1,121 @@
 ---
-order: 1
-title: 基本
+order: 0
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
-最简单的用法。
+When using `Carousel` in web projects, you may have problem about how to deal with variable item height.
+
+> [issues/1002](https://github.com/ant-design/ant-design-mobile/issues/1002#issuecomment-287301262)、[nuka-carousel/issues/103](https://github.com/FormidableLabs/nuka-carousel/issues/103)
 
 ````jsx
-import { Carousel } from 'antd-mobile';
+import { Carousel, WhiteSpace, WingBlank } from 'antd-mobile';
 
-function onChange(a, b, c) {
-  console.log(a, b, c);
+class App extends React.Component {
+  state = {
+    data: ['', '', ''],
+    initialHeight: 200,
+  }
+  componentDidMount() {
+    // simulate img loading
+    setTimeout(() => {
+      this.setState({
+        data: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI'],
+      });
+    }, 100);
+  }
+  render() {
+    const hProp = this.state.initialHeight ? { height: this.state.initialHeight } : {};
+    return (
+      <WingBlank>
+        <div className="sub-title">normal</div>
+        <Carousel
+          className="my-carousel"
+          autoplay={false}
+          infinite
+          selectedIndex={1}
+          swipeSpeed={35}
+          beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
+          afterChange={index => console.log('slide to', index)}
+        >
+          {this.state.data.map(ii => (
+            <a href="http://www.baidu.com" key={ii} style={hProp}>
+              <img
+                src={`https://zos.alipayobjects.com/rmsportal/${ii || 'QcWDkUhvYIVEcvtosxMF'}.png`}
+                alt="icon"
+                onLoad={() => {
+                  // fire window resize event to change height
+                  window.dispatchEvent(new Event('resize'));
+                  this.setState({
+                    initialHeight: null,
+                  });
+                }}
+              />
+            </a>
+          ))}
+        </Carousel>
+
+        <WhiteSpace />
+        <div className="sub-title">vertical</div>
+        <Carousel className="my-carousel"
+          vertical
+          dots={false}
+          dragging={false}
+          swiping={false}
+          autoplay
+          infinite
+        >
+          <div className="v-item">Carousel 1</div>
+          <div className="v-item">Carousel 2</div>
+          <div className="v-item">Carousel 3</div>
+        </Carousel>
+
+        <WhiteSpace />
+        <div className="sub-title">lottery</div>
+        <Carousel className="my-carousel"
+          vertical
+          dots={false}
+          dragging={false}
+          swiping={false}
+          autoplay
+          infinite
+          speed={200}
+          autoplayInterval={300}
+          resetAutoplay={false}
+        >
+          {['ring', 'ruby', 'iPhone', 'iPod', 'sorry', 'tourism', 'coke', 'ticket', 'note'].map(type => (
+            <div className="v-item" key={type}>{type}</div>
+          ))}
+        </Carousel>
+      </WingBlank>
+    );
+  }
 }
 
-ReactDOM.render(
-  <Carousel afterChange={onChange}>
-    <div><h3>Pic1</h3></div>
-    <div><h3>Pic2</h3></div>
-    <div><h3>Pic3</h3></div>
-    <div><h3>Pic4</h3></div>
-    <div><h3>Pic5</h3></div>
-  </Carousel>
-, mountNode);
+ReactDOM.render(<App />, mountNode);
 ````
-
-<style>
-.am-carousel .slick-slide {
-  text-align: center;
-  height: 480px;
-  line-height: 480px;
-  background: #71B5DE;
-  color: #fff;
-  overflow: hidden;
+````css
+.my-carousel {
+  background: #fff;
 }
-.am-carousel h3 {
-  height: 480px;
+.my-carousel a {
+  display: inline-block;
+  width: 100%;
+  margin: 0; padding: 0;
 }
-.am-carousel-card .slick-slide p, .am-carousel h3 {
-  background: #71B5DE;
-  color: #fff;
-  text-align: center;
+.my-carousel a img {
+  width: 100%;
+  vertical-align: top;
 }
-.am-carousel-card .slick-slide p {
-  margin: 0px 10px;
-  height: 152px;
-  line-height: 152px;
+.my-carousel .v-item {
+  height: 36px;
+  line-height: 36px;
+  padding-left: 10px;
 }
-</style>
+.sub-title {
+  color: #888;
+  font-size: 14px;
+  padding: 30px 0 18px 0;
+}
+````

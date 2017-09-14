@@ -5,16 +5,21 @@
 @subMenuPrefixCls: am-sub-menu;
 @flexPrefixCls: am-flexbox;
 @listPrefixCls: am-list;
+@firstMenuColor: @fill-grey;
 
 .@{menuPrefixCls} {
   background-color: @fill-body;
+
   .@{flexPrefixCls} {
     .@{flexPrefixCls}-item {
       margin-left: 0;
       -webkit-overflow-scrolling: touch;
+      overflow-y: scroll;
+
       .@{listPrefixCls} {
         padding: 0;
       }
+
       .@{listPrefixCls} {
         .@{listPrefixCls}-item {
           .@{listPrefixCls}-line {
@@ -24,46 +29,83 @@
           }
         }
       }
+
       &:first-child {
+        background-color: @firstMenuColor;
+
         .@{listPrefixCls} {
+          .@{listPrefixCls}-body {
+            background-color: @firstMenuColor;
+            .hairline-remove('bottom');
+          }
+
           .@{listPrefixCls}-item {
-            background-color: @fill-body;
+            background-color: @firstMenuColor;
+
             .@{listPrefixCls}-line {
-              .hairline-remove-right-bottom();
+              .hairline-remove('bottom');
+
               .@{listPrefixCls}-content {
                 color: @color-text-base;
               }
             }
+
             &:last-child {
-              .hairline-remove-right-bottom();
+              .hairline-remove('bottom');
             }
+
             &.@{menuPrefixCls}-selected {
-              background-color: @fill-tap;
+              background-color: @fill-base;
             }
           }
         }
       }
+
       &:last-child {
         background-color: @fill-base;
+
         .@{listPrefixCls} {
           .@{listPrefixCls}-item {
             background-color: @fill-base;
-            padding-left: 3*@grid;
-            .hairline-remove-right-bottom();
+            .hairline-remove('bottom');
+
             .@{listPrefixCls}-line {
-              .hairline-bottom(@border-color-base);
               .@{listPrefixCls}-extra {
                 flex: 0;
               }
             }
-            //&.@{subMenuPrefixCls}-item-selected {
-              //background-color: @input-color-icon-inverse;
-            //}
+
+            &.@{subMenuPrefixCls}-item-selected {
+              .@{listPrefixCls}-line {
+                .@{listPrefixCls}-content {
+                  color: @color-link;
+                }
+              }
+            }
+
             &.@{subMenuPrefixCls}-item-disabled {
               .@{listPrefixCls}-line {
                 .@{listPrefixCls}-content {
                   color: @color-text-disabled;
                 }
+              }
+            }
+          }
+        }
+      }
+
+      &:only-child {
+        .@{listPrefixCls} {
+          .@{listPrefixCls}-item {
+            .@{listPrefixCls}-line {
+              .hairline('bottom');
+            }
+
+            &:last-child {
+              .hairline('bottom');
+
+              .@{listPrefixCls}-line {
+                .hairline-remove('bottom');
               }
             }
           }

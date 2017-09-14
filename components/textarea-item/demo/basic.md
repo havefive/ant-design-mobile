@@ -1,142 +1,137 @@
 ---
 order: 0
-title: 基本
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
-列表主体内容的容器。
+## zh-CN
+
+受控组件建议使用([rc-form ](https://github.com/react-component/form))
+
+## en-US
+
+Recommended use of [rc-form ](https://github.com/react-component/form) for controlled component.
 
 ````jsx
 import { List, TextareaItem } from 'antd-mobile';
 import { createForm } from 'rc-form';
 
-let TextareaItemExample = React.createClass({
-  onClick() {
-    console.log(this.props.form.getFieldsValue());
-  },
+class TextareaItemExample extends React.Component {
+  componentDidMount() {
+    this.autoFocusInst.focus();
+  }
   render() {
     const { getFieldProps } = this.props.form;
     return (
       <div>
-        <List title="多行输入,TextareaItem">
-          <List.Body>
-            <TextareaItem
-              {...getFieldProps('note', {
-                initialValue: '',
-                valuePropName: 'value',
-              })}
-              name="yyy"
-              placeholder="如果你有什么建议意见，欢迎你来吐槽"
-              clear
-              onBlur={() => { console.log('onBlur'); }}
-              onFocus={(e) => { console.log('onFocus'); console.log(e); }}
-            />
-            <TextareaItem
-              {...getFieldProps('note1', {
-                initialValue: '',
-                valuePropName: 'value',
-              })}
-              name="yyy"
-              rows={3}
-              placeholder="固定行数,rows"
-              clear
-              onBlur={() => { console.log('onBlur'); }}
-              onFocus={(e) => { console.log('onFocus'); console.log(e); }}
-            />
-            <TextareaItem
-              {...getFieldProps('note2', {
-                initialValue: '',
-                valuePropName: 'value',
-              })}
-              title="带标题"
-              labelNumber={4}
-              name="yyy"
-              placeholder="title"
-              clear={false}
-              onBlur={() => { console.log('onBlur'); }}
-              onFocus={(e) => { console.log('onFocus'); console.log(e); }}
-            />
-            <TextareaItem
-              {...getFieldProps('note3', {
-                initialValue: '',
-                valuePropName: 'value',
-              })}
-              title="自适应"
-              labelNumber={4}
-              autoHeight
-              clear
-              placeholder="高度自适应"
-            />
-            <TextareaItem
-              {...getFieldProps('note4', {
-                initialValue: '',
-                valuePropName: 'value',
-              })}
-              title="最大长度"
-              labelNumber={4}
-              count={30}
-              clear
-              error
-              placeholder="count"
-            />
-            <TextareaItem
-              {...getFieldProps('note5', {
-                initialValue: '',
-                valuePropName: 'value',
-              })}
-              title={<img src="https://os.alipayobjects.com/rmsportal/mOoPurdIfmcuqtr.png" style={{ width: '0.56rem', height: '0.56rem' }} />}
-              labelNumber={4}
-              clear
-              placeholder="title类型可以是node"
-            />
-            <TextareaItem
-              {...getFieldProps('note6', {
-                initialValue: '不可编辑',
-                valuePropName: 'value',
-              })}
-              title="不可编辑"
-              labelNumber={4}
-              placeholder="editable"
-              editable={false}
-            />
-            <TextareaItem
-              {...getFieldProps('note7', {
-                initialValue: '多行输入,带计数功能,count+rows',
-                valuePropName: 'value',
-              })}
-              title="备注说明"
-              labelNumber={4}
-              name="yyy"
-              rows={5}
-              placeholder="计数功能"
-              clear
-              count={100}
-              onBlur={() => { console.log('onBlur'); }}
-              onFocus={(e) => { console.log('onFocus'); console.log(e); }}
-            />
-            <TextareaItem
-              {...getFieldProps('note8', {
-                initialValue: '多行输入,带计数功能,count+rows',
-                valuePropName: 'value',
-              })}
-              title="备注说明"
-              labelNumber={4}
-              name="yyy"
-              rows={5}
-              placeholder="计数功能"
-              clear
-              error
-              onErrorClick={() => { alert(21212); }}
-              count={100}
-              onBlur={() => { console.log('onBlur'); }}
-              onFocus={(e) => { console.log('onFocus'); console.log(e); }}
-            />
-          </List.Body>
+        <List renderHeader={() => 'Customize to focus'}>
+          <TextareaItem
+            title="标题"
+            placeholder="auto focus in Alipay client"
+            data-seed="logId"
+            ref={el => this.autoFocusInst = el}
+            autoHeight
+          />
+          <TextareaItem
+            title="标题"
+            placeholder="click the button below to focus"
+            data-seed="logId"
+            autoHeight
+            ref={el => this.customFocusInst = el}
+          />
+          <List.Item>
+            <div
+              style={{ width: '100%', color: '#108ee9', textAlign: 'center' }}
+              onClick={() => this.customFocusInst.focus()}
+            >
+              click to focus
+            </div>
+          </List.Item>
+        </List>
+        <List renderHeader={() => 'Whether is controlled'}>
+          <TextareaItem
+            {...getFieldProps('control')}
+            title="受控组件"
+            placeholder="Hello World"
+          />
+          <TextareaItem
+            title="非受控组件"
+            placeholder="please input content"
+          />
+        </List>
+        <List renderHeader={() => 'Auto / Fixed height'}>
+          <TextareaItem
+            {...getFieldProps('note3')}
+            title="高度自适应"
+            autoHeight
+            labelNumber={5}
+          />
+          <TextareaItem
+            {...getFieldProps('note1')}
+            rows={3}
+            placeholder="fixed number of lines"
+          />
+        </List>
+        <List renderHeader={() => 'Show clear icon'}>
+          <TextareaItem
+            {...getFieldProps('clear1')}
+            clear
+            title="标题"
+            placeholder="displayed clear icon while typing"
+          />
+        </List>
+        <List renderHeader={() => 'Custom title（text / image / empty）'}>
+          <TextareaItem
+            {...getFieldProps('title3')}
+            title={<img src="https://os.alipayobjects.com/rmsportal/mOoPurdIfmcuqtr.png" alt="icon" style={{ width: '28px', height: '28px' }} />}
+            placeholder="title can be customized"
+          />
+        </List>
+        <List renderHeader={() => 'Limited value length'}>
+          <TextareaItem
+            {...getFieldProps('note4')}
+            placeholder="can enter up to 10 characters"
+            count={10}
+          />
+        </List>
+        <List renderHeader={() => 'Count'}>
+          <TextareaItem
+            {...getFieldProps('count', {
+              initialValue: '计数功能,我的意见是...',
+            })}
+            rows={5}
+            count={100}
+          />
+        </List>
+        <List renderHeader={() => 'Not editable / Disabled'}>
+          <TextareaItem
+            {...getFieldProps('note6', {
+              initialValue: 'not editable',
+            })}
+            title="姓名"
+            editable={false}
+          />
+          <TextareaItem
+            value="disabled style"
+            title="姓名"
+            disabled
+          />
         </List>
       </div>
     );
-  },
-});
+  }
+}
 
-TextareaItemExample = createForm()(TextareaItemExample);
+const TextareaItemExampleWrapper = createForm()(TextareaItemExample);
 
-ReactDOM.render(<TextareaItemExample />, mountNode);
+ReactDOM.render(<TextareaItemExampleWrapper />, mountNode);
+````
+
+
+````css
+.demoTitle:before,
+.demoTitle:after {
+  border-bottom: none;
+}
+````

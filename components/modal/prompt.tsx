@@ -1,19 +1,21 @@
 /* tslint:disable:no-switch-case-fall-through */
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Modal from './Modal';
 
-export default function (...args) {
-  if (!args || !args[2]) {
+export default function prompt(
+  title, message, callbackOrActions,
+  type = 'default', defaultValue = '', placeholders = ['', ''],
+  platform = 'ios',
+) {
+  if (!callbackOrActions) {
     // console.log('Must specify callbackOrActions');
-    return;
+    return {
+      close: () => {},
+    };
   }
 
   const prefixCls = 'am-modal';
-  const title = args[0];
-
-  let inputDom;
-  const type = args[3] || 'default';
 
   let data: any = {};
 
@@ -23,24 +25,54 @@ export default function (...args) {
     data[inputType] =  target.value;
   }
 
+  let inputDom;
+
+  const focusFn = function(input) {
+    setTimeout(() => {
+      if (input) {
+        input.focus();
+      }
+    }, 500);
+  };
+
   switch (type) {
     case 'login-password':
       inputDom = (
-        <div>
+        <div className={`${prefixCls}-input-container`}>
           <div className={`${prefixCls}-input`}>
-            <input type="text" defaultValue="" onChange={onChange} />
+            <input
+              type="text"
+              value={data.text}
+              defaultValue={defaultValue}
+              ref={input => focusFn(input)}
+              onChange={onChange}
+              placeholder={placeholders[0]}
+            />
           </div>
           <div className={`${prefixCls}-input`}>
-            <input type="password" defaultValue="" onChange={onChange} />
+            <input
+              type="password"
+              value={data.password}
+              defaultValue=""
+              onChange={onChange}
+              placeholder={placeholders[1]}
+            />
           </div>
         </div>
       );
       break;
     case 'secure-text':
       inputDom = (
-        <div>
+        <div className={`${prefixCls}-input-container`}>
           <div className={`${prefixCls}-input`}>
-            <input type="password" defaultValue="" onChange={onChange} />
+            <input
+              type="password"
+              value={data.password}
+              defaultValue=""
+              ref={input => focusFn(input)}
+              onChange={onChange}
+              placeholder={placeholders[0]}
+            />
           </div>
         </div>
       );
@@ -49,9 +81,16 @@ export default function (...args) {
     case 'default':
     default:
       inputDom = (
-        <div>
+        <div className={`${prefixCls}-input-container`}>
           <div className={`${prefixCls}-input`}>
-            <input type="text" defaultValue="" onChange={onChange} />
+            <input
+              type="text"
+              value={data.text}
+              defaultValue={defaultValue}
+              ref={input => focusFn(input)}
+              onChange={onChange}
+              placeholder={placeholders[0]}
+            />
           </div>
         </div>
       );
@@ -60,73 +99,86 @@ export default function (...args) {
 
   let content = (
     <div>
-      {args[1]}
-      {inputDom}
+      <label>
+        <span>{message}</span>
+        {inputDom}
+      </label>
     </div>
   );
 
-  let div = document.createElement('div');
+  let div: any = document.createElement('div');
   document.body.appendChild(div);
 
   function close() {
     ReactDOM.unmountComponentAtNode(div);
-    div.parentNode.removeChild(div);
+    if (div && div.parentNode) {
+      div.parentNode.removeChild(div);
+    }
   }
 
   function getArgs(func) {
-    const text = data.text || '';
+    const text = data.text || defaultValue || '';
     const password = data.password || '';
     if (type === 'login-password') {
       return func(text, password);
     } else if (type === 'secure-text') {
-      return func(password);
+      return func(password || defaultValue);
     }
     return func(text);
   }
 
   let actions;
-  if (typeof args[2] === 'function') {
+  if (typeof callbackOrActions === 'function') {
     actions = [
       { text: '取消' },
-      { text: '确定', onPress: () => { getArgs(args[2]); } },
+      { text: '确定', onPress: () => { getArgs(callbackOrActions); } },
     ];
   } else {
-    actions = args[2].map(item => {
+    actions = callbackOrActions.map(item => {
       return {
         text: item.text,
         onPress: () => {
           if (item.onPress) {
-            getArgs(item.onPress);
+            return getArgs(item.onPress);
           }
         },
       };
     });
   }
 
-  const footer = [<div key="footer" className={`${prefixCls}-button-group-h`}>
-    {
-      actions.map((button, i) => {
-        return (
-          <a key={i} className={`${prefixCls}-button`} href="#" onClick={(e) => {
-            e.preventDefault();
-            if (button.onPress) {
-              button.onPress();
-            }
-            close();
-          }}>{button.text}</a>
-        );
-      })
-    }
-  </div>];
+  const footer = actions.map((button) => {
+    const orginPress = button.onPress || function() {};
+    button.onPress = () => {
+      const res = orginPress();
+      if (res && res.then) {
+        res.then(() => {
+          close();
+        });
+      } else {
+        close();
+      }
+    };
+    return button;
+  });
 
-  ReactDOM.render(<Modal
-    visible
-    transparent
-    prefixCls={prefixCls}
-    title={title}
-    transitionName="am-zoom"
-    footer={footer}
-    maskTransitionName="am-fade">
-    <div style={{ zoom: 1, overflow: 'hidden' }}>{content}</div>
-  </Modal>, div);
+  ReactDOM.render(
+    <Modal
+      visible
+      transparent
+      prefixCls={prefixCls}
+      title={title}
+      closable={false}
+      maskClosable={false}
+      transitionName="am-zoom"
+      footer={footer}
+      maskTransitionName="am-fade"
+      platform={platform}
+    >
+      <div style={{ zoom: 1, overflow: 'hidden' }}>{content}</div>
+    </Modal>, div,
+  );
+
+  return {
+    close,
+  };
 }

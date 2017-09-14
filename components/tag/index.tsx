@@ -1,18 +1,24 @@
-import * as React from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
-import TagStyle from './style/index';
-import TagProps from './TagPropsType';
+import React from 'react';
+import classnames from 'classnames';
+import TagProps from './PropsType';
+import Icon from '../icon';
+import getDataAttr from '../_util/getDataAttr';
+import TouchFeedback from 'rmc-feedback';
 
-export default class Modal extends React.Component<TagProps, any> {
+export default class Tag extends React.Component<TagProps, any> {
   static defaultProps = {
+    prefixCls: 'am-tag',
     disabled: false,
     selected: false,
+    closable: false,
+    small: false,
     onChange() {},
+    onClose() {},
+    afterClose() {},
   };
 
   constructor(props) {
     super(props);
-
     this.state = {
       selected: props.selected,
       closed: false,
@@ -32,41 +38,48 @@ export default class Modal extends React.Component<TagProps, any> {
     if (disabled) {
       return;
     }
-    const isSelect: boolean = this.state.selected;
+    const isSelect = this.state.selected;
     this.setState({
       selected: !isSelect,
     }, () => {
-      onChange(!isSelect);
+      if (onChange) {
+        onChange(!isSelect);
+      }
     });
   }
 
+  onTagClose = () => {
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
+    this.setState({
+      closed: true,
+    }, this.props.afterClose);
+  }
+
   render() {
-    const {children, disabled, style} = this.props;
-    const selected = this.state.selected;
+    const { children, className, prefixCls, disabled, closable, small, style } = this.props;
+    const wrapCls = classnames(className, prefixCls, {
+      [`${prefixCls}-normal`]: !disabled && ( !this.state.selected || small || closable ),
+      [`${prefixCls}-small`]: small,
+      [`${prefixCls}-active`]: this.state.selected && !disabled && !small && !closable,
+      [`${prefixCls}-disabled`]: disabled,
+      [`${prefixCls}-closable`]: closable,
+    });
 
-    let wrapStyle;
-    let textStyle;
-    if (!selected && !disabled) {
-      wrapStyle = TagStyle.normalWrap;
-      textStyle = TagStyle.normalText;
-    }
-    if (selected && !disabled) {
-      wrapStyle = TagStyle.activeWrap;
-      textStyle = TagStyle.activeText;
-    }
-    if (disabled) {
-      wrapStyle = TagStyle.disabledWrap;
-      textStyle = TagStyle.disabledText;
-    }
+    const closableDom = closable && !disabled && !small ? (
+      <TouchFeedback activeClassName={`${prefixCls}-close-active`}>
+        <div className={`${prefixCls}-close`} role="button" onClick={this.onTagClose} aria-label="remove tag">
+          <Icon type="cross-circle" size="xs" aria-hidden="true" />
+        </div>
+      </TouchFeedback>
+    ) : null;
 
-    return (
-      <View style={[ TagStyle.tag, style ]}>
-        <TouchableWithoutFeedback onPress={this.onClick}>
-          <View style={[TagStyle.wrap, wrapStyle]}>
-            <Text style={[TagStyle.text, textStyle]}>{children} </Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
-    );
+    return !this.state.closed ? (
+      <div {...getDataAttr(this.props)} className={wrapCls} onClick={this.onClick} style={style}>
+        <div className={`${prefixCls}-text`}>{children}</div>
+        {closableDom}
+      </div>
+    ) : null;
   }
 }

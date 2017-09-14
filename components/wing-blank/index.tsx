@@ -1,25 +1,21 @@
-// WingBlank
-import { PropTypes } from 'react';
-import * as React from 'react';
-import { View } from 'react-native';
+import React from 'react';
+import classnames from 'classnames';
+import WingBlankProps from './PropsType';
 
-import WingBlankProps from './WingBlankPropsType';
-
-class WingBlank extends React.Component<WingBlankProps, any> {
-  static propTypes = {
-    size: PropTypes.oneOf([4, 8, 12, 16, 20, 24, 28, 32]),
-  };
-
+export default class WingBlank extends React.Component<WingBlankProps, any> {
   static defaultProps = {
-    size: 8,
+    prefixCls: 'am-wingblank',
+    size: 'lg',
   };
 
   render() {
-    const { size, style, children } = this.props;
-    return (<View style={[{ marginLeft: size, marginRight: size }, style]}>
-      {children}
-    </View>);
+    const { prefixCls, size, className, children, style } = this.props;
+    let wrapCls = classnames(prefixCls, `${prefixCls}-${size}`, className);
+
+    return (
+      <div className={wrapCls} style={style}>
+        {children}
+      </div>
+    );
   }
 }
-
-export default WingBlank;

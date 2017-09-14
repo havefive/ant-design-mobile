@@ -1,11 +1,10 @@
 import Modal from './Modal';
+import alert from './alert';
+import prompt from './prompt';
+import operation from './operation';
 
-(Modal as any).alert = () => {
-  console.warn('Modal.alert is on the road，Please use react native "Alert" temporarily');
-};
-
-(Modal as any).prompt = () => {
-  console.warn('Modal.prompt is on the road, use react native "AlertIOS" temporarily');
-};
+Modal.alert = alert;
+Modal.prompt = prompt;
+Modal.operation = operation;
 
 export default Modal;

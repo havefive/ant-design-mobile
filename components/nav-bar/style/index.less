@@ -1,44 +1,57 @@
 @import '../../style/mixins';
 @import '../../style/themes/default';
 
+@navbar-height: 45 * @hd;
 @navbarPrefixCls: am-navbar;
+
 .@{navbarPrefixCls} {
-  .display-box;
-  .box-align;
-  padding: @h-spacing-sm @h-spacing-lg;
+  display: flex;
+  align-items: center;
+  height: @navbar-height;
   background-color: @brand-primary;
-  color: #fff;
-  &-light {
-    background-color: #fff;
-    color: @brand-primary;
+  color: @fill-base;
+
+  &-left,
+  &-title,
+  &-right {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
+
   &-left {
-    .box-flex(1);
-    font-size: @font-size-display-sm;
+    padding-left: @h-spacing-lg;
+    font-size: @link-button-font-size;
+
     &-icon {
       margin-right: @h-spacing-sm;
+      display: inherit;
     }
   }
+
   &-title {
-    .box-flex(1);
-    .ellipsis;
-    max-width: 80%;
-    text-align: center;
-    font-size: @font-size-display-md;
-    line-height: 1.5;
+    justify-content: center;
+    font-size: 18 * @hd;
+    white-space: nowrap;
   }
+
   &-right {
-    .box-flex(1);
-    font-size: @font-size-display-sm;
-    text-align: right;
-    .anticon {
-      margin-right: @h-spacing-sm;
-      &:last-child {
-        margin-right: 0;
-      }
-    }
+    justify-content: flex-end;
+    font-size: @link-button-font-size;
+    margin-right: @h-spacing-lg;
+
     &-content {
       margin-right: @h-spacing-sm;
     }
+  }
+
+  &-light {
+    background-color: @fill-base;
+    color: @brand-primary;
+  }
+
+  &-light &-title {
+    color: @color-text-base;
   }
 }

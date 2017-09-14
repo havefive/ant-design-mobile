@@ -1,15 +1,28 @@
-interface Props {
-  defaultDate: any;
+import React from 'react';
+
+interface DatePickerProps {
+  defaultDate?: any;
   value?: any;
-  format?: (x: any) => void;
-  cols?: number;
   mode?: string;
+  minDate?: any;
+  maxDate?: any;
+  onChange?: (x: any) => void;
+  onValueChange?: (vals: any, index: number) => void;
+  locale?: any;
+  minuteStep?: number;
+  use12Hours?: boolean; // web only
+  disabled?: boolean;
+  format?: (x: any) => void;
   extra?: string;
   children?: any;
-  /** rn only */
-  triggerTypes?: string;
-  /** web only */
-  prefixCls?: string;
+  triggerTypes?: string; // rn only
+  styles?: any; // rn only
+  prefixCls?: string; // web only
+  className?: string; // web only
+  pickerPrefixCls?: string; // web only
+  popupPrefixCls?: string; // web only
+  dismissText?: string | React.ReactElement<any>; // React.ReactElement only for web
+  okText?: string | React.ReactElement<any>; // React.ReactElement only for web
 }
 
-export default Props;
+export default DatePickerProps;

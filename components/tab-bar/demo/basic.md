@@ -1,82 +1,175 @@
 ---
 order: 0
-title: APP型选项卡
+title:
+  zh-CN: 'APP 型选项卡'
+  en-US: 'APP Tab Bar'
 ---
 
+## zh-CN
+
 多用于页面的内容区块，起着控制小范围内的大块内容的分组和隐藏，起着保持界面整洁的作用。
+
+## en-US
+
+Used for the content of the page block, control large content of a small range grouping and hidden, plays a role in keeping the interface clean and tidy.
 
 ````jsx
 import { TabBar } from 'antd-mobile';
 
-let TabBarExample = React.createClass({
-  getInitialState() {
-    return {
+class TabBarExample extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       selectedTab: 'redTab',
-      notifCount: 0,
-      presses: 0,
+      hidden: false,
     };
-  },
-  renderContent(color, pageText, num?: number) {
+  }
+
+  renderContent(pageText) {
     return (
-      <div style={{ flex: 1, alignItems: 'center', backgroundColor: color }}>
-        <div style={{ color: 'white', margin: 50 }}>{pageText}</div>
-        <div style={{ color: 'white', margin: 50 }}>{num} re-renders of the {pageText}</div>
+      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+        <div style={{ paddingTop: 60 }}>clicked “{pageText}” tab， show “{pageText}” information</div>
+        <a style={{ display: 'block', marginTop: 40, marginBottom: 600, color: '#108ee9' }}
+          onClick={(e) => {
+            e.preventDefault();
+            this.setState({
+              hidden: !this.state.hidden,
+            });
+          }}
+        >
+          click to show/hide tab-bar
+        </a>
       </div>
     );
-  },
+  }
+
   render() {
     return (
       <TabBar
         unselectedTintColor="#949494"
         tintColor="#33A3F4"
-        barTintColor="#ccc"
+        barTintColor="white"
+        hidden={this.state.hidden}
       >
         <TabBar.Item
-          title="生活"
-          icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/XLdKiKAwDRXQNhC.png' }}
-          selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/iKfBQdGdTMubhXy.png' }}
+          title="Life"
+          key="Life"
+          icon={<div style={{
+            width: '22px',
+            height: '22px',
+            background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat' }}
+          />
+          }
+          selectedIcon={<div style={{
+            width: '22px',
+            height: '22px',
+            background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat' }}
+          />
+          }
           selected={this.state.selectedTab === 'blueTab'}
+          badge={1}
           onPress={() => {
             this.setState({
               selectedTab: 'blueTab',
             });
           }}
+          data-seed="logId"
         >
-          {this.renderContent('#414A8C', '生活 Tab')}
+          {this.renderContent('Life')}
         </TabBar.Item>
         <TabBar.Item
-          icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/UNQhIatjpNZHjVf.png' }}
-          selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/HLkBvJOKnmOfBPO.png' }}
-          title="口碑"
-          badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
+          icon={
+            <div style={{
+              width: '22px',
+              height: '22px',
+              background: 'url(https://gw.alipayobjects.com/zos/rmsportal/LIrTcIGtEmwqZsQnTtFa.svg) center center /  21px 21px no-repeat' }}
+            />
+          }
+          selectedIcon={
+            <div style={{
+              width: '22px',
+              height: '22px',
+              background: 'url(https://gw.alipayobjects.com/zos/rmsportal/ZGXnYElJHBJjuiWLIlNe.svg) center center /  21px 21px no-repeat' }}
+            />
+          }
+          title="Koubei"
+          key="Koubei"
+          badge={'new'}
           selected={this.state.selectedTab === 'redTab'}
           onPress={() => {
             this.setState({
               selectedTab: 'redTab',
-              notifCount: this.state.notifCount + 1,
             });
           }}
+          data-seed="logId1"
         >
-          {this.renderContent('#783E33', '口碑 Tab', this.state.notifCount)}
+          {this.renderContent('Koubei')}
         </TabBar.Item>
         <TabBar.Item
-          icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/EljxLrJEShWZObW.png' }}
-          selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/LWNaMdwAFSmYBFw.png' }}
-          title="朋友"
+          icon={
+            <div style={{
+              width: '22px',
+              height: '22px',
+              background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat' }}
+            />
+          }
+          selectedIcon={
+            <div style={{
+              width: '22px',
+              height: '22px',
+              background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat' }}
+            />
+          }
+          title="Friend"
+          key="Friend"
+          dot
           selected={this.state.selectedTab === 'greenTab'}
           onPress={() => {
             this.setState({
               selectedTab: 'greenTab',
-              presses: this.state.presses + 1,
             });
           }}
         >
-          {this.renderContent('#21551C', '朋友 Tab', this.state.presses)}
+          {this.renderContent('Friend')}
+        </TabBar.Item>
+        <TabBar.Item
+          icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
+          selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
+          title="My"
+          key="my"
+          selected={this.state.selectedTab === 'yellowTab'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'yellowTab',
+            });
+          }}
+        >
+          {this.renderContent('My')}
         </TabBar.Item>
       </TabBar>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<TabBarExample />, mountNode);
+````
+
+````css
+#tab-bar.demo {
+  display: flex;
+  flex-direction: column;
+}
+#tab-bar .demoName {
+  height: 40px;
+}
+#tab-bar .demo-preview-item,
+#tab-bar .demo-preview-item .am-tab-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+#tab-bar .demo-preview-item .am-tab-bar {
+  background-color: white;
+}
+
 ````

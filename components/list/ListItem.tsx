@@ -1,166 +1,141 @@
-import {PropTypes} from 'react';
-import * as React from 'react';
-import {Image, View, TouchableHighlight, Text} from 'react-native';
-import theme from './style/index';
-const THEMES = theme.ThemesList;
-const ASSETS = theme.AssetsList;
+/* tslint:disable:jsx-no-multiline-js */
+import React from 'react';
+import classnames from 'classnames';
+import { ListItemProps, BriefProps } from './PropsType';
+import TouchFeedback from 'rmc-feedback';
 
-export interface CommonProps {
-  style?: React.CSSProperties;
-  children?: any;
-}
-
-export interface ListItemProps {
-  style?: React.CSSProperties;
-  onClick?: any;
-  line?: number;
-  thumb?: any;
-  children?: any;
-  extra?: any;
-  arrow?: 'horizontal'|'down'|'up'|'';
-  error?: boolean;
-  lazy?: boolean;
-  last?: boolean;
-}
-
-class Content extends React.Component<CommonProps, any> {
+export class Brief extends React.Component<BriefProps, any> {
   render() {
-    return (<Text style={[THEMES.Content, this.props.style]} numberOfLines={1}>{this.props.children}</Text>);
+    return (
+      <div className="am-list-brief" style={this.props.style}>{this.props.children}</div>
+    );
   }
 }
 
-class AffiliatedContent extends React.Component<CommonProps, any> {
-  render() {
-    return (<Text style={[THEMES.AffiliatedContent, this.props.style]} numberOfLines={1}>{this.props.children}</Text>);
-  }
-}
-
-class Extra extends React.Component<CommonProps, any> {
-  render() {
-    return (<View style={{ alignItems: 'flex-end' }}>{this.props.children}</View>);
-  }
-}
-
-class Detail extends React.Component<CommonProps, any> {
-  render() {
-    return (<Text style={[THEMES.Detail, this.props.style]} numberOfLines={1}>{this.props.children}</Text>);
-  }
-}
-
-export default class Item extends React.Component<ListItemProps, any> {
-  static propTypes = {
-    extra(props, propName) {
-      if (props[propName]) {
-        if (!React.isValidElement(props[propName]) && typeof(props[propName]) !== 'string') {
-          throw new Error('extra must be a string or element');
-        }
-      }
-    },
-    arrow: PropTypes.oneOf(['horizontal', 'down', 'up', '']),
+class ListItem extends React.Component<ListItemProps, any> {
+  static defaultProps: Partial<ListItemProps> = {
+    prefixCls: 'am-list',
+    align: 'middle',
+    error: false,
+    multipleLine: false,
+    wrap: false,
+    platform: 'ios',
   };
 
-  static defaultProps = {
-    lazy: false,
-    last: false,
-    line: 1,
-  };
-
-  static Content: any;
-  static AffiliatedContent: any;
-  static Extra: any;
-  static Detail: any;
-
-  timer: any;
+  static Brief = Brief;
+  debounceTimeout: any;
 
   constructor(props) {
     super(props);
     this.state = {
-      __lazy: this.props.lazy,
+      coverRippleStyle: { display: 'none' },
+      RippleClicked: false,
     };
   }
 
-  componentWillMount() {
-    if (this.state.__lazy) {
-      this.timer = setTimeout(() => this.setState({__lazy: false}), 500);
+  componentWillUnmount() {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout);
+      this.debounceTimeout = null;
     }
   }
 
-  componentWillUnmount() {
-    if (this.timer) {
-      clearTimeout(this.timer);
+  onClick = (ev) => {
+    const { onClick, platform } = this.props;
+    const isAndroid = platform === 'android';
+    if (!!onClick && isAndroid) {
+      if (this.debounceTimeout) {
+        clearTimeout(this.debounceTimeout);
+        this.debounceTimeout = null;
+      }
+      let Item = ev.currentTarget;
+      let RippleWidth = Math.max(Item.offsetHeight, Item.offsetWidth);
+      const ClientRect = ev.currentTarget.getBoundingClientRect();
+      let pointX = ev.clientX - ClientRect.left - Item.offsetWidth / 2;
+      let pointY = ev.clientY - ClientRect.top - Item.offsetWidth / 2;
+      const coverRippleStyle = {
+        width: `${RippleWidth}px`,
+        height: `${RippleWidth}px`,
+        left: `${pointX}px`,
+        top: `${pointY}px`,
+      };
+      this.setState({
+        coverRippleStyle,
+        RippleClicked: true,
+      }, () => {
+        this.debounceTimeout = setTimeout(() => {
+          this.setState({
+            coverRippleStyle: { display: 'none' },
+            RippleClicked: false,
+          });
+        }, 1000);
+      });
+    }
+
+    if (onClick) {
+      onClick(ev);
     }
   }
 
   render() {
-    if (this.state.__lazy) {
-      return (<View />);
-    }
-    let thumbDom = null;
-    let contentDom = null;
-    let extraDom = null;
-    let arrowDom = null;
 
-    if (this.props.thumb) {
-      thumbDom = (<Image source={{ uri: this.props.thumb }} style={[THEMES.Thumb,
-        this.props.line === 2 ? THEMES.Line2.Thumb : {}]}/>);
-    }
-    if ((this.props.line === 2) && React.isValidElement(this.props.children)) {
-      contentDom = <View style={{ flex: 1 }}>{this.props.children}</View>;
-    } else {
-      contentDom = <Text style={THEMES.Content} numberOfLines={1}>{this.props.children}</Text>;
-    }
-    if (this.props.extra) {
-      if (React.isValidElement(this.props.extra)) {
-        extraDom = this.props.extra;
-      } else {
-        extraDom = <Text style={THEMES.Extra} numberOfLines={1}>{this.props.extra}</Text>;
-      }
-    }
-    if (this.props.arrow) {
-      switch (this.props.arrow) {
-        case 'horizontal':
-          arrowDom = <Image source={{ uri: ASSETS.arrowH }} style={THEMES.Arrow}/>;
-          break;
-        case 'down':
-          arrowDom = <Image source={{ uri: ASSETS.arrowDown }} style={THEMES.Arrow}/>;
-          break;
-        case 'up':
-          arrowDom = <Image source={{ uri: ASSETS.arrowUp }} style={THEMES.Arrow}/>;
-          break;
-        default:
-          arrowDom = <View style={THEMES.Arrow}/>;
-          break;
-      }
-    }
-    const itemStyle = [THEMES.Item,
-      this.props.line === 2 ? THEMES.Line2.Item : {},
-      this.props.last ? THEMES.Last.Item : {},
-      this.props.error ? THEMES.Error.Item : {},
-      this.props.style];
+    const {
+      prefixCls, className, activeStyle, error, align, wrap, disabled,
+      children, multipleLine, thumb, extra, arrow, onClick, ...restProps,
+    } = this.props;
+    const { platform, ...otherProps } = restProps;
+    const { coverRippleStyle, RippleClicked } = this.state;
 
-    const itemView = (<View {...this.props} style={itemStyle}>
-      {thumbDom}{contentDom}{extraDom}{arrowDom}
-    </View>);
+    const wrapCls = classnames(`${prefixCls}-item`, className, {
+      [`${prefixCls}-item-disabled`]: disabled,
+      [`${prefixCls}-item-error`]: error,
+      [`${prefixCls}-item-top`]: align === 'top',
+      [`${prefixCls}-item-middle`]: align === 'middle',
+      [`${prefixCls}-item-bottom`]: align === 'bottom',
+    });
 
-    if (this.props.onClick) {
-      return (
-        <TouchableHighlight
-          activeOpacity={1}
-          underlayColor={THEMES.underlayColor}
-          onPress={this.props.onClick}
-          onPressIn={() => {}}
-          onPressOut={() => {}}
-        >
-          {itemView}
-        </TouchableHighlight>
-      );
-    }
+    const rippleCls = classnames(`${prefixCls}-ripple`, {
+      [`${prefixCls}-ripple-animate`]: RippleClicked,
+    });
 
-    return itemView;
+    const lineCls = classnames(`${prefixCls}-line`, {
+      [`${prefixCls}-line-multiple`]: multipleLine,
+      [`${prefixCls}-line-wrap`]: wrap,
+    });
+
+    const arrowCls = classnames(`${prefixCls}-arrow`, {
+      [`${prefixCls}-arrow-horizontal`]: arrow === 'horizontal',
+      [`${prefixCls}-arrow-vertical`]: arrow === 'down' || arrow === 'up',
+      [`${prefixCls}-arrow-vertical-up`]: arrow === 'up',
+    });
+    const content = <div
+      {...otherProps}
+      onClick={(ev) => {
+        this.onClick(ev);
+      }}
+      className={(wrapCls)}
+    >
+      {thumb ? <div className={`${prefixCls}-thumb`}>
+        {typeof thumb === 'string' ? <img src={thumb} /> : thumb}
+      </div> : null}
+      <div className={lineCls}>
+        {children !== undefined && <div className={`${prefixCls}-content`}>{children}</div>}
+        {extra !== undefined && <div className={`${prefixCls}-extra`}>{extra}</div>}
+        {arrow && <div className={arrowCls} aria-hidden="true" />}
+      </div>
+      <div style={coverRippleStyle} className={rippleCls} />
+    </div>;
+
+    return (
+      <TouchFeedback
+        disabled={disabled || !onClick}
+        activeStyle={activeStyle}
+        activeClassName={`${prefixCls}-item-active`}
+      >
+        {content}
+      </TouchFeedback>
+    );
   }
 }
 
-Item.Content = Content;
-Item.AffiliatedContent = AffiliatedContent;
-Item.Extra = Extra;
-Item.Detail = Detail;
+export default ListItem;

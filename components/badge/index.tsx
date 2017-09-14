@@ -1,57 +1,55 @@
-import { PropTypes } from 'react';
-import * as React from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
-import BadgeStyle from './style/index';
-import BadgeProps from './BadgePropsType';
+import React from 'react';
+import classnames from 'classnames';
+import BasePropsType from './PropsType';
+
+export interface BadgeProps extends BasePropsType {
+  prefixCls?: string;
+  className?: string;
+  hot?: boolean;
+}
 
 export default class Badge extends React.Component<BadgeProps, any> {
-  static propTypes = {
-    size: PropTypes.oneOf(['large', 'small']),
-    overflowCount: PropTypes.number,
-    corner: PropTypes.bool,
-    dot: PropTypes.bool,
-    text: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-  };
-
   static defaultProps = {
+    prefixCls: 'am-badge',
     size: 'small',
     overflowCount: 99,
-    corner: false,
     dot: false,
+    corner: false,
   };
 
   render() {
-    const {size, overflowCount, corner, dot, text, children, style} = this.props;
+    let {
+      className, prefixCls,
+      children, text, size, overflowCount, dot, corner, hot, ...restProps,
+    } = this.props;
+    overflowCount = overflowCount as number;
+    text = typeof text === 'number' && text > overflowCount ? `${overflowCount}+` : text;
 
-    const overflowNum = overflowCount || 99;
-    const badgeText = typeof text === 'number' && text > overflowNum ? `${overflowNum}+` : text;
+    // dot mode don't need text
+    if (dot) {
+      text = '';
+    }
 
-    const badgeCls = corner ? 'textCorner' : 'textDom';
+    const scrollNumberCls = classnames({
+      [`${prefixCls}-dot`]: dot,
+      [`${prefixCls}-dot-large`]: dot && (size === 'large'),
+      [`${prefixCls}-text`]: !dot && !corner,
+      [`${prefixCls}-corner`]: corner,
+      [`${prefixCls}-corner-large`]: corner && (size === 'large'),
+    });
+
+    const badgeCls = classnames(prefixCls, className, {
+      [`${prefixCls}-not-a-wrapper`]: !children,
+      [`${prefixCls}-corner-wrapper`]: corner,
+      [`${prefixCls}-hot`]: !!hot,
+      [`${prefixCls}-corner-wrapper-large`]: corner && (size === 'large'),
+    });
 
     return (
-      <View style={[ BadgeStyle.wrap, style ]}>
-        <View style={ [BadgeStyle[`${badgeCls}Wrap`]] }>
-          {children}
-
-          {
-            !dot ? (
-              <TouchableWithoutFeedback>
-                <View style={ [BadgeStyle[badgeCls], BadgeStyle[`${badgeCls}${size}`]] }>
-                  <Text style={ [BadgeStyle.text] }>{badgeText}</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            ) : (
-              <TouchableWithoutFeedback>
-                <View style={ [BadgeStyle.dot, BadgeStyle[`dotSize${size}`] ] } />
-              </TouchableWithoutFeedback>
-            )
-          }
-
-        </View>
-      </View>
+      <span className={badgeCls}>
+        {children}
+        {(text || dot) && <sup className={scrollNumberCls} {...restProps}>{text}</sup>}
+      </span>
     );
   }
 }

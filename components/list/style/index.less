@@ -4,147 +4,229 @@
 @listPrefixCls: am-list;
 
 .@{listPrefixCls} {
-  padding: @v-spacing-xs 0;
-  background-color: @fill-body;
-  & &-header {
+  &-header {
     padding: @v-spacing-lg @h-spacing-lg @v-spacing-md @h-spacing-lg;
     font-size: @font-size-base;
     color: @color-text-caption;
     display: inline-block;
     width: 100%;
-    -webkit-box-sizing: border-box;
-    background-color: @fill-body;
+    box-sizing: border-box;
   }
-  & &-footer {
+
+  &-footer {
     padding: @v-spacing-md @h-spacing-lg @v-spacing-lg @h-spacing-lg;
     font-size: @font-size-base;
     color: @color-text-caption;
-    background-color: @fill-body;
   }
-  & &-body {
+
+  &-body {
     position: relative;
-    .hairline-top(@border-color-base);
-  }
-}
-.@{listPrefixCls}-item {
-  position: relative;
-  display: flex;
-  padding-left: @v-spacing-lg;
-  min-height: @list-item-height;
-  background-color: @fill-base;
-  // box-sizing: content-box;
-  vertical-align: middle;
-  overflow: hidden;
-  .box-align;
-  .transition(background-color 200ms);
-  &.@{listPrefixCls}-item-top {
-    .@{listPrefixCls}-line {
-      .box-align(flex-start);
-      .@{listPrefixCls}-arrow {
-        margin-top: 4px;
+    background-color: @fill-base;
+    .hairline('top');
+    .hairline('bottom');
+
+    div:not(:last-child) {
+      .@{listPrefixCls}-line {
+        .hairline('bottom');
       }
     }
   }
+}
+
+.@{listPrefixCls}-item {
+  position: relative;
+  display: flex;
+  padding-left: @h-spacing-lg;
+  min-height: @list-item-height;
+  background-color: @fill-base;
+  vertical-align: middle;
+  overflow: hidden;
+  transition: background-color 200ms;
+  align-items: center;
+
+  .@{listPrefixCls}-ripple {
+    position: absolute;
+    background: transparent;
+    display: inline-block;
+    overflow: hidden;
+    will-change: box-shadow, transform;
+    transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+    outline: none;
+    cursor: pointer;
+    border-radius: 100%;
+    transform: scale(0);
+
+    &.@{listPrefixCls}-ripple-animate {
+      background-color: hsla(0, 0%, 62%, .2);
+      animation: ripple 1s linear;
+    }
+  }
+
+  &.@{listPrefixCls}-item-top {
+    .@{listPrefixCls}-line {
+      align-items: flex-start;
+
+      .@{listPrefixCls}-arrow {
+        margin-top: 2 * @hd;
+      }
+    }
+  }
+
   &.@{listPrefixCls}-item-middle {
     .@{listPrefixCls}-line {
-      .box-align(center);
+      align-items: center;
     }
   }
+
   &.@{listPrefixCls}-item-bottom {
     .@{listPrefixCls}-line {
-      .box-align(flex-end);
+      align-items: flex-end;
     }
   }
+
   &.@{listPrefixCls}-item-error {
     .@{listPrefixCls}-line {
       .@{listPrefixCls}-extra {
         color: #f50;
+
         .@{listPrefixCls}-brief {
           color: #f50;
         }
       }
     }
   }
-  &:last-child {
-    .hairline-bottom(@border-color-base);
-    .@{listPrefixCls}-line {
-      .hairline-remove-right-bottom();
-    }
-  }
-  &.@{listPrefixCls}-item-hover {
+
+  &.@{listPrefixCls}-item-active {
     background-color: @fill-tap;
   }
+
+  &&-disabled {
+    .@{listPrefixCls}-line {
+      .@{listPrefixCls}-content,
+      .@{listPrefixCls}-extra {
+        color: @color-text-disabled;
+      }
+    }
+  }
+
   img {
     width: @icon-size-md;
     height: @icon-size-md;
     vertical-align: middle;
   }
+
   /* list左图片显示*/
   .@{listPrefixCls}-thumb {
     &:first-child {
       margin-right: @h-spacing-lg;
     }
+
     &:last-child {
       margin-left: @h-spacing-md;
     }
   }
+
   .@{listPrefixCls}-line {
     position: relative;
     display: flex;
     flex: 1;
     align-self: stretch;
     padding-right: @h-spacing-lg;
+    min-height: @list-item-height;
     overflow: hidden;
-    .hairline-bottom(@border-color-base);
-    &-multiple {
-      padding: @v-spacing-lg @h-spacing-lg @v-spacing-lg 0;
-    }
+
     /* list左侧主内容*/
     .@{listPrefixCls}-content {
       flex: 1;
       color: @color-text-base;
       font-size: @font-size-heading;
-      line-height: 1.2;
+      line-height: @line-height-paragraph;
+      text-align: left;
       .ellipsis();
+
+      padding-top: 7 * @hd;
+      padding-bottom: 7 * @hd;
     }
+
     /* list右补充内容*/
     .@{listPrefixCls}-extra {
-      flex: 1;
+      flex-basis: 36%;
       color: @color-text-caption;
-      font-size: @font-size-heading;
-      line-height: 1.2;
+      font-size: @font-size-caption;
+      line-height: @line-height-paragraph;
       text-align: right;
       .ellipsis();
+
+      padding-top: 7 * @hd;
+      padding-bottom: 7 * @hd;
     }
+
     .@{listPrefixCls}-title {
       .ellipsis();
     }
+
     /* 辅助性文字*/
     .@{listPrefixCls}-brief {
       color: @color-text-caption;
       font-size: @font-size-subhead;
-      line-height: 1.2;
+      line-height: @line-height-paragraph;
       margin-top: @v-spacing-sm;
       .ellipsis();
     }
+
     /* list右侧箭头*/
     .@{listPrefixCls}-arrow {
       display: block;
       width: @icon-size-xxs;
       height: @icon-size-xxs;
       margin-left: @h-spacing-md;
-      .encoded-svg-background("<svg width='16' height='27' viewBox='0 0 16 27' version='1.1' xmlns='http://www.w3.org/2000/svg'><g transform='translate(-704.000000, -261.000000)' fill='#CCCCCC'><g  transform='translate(0.000000, 204.000000)'><path d='M719.533036,70.040985 L719.571414,70.0026067 L706.568807,57 L704,59.5688074 L714.472178,70.040985 L704,80.5131625 L706.568807,83.08197 L719.571414,70.0793633 L719.533036,70.040985 Z'></path></g></g></svg>");
+      .encoded-svg-background('right');
+
       background-size: contain;
       background-repeat: no-repeat;
       background-position: 50% 50%;
-      &-vertical-up {
-        .transform(rotate(270deg));
+      visibility: hidden;
+
+      &-horizontal {
+        visibility: visible;
       }
-      &-vertical-down {
-        .transform(rotate(90deg));
+
+      &-vertical {
+        visibility: visible;
+        transform: rotate(90deg);
+      }
+
+      &-vertical-up {
+        visibility: visible;
+        transform: rotate(270deg);
+      }
+    }
+
+    &-multiple {
+      padding: 12.5 * @hd @h-spacing-lg 12.5 * @hd 0;
+
+      .@{listPrefixCls}-content {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      .@{listPrefixCls}-extra {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+
+    &-wrap {
+      .@{listPrefixCls}-content {
+        white-space: normal;
+      }
+
+      .@{listPrefixCls}-extra {
+        white-space: normal;
       }
     }
   }
+
   select {
     position: relative;
     display: block;
@@ -155,5 +237,12 @@
     font-size: @font-size-heading;
     appearance: none;
     background-color: transparent;
+  }
+}
+
+@keyframes ripple {
+  100% {
+    opacity: 0;
+    transform: scale(2.5);
   }
 }

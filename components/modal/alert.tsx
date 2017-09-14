@@ -1,51 +1,63 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Modal from './Modal';
+import { Action } from './PropsType';
 
-export default function (...args) {
-  const title = args[0];
-  const content = args[1];
-  const actions = args[2] || [{ text: '确定' }];
+export default function alert(
+  title, message, actions = [{ text: '确定' }], platform = 'ios',
+) {
 
-  if (!title && !content) {
+  if (!title && !message) {
     // console.log('Must specify either an alert title, or message, or both');
-    return;
+    return {
+      close: () => {},
+    };
   }
 
   const prefixCls = 'am-modal';
-  let div = document.createElement('div');
+  let div: any = document.createElement('div');
   document.body.appendChild(div);
 
   function close() {
     ReactDOM.unmountComponentAtNode(div);
-    div.parentNode.removeChild(div);
+    if (div && div.parentNode) {
+      div.parentNode.removeChild(div);
+    }
   }
 
-  const btnGroupClass = `${prefixCls}-button-group-${actions.length === 2 ? 'h' : 'v'}`;
-  const footer = [<div key="footer" className={btnGroupClass}>
-    {
-      actions.map((button, i) => {
-        return (
-          <a key={i} className={`${prefixCls}-button`} href="#" onClick={(e) => {
-            e.preventDefault();
-            if (button.onPress) {
-              button.onPress();
-            }
-            close();
-          }}>{button.text || `按钮${i}`}</a>
-        );
-      })
-    }
-  </div>];
+  const footer = actions.map((button: Action) => {
+    const orginPress = button.onPress || function() {};
+    button.onPress = () => {
+      const res = orginPress();
+      if (res && res.then) {
+        res.then(() => {
+          close();
+        });
+      } else {
+        close();
+      }
+    };
+    return button;
+  });
 
-  ReactDOM.render(<Modal
-    visible
-    transparent
-    prefixCls={prefixCls}
-    title={title}
-    transitionName="am-zoom"
-    footer={footer}
-    maskTransitionName="am-fade">
-    <div style={{ zoom: 1, overflow: 'hidden' }}>{content}</div>
-  </Modal>, div);
+  ReactDOM.render(
+    <Modal
+      visible
+      transparent
+      prefixCls={prefixCls}
+      title={title}
+      transitionName="am-zoom"
+      closable={false}
+      maskClosable={false}
+      footer={footer}
+      maskTransitionName="am-fade"
+      platform={platform}
+    >
+      <div style={{ zoom: 1, overflow: 'hidden' }}>{message}</div>
+    </Modal>, div,
+  );
+
+  return {
+    close,
+  };
 }

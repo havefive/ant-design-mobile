@@ -1,137 +1,87 @@
-import * as React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  ActivityIndicator,
-  Animated,
-} from 'react-native';
-import topView from 'rn-topview';
-import styles from './style/';
+import React from 'react';
+import Notification from 'rc-notification';
+import Icon from '../icon';
+import classnames from 'classnames';
 
-export interface ToastProps {
-  content: string;
-  duration?: number;
-  onClose?: () => void;
-  type?: string;
+let messageInstance;
+let prefixCls = 'am-toast';
+
+function getMessageInstance(mask) {
+  if (messageInstance) {
+    messageInstance.destroy();
+    messageInstance = null;
+  }
+  messageInstance = (Notification as any).newInstance({
+    prefixCls,
+    style: { }, // clear rc-notification default style
+    transitionName: 'am-fade',
+    className: classnames({
+      [`${prefixCls}-mask`]: mask,
+      [`${prefixCls}-nomask`]: !mask,
+    }),
+  });
+  return messageInstance;
 }
 
-class ToastContainer extends React.Component<ToastProps, any> {
-  static defaultProps = {
-    duration: 3,
-    onClose() {},
-  };
+function notice(content, type, duration = 3, onClose, mask = true) {
+  let iconType = ({
+    info: '',
+    success: 'success',
+    fail: 'fail',
+    offline: 'dislike',
+    loading: 'loading',
+  })[type];
 
-  anim: any;
-
-  constructor(props) {
-    super(props);
-    this.state = {
-     fadeAnim: new Animated.Value(0),
-    };
-  }
-
-  componentDidMount() {
-    const {onClose, duration} = this.props;
-    const timing = Animated.timing;
-    this.anim = Animated.sequence([
-      timing(
-        this.state.fadeAnim,
-        {toValue: 1, duration: 200}
-      ),
-      Animated.delay(duration * 1000),
-      timing(
-        this.state.fadeAnim,
-        {toValue: 0, duration: 200}
-      ),
-    ]);
-    this.anim.start(() => {
-      this.anim = null;
-      onClose();
-      topView.remove();
-    });
-  }
-
-  componentWillUnmount() {
-    if (this.anim) {
-      this.anim.stop();
-      this.anim = null;
-    }
-  }
-
-  render() {
-    const { type, content } = this.props;
-    const iconType = {
-      success: require('./images/success.png'),
-      fail: require('./images/fail.png'),
-      offline: require('./images/offline.png'),
-    };
-
-    let iconDom = null;
-    if (type === 'loading') {
-      iconDom = <ActivityIndicator
-        animating
-        style={[styles.centering]}
-        color="white"
-        size="large"
-      />;
-    } else if (type === 'info') {
-      iconDom = null;
-    } else {
-      iconDom = <Image
-        source={iconType[type]}
-        style={styles.image}
-      />;
-    }
-
-    return (
-      <View style={[styles.container]}>
-        <View style={[styles.innerContainer]}>
-          <Animated.View style={{opacity: this.state.fadeAnim}}>
-            <View style={[styles.innnerWrap, iconDom ? styles.iconToast : styles.textToast]}>
-              {iconDom}
-              <Text style={styles.content}>{content}</Text>
-            </View>
-          </Animated.View>
-        </View>
-      </View>
-    );
-  }
-}
-
-function notice(content, type, duration = 3, onClose) {
-  if (typeof duration === 'function') {
-    onClose = duration;
-    duration = 3;
-  }
-
-  topView.set(
-    <ToastContainer content={content} duration={duration} onClose={onClose} type={type} />
-  );
+  let instance = getMessageInstance(mask);
+  instance.notice({
+    duration,
+    style: {},
+    content: !!iconType ? (
+      <div className={`${prefixCls}-text ${prefixCls}-text-icon`} role="alert" aria-live="assertive">
+        <Icon type={iconType} size="lg" />
+        <div className={`${prefixCls}-text-info`}>{content}</div>
+      </div>
+    ) : (
+      <div className={`${prefixCls}-text`} role="alert" aria-live="assertive">
+        <div>{content}</div>
+      </div>
+    ),
+    onClose: () => {
+      if (onClose) {
+        onClose();
+      }
+      instance.destroy();
+      instance = null;
+      messageInstance = null;
+    },
+  });
 }
 
 export default {
   SHORT: 3,
   LONG: 8,
-  show(content: string, duration?: number) {
-    return notice(content, 'info', duration, () => {});
+  show(content: string, duration?: number, mask?: boolean) {
+    return notice(content, 'info', duration, () => {}, mask);
   },
-  info(content: string, duration?: number, onClose?: () => void) {
-    return notice(content, 'info', duration, onClose);
+  info(content: string, duration?: number, onClose?: () => void, mask?: boolean) {
+    return notice(content, 'info', duration, onClose, mask);
   },
-  success(content: string, duration?: number, onClose?: () => void) {
-    return notice(content, 'success', duration, onClose);
+  success(content: string, duration?: number, onClose?: () => void, mask?: boolean) {
+    return notice(content, 'success', duration, onClose, mask);
   },
-  fail(content: string, duration?: number, onClose?: () => void) {
-    return notice(content, 'fail', duration, onClose);
+  fail(content: string, duration?: number, onClose?: () => void, mask?: boolean) {
+    return notice(content, 'fail', duration, onClose, mask);
   },
-  offline(content: string, duration?: number, onClose?: () => void) {
-    return notice(content, 'offline', duration, onClose);
+  offline(content: string, duration?: number, onClose?: () => void, mask?: boolean) {
+    return notice(content, 'offline', duration, onClose, mask);
   },
-  loading(content: string, duration?: number, onClose?: () => void) {
-    return notice(content, 'loading', duration, onClose);
+  loading(content: string, duration?: number, onClose?: () => void, mask?: boolean) {
+    return notice(content, 'loading', duration, onClose, mask);
   },
   hide() {
-    topView.remove();
+    if (messageInstance) {
+      messageInstance.destroy();
+      messageInstance = null;
+    }
   },
 };

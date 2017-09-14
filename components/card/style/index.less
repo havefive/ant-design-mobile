@@ -1,32 +1,43 @@
 @import '../../style/mixins';
 @import '../../style/themes/default';
 
-@alertPrefixCls: am-card;
+@cardPrefixCls: am-card;
 
-.@{alertPrefixCls} {
-  border-radius: @radius-md;
-  border: @border-width-sm solid @border-color-base;
-  min-height: 1.92rem;
-  position: relative;
-  padding-bottom: @h-spacing-md;
-  .display-box();
+.@{cardPrefixCls} {
+  &:not(.@{cardPrefixCls}-full) {
+    .hairline('all', @border-color-base, @radius-md);
+  }
+
+  min-height: 96 * @hd;
+  padding-bottom: @v-spacing-sm;
+  display: flex;
   flex-direction: column;
+  background-color: @fill-base;
+
+  &&-full {
+    position: relative;
+    .hairline('top');
+    .hairline('bottom');
+  }
+
   &-header {
-    .display-box();
+    display: flex;
     align-items: center;
     font-size: @font-size-heading;
-    padding: @v-spacing-sm @h-spacing-lg @v-spacing-sm 0;
-    margin-left: @h-spacing-lg;
-    position: relative;
+    padding: @v-spacing-md @h-spacing-lg;
+
     &-content {
       flex: 1;
       text-align: left;
       color: @color-text-base;
+      display: flex;
+      align-items: center;
+
       img {
-        vertical-align: middle;
         margin-right: @h-spacing-sm;
       }
     }
+
     &-extra {
       flex: 1;
       text-align: right;
@@ -34,22 +45,27 @@
       color: @color-text-caption;
     }
   }
+
   &-body {
-    border-top: @border-width-sm solid @border-color-base;
+    position: relative;
+    .hairline('top');
     padding: @v-spacing-lg @h-spacing-lg @v-spacing-sm;
     font-size: @font-size-subhead;
     color: @color-text-paragraph;
-    min-height: 0.8rem;
+    min-height: 40 * @hd;
     flex: 1;
   }
+
   &-footer {
     font-size: @font-size-base;
     color: @color-text-caption;
-    .display-box();
     padding: 0 @h-spacing-lg;
+    display: flex;
+
     &-content {
       flex: 1;
     }
+
     &-extra {
       flex: 1;
       text-align: right;

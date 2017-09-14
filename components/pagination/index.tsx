@@ -1,20 +1,24 @@
-/* tslint:disable:no-switch-case-fall-through */
-import * as React from 'react';
-import { View, Text } from 'react-native';
-import Flex from '../flex';
+/* tslint:disable:jsx-no-multiline-js */
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import Button from '../button';
-import PaginationProps from './PaginationPropTypes';
-import styles from './style/index';
+import Flex from '../flex';
+import PaginationProps from './PropsType';
+import { getComponentLocale } from '../_util/getLocale';
 
 export default class Pagination extends React.Component<PaginationProps, any> {
   static defaultProps = {
+    prefixCls: 'am-pagination',
     mode: 'button',
-    current: 0,
-    size: 'large',
+    current: 1,
+    total: 0,
     simple: false,
-    prevText: 'Prev',
-    nextText: 'Next',
-    onChange: () => {},
+    onChange: () => { },
+  };
+
+  static contextTypes = {
+    antLocale: PropTypes.object,
   };
 
   constructor(props) {
@@ -22,116 +26,81 @@ export default class Pagination extends React.Component<PaginationProps, any> {
     this.state = {
       current: props.current,
     };
-    this.onPrev = this.onPrev.bind(this);
-    this.onNext = this.onNext.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      current: nextProps.current,
-    });
+    if (nextProps.current !== this.state.current) {
+      this.setState({
+        current: nextProps.current,
+      });
+    }
   }
 
-  _hasPrev() {
-    return this.state.current > 0;
-  }
-
-  _hasNext() {
-    return this.state.current < this.props.total;
-  }
-
-  _handleChange(p) {
+  onChange(p) {
     this.setState({
       current: p,
     });
-    this.props.onChange(p);
-    return p;
-  }
-
-  onPrev() {
-    this._handleChange(this.state.current - 1);
-  }
-
-  onNext() {
-    this._handleChange(this.state.current + 1);
-  }
-
-  getIndexes(count) {
-    const arr = [];
-    for (let i = 0; i < count; i++) {
-      arr.push(i);
+    if (this.props.onChange) {
+      this.props.onChange(p);
     }
-    return arr;
   }
 
   render() {
-    const { mode, size, style, simple, total,
-      prevText, nextText } = this.props;
-    const current = this.state.current;
-    let markup;
-    switch (mode) {
-      case 'button':
-        markup = (
-          <Flex>
-            <Flex.Item>
-              <Button
-                size={size}
-                inline
-                disabled={current <= 0}
-                onClick={this.onPrev}
-              >
-                {prevText}
-              </Button>
-            </Flex.Item>
-            {!simple ?
-              <Flex.Item>
-                <View style={[styles.numberStyle]}>
-                  <Text style={[styles.activeTextStyle]}>{current + 1}</Text>
-                  <Text style={[styles.totalStyle]}>/{total}</Text>
-                </View>
-              </Flex.Item> : <Flex.Item />
-            }
-            <Flex.Item>
-              <Button
-                size={size}
-                disabled={current >= total - 1}
-                inline
-                onClick={this.onNext}
-              >
-              {nextText}
-              </Button>
-            </Flex.Item>
-          </Flex>
+    const { prefixCls, className, style, mode, total, simple } = this.props;
+    const { current } = this.state;
+    const locale = getComponentLocale(this.props, this.context, 'Pagination', () => require('./locale/zh_CN'));
+    const { prevText, nextText } = locale;
+
+    let markup = (
+      <Flex>
+        <Flex.Item className={`${prefixCls}-wrap-btn ${prefixCls}-wrap-btn-prev`}>
+          <Button inline disabled={current <= 1} onClick={() => this.onChange(current - 1)}>{prevText}</Button>
+        </Flex.Item>
+        {this.props.children ? (<Flex.Item>{this.props.children}</Flex.Item>) : (!simple &&
+          <Flex.Item className={`${prefixCls}-wrap`} aria-live="assertive">
+            <span className="active">{current}</span>/<span>{total}</span>
+          </Flex.Item>)}
+        <Flex.Item className={`${prefixCls}-wrap-btn ${prefixCls}-wrap-btn-next`}>
+          <Button
+            inline
+            disabled={current >= total}
+            onClick={() => this.onChange(this.state.current + 1)}
+          >
+            {nextText}
+          </Button>
+        </Flex.Item>
+      </Flex>
+    );
+    if (mode === 'number') {
+      markup = (
+        <div className={`${prefixCls}-wrap`}>
+          <span className="active">{current}</span>/<span>{total}</span>
+        </div>
+      );
+    } else if (mode === 'pointer') {
+      const arr: any = [];
+      for (let i = 0; i < total; i++) {
+        arr.push(
+          <div
+            key={`dot-${i}`}
+            className={classnames(`${prefixCls}-wrap-dot`, {
+              [`${prefixCls}-wrap-dot-active`]: (i + 1) === current,
+            })}
+          >
+            <span />
+          </div>,
         );
-        break;
-      case 'number':
-        markup = (
-          <View style={[styles.numberStyle]}>
-            <Text style={[styles.activeTextStyle]}>{current + 1}</Text>
-            <Text style={[styles.totalStyle]}>/{total}</Text>
-          </View>
-        );
-        break;
-      case 'point':
-        const indexes = this.getIndexes(total);
-        const spaceStyle = size === 'large'
-          ? styles.spaceLargeStyle : styles.spaceSmallStyle;
-        const pointer = indexes.map((index) => {
-          const activeStyle = index === current ? styles.pointActiveStyle : null;
-          return (
-            <View style={[styles.pointStyle, spaceStyle, activeStyle]} key={`point-${index}`}></View>
-          );
-        });
-        markup = (<View style={[styles.indicatorStyle]}>{pointer}</View>);
-        break;
-      default:
-        markup = false;
-        break;
+      }
+      markup = <div className={`${prefixCls}-wrap`}>{arr}</div>;
     }
+    const cls = classnames(prefixCls, className);
     return (
-      <View style={[style]}>
+      <div
+        className={cls}
+        style={style}
+      >
         {markup}
-      </View>
+      </div>
     );
   }
 }

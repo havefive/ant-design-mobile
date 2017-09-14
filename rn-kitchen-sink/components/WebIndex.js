@@ -1,12 +1,26 @@
-import * as React from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
   WebView,
   Modal,
   ActivityIndicator,
-  Platform,
 } from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  webView: {
+    flex: 1,
+  },
+  loading: {
+    marginTop: 64,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default class WebIndex extends React.Component {
   constructor(props) {
@@ -31,7 +45,8 @@ export default class WebIndex extends React.Component {
           ref="webview"
           onLoadEnd={this.onLoadEnd}
           automaticallyAdjustContentInsets={false}
-          source={{ uri: 'http://mobile.ant.design/kitchen-sink/' }}
+          source={{ uri: 'https://mobile.ant.design/kitchen-sink/' }}
+          scalesPageToFit={false}
         />
         <Modal
           animationType={'none'}
@@ -50,26 +65,3 @@ export default class WebIndex extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    ...Platform.select({
-      ios: {
-        marginTop: 64,
-      },
-      android: {
-        marginTop: 44,
-      },
-    }),
-  },
-  webView: {
-    flex: 1,
-  },
-  loading: {
-    marginTop: 64,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

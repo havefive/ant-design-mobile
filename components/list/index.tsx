@@ -1,26 +1,30 @@
-// List
-import * as React from 'react';
-import { View } from 'react-native';
-import Body from './ListBody';
+/* tslint:disable:jsx-no-multiline-js */
+import React from 'react';
 import Item from './ListItem';
-import Header from './ListHeader';
-import Footer from './ListFooter';
+import classnames from 'classnames';
+import { ListProps } from './PropsType';
 
-export default class List extends React.Component<any, any> {
-  static Header: any;
-  static Body: any;
-  static Footer: any;
-  static Item: any;
+export default class List extends React.Component<ListProps, any> {
+  static Item = Item;
+
+  static defaultProps: Partial<ListProps> = {
+    prefixCls: 'am-list',
+  };
+
   render() {
-    const style = {
-      marginTop: 8,
-      marginBottom: 8,
-    };
-    return (<View {...this.props} style={[style, this.props.style]}>{this.props.children}</View>);
+    let { prefixCls, children, className, style, renderHeader, renderFooter, ...restProps } = this.props;
+    const wrapCls = classnames(prefixCls, className);
+
+    return (
+      <div className={wrapCls} style={style} {...restProps}>
+        {renderHeader ? (<div className={`${prefixCls}-header`}>
+          {typeof renderHeader === 'function' ? renderHeader() : renderHeader}
+        </div>) : null}
+        {children ? (<div className={`${prefixCls}-body`}>{children}</div>) : null}
+        {renderFooter ? (<div className={`${prefixCls}-footer`}>
+          {typeof renderFooter === 'function' ? renderFooter() : renderFooter}
+        </div>) : null}
+      </div>
+    );
   }
 }
-
-List.Header = Header;
-List.Body = Body;
-List.Footer = Footer;
-List.Item = Item;

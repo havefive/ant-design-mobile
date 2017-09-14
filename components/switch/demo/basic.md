@@ -1,64 +1,101 @@
 ---
 order: 0
-title: 基本
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
-滑动开关。
+Switch. ([rc-form document](https://github.com/react-component/form))
 
 ````jsx
 import { List, Switch } from 'antd-mobile';
 import { createForm } from 'rc-form';
 
-let SwitchExample = React.createClass({
-  onClick() {
-    console.log(this.props.form.getFieldsValue());
-  },
-  render() {
-    const { getFieldProps } = this.props.form;
-    return (
-      <List >
-        <List.Body>
-          <List.Item
-            extra={<Switch
-              {...getFieldProps('1', {
-                initialValue: true,
-                valuePropName: 'checked',
-              })}
-            />}
-          >默认开</List.Item>
-          <List.Item
-            extra={<Switch
-              {...getFieldProps('2', {
-                initialValue: false,
-                valuePropName: 'checked',
-              })}
-            />}
-          >默认关</List.Item>
-          <List.Item
-            needActive={false}
-            extra={<Switch
-              {...getFieldProps('3', {
-                initialValue: false,
-                valuePropName: 'checked',
-              })}
-              disabled
-            />}
-          >默认关不可修改</List.Item>
-          <List.Item
-            needActive={false}
-            extra={<Switch
-              {...getFieldProps('4', {
-                initialValue: true,
-                valuePropName: 'checked',
-              })}
-              disabled
-            />}
-          >默认开不可修改</List.Item>
-        </List.Body>
-      </List>
-    );
-  },
-});
+let SwitchExample = (props) => {
+  const { getFieldProps } = props.form;
+  return (
+    <List
+      renderHeader={() => 'Form switch'}
+    >
+      <List.Item
+        extra={<Switch
+          {...getFieldProps('Switch1', {
+            initialValue: true,
+            valuePropName: 'checked',
+          })}
+          onClick={(checked) => { console.log(checked); }}
+        />}
+      >On</List.Item>
+      <List.Item
+        extra={<Switch
+          {...getFieldProps('Switch2', {
+            initialValue: false,
+            valuePropName: 'checked',
+          })}
+          onClick={(checked) => { console.log(checked); }}
+        />}
+      >Off</List.Item>
+      <List.Item
+        extra={<Switch
+          {...getFieldProps('Switch3', {
+            initialValue: false,
+            valuePropName: 'checked',
+          })}
+          onClick={(checked) => { console.log(checked); }}
+          disabled
+        />}
+      >Disabled off</List.Item>
+      <List.Item
+        extra={<Switch
+          {...getFieldProps('Switch4', {
+            initialValue: true,
+            valuePropName: 'checked',
+          })}
+          onClick={(checked) => { console.log(checked); }}
+          disabled
+        />}
+      >Disabled on</List.Item>
+      <List.Item
+        extra={<Switch
+          {...getFieldProps('Switch5', {
+            initialValue: true,
+            valuePropName: 'checked',
+          })}
+          platform="android"
+        />}
+      >Style for Android</List.Item>
+      <List.Item
+        extra={<Switch
+          {...getFieldProps('Switch6', {
+            initialValue: true,
+            valuePropName: 'checked',
+          })}
+          platform="android"
+          color="red"
+        />}
+      >Color for Android</List.Item>
+      <List.Item
+        extra={<Switch
+          {...getFieldProps('Switch7', {
+            initialValue: true,
+            valuePropName: 'checked',
+          })}
+          platform="ios"
+        />}
+      >Style for iOS</List.Item>
+      <List.Item
+        extra={<Switch
+          {...getFieldProps('Switch8', {
+            initialValue: true,
+            valuePropName: 'checked',
+          })}
+          platform="ios"
+          color="red"
+        />}
+      >Color for iOS</List.Item>
+    </List>
+  );
+};
 
 SwitchExample = createForm()(SwitchExample);
 

@@ -3,49 +3,50 @@
 
 @activityIndicatorPrefixCls: am-activity-indicator;
 
-// Encoded SVG Background
-.encoded-svg-background(@svg) {
-  @url: `encodeURIComponent(@{svg})`;
-  background-image: url("data:image/svg+xml;charset=utf-8,@{url}");
-}
-
-
 .@{activityIndicatorPrefixCls} {
   display: flex;
   align-items: center;
-  z-index: 999;
+  z-index: 99;
+
   &-spinner {
     display: inline-block;
-    margin-right: 16px;
-    width: 40px;
-    height: 40px;
-    .encoded-svg-background("<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><defs><line id='l' x1='60' x2='60' y1='7' y2='27' stroke='#6c6c6c' stroke-width='11' stroke-linecap='round'/></defs><g><use xlink:href='#l' opacity='.27'/><use xlink:href='#l' opacity='.27' transform='rotate(30 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(60 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(90 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(120 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(150 60,60)'/><use xlink:href='#l' opacity='.37' transform='rotate(180 60,60)'/><use xlink:href='#l' opacity='.46' transform='rotate(210 60,60)'/><use xlink:href='#l' opacity='.56' transform='rotate(240 60,60)'/><use xlink:href='#l' opacity='.66' transform='rotate(270 60,60)'/><use xlink:href='#l' opacity='.75' transform='rotate(300 60,60)'/><use xlink:href='#l' opacity='.85' transform='rotate(330 60,60)'/></g></svg>");
+    width: 20 * @hd;
+    height: 20 * @hd;
+    .encoded-svg-background('loading');
+
     background-position: 50%;
     background-size: 100%;
     background-repeat: no-repeat;
-    animation: spinner-anime 1s steps(12, end) infinite;
+    animation: spinner-anime 1s linear infinite;
   }
 
-  &-spinner-white {
-    .encoded-svg-background("<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><defs><line id='l' x1='60' x2='60' y1='7' y2='27' stroke='#fff' stroke-width='11' stroke-linecap='round'/></defs><g><use xlink:href='#l' opacity='.27'/><use xlink:href='#l' opacity='.27' transform='rotate(30 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(60 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(90 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(120 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(150 60,60)'/><use xlink:href='#l' opacity='.37' transform='rotate(180 60,60)'/><use xlink:href='#l' opacity='.46' transform='rotate(210 60,60)'/><use xlink:href='#l' opacity='.56' transform='rotate(240 60,60)'/><use xlink:href='#l' opacity='.66' transform='rotate(270 60,60)'/><use xlink:href='#l' opacity='.75' transform='rotate(300 60,60)'/><use xlink:href='#l' opacity='.85' transform='rotate(330 60,60)'/></g></svg>");
+  &-tip {
+    font-size: @font-size-base;
+    margin-left: @h-spacing-md;
+    color: @color-text-base;
+    opacity: 0.4;
   }
 
   &.@{activityIndicatorPrefixCls}-toast {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    z-index: @toast-zindex;
+
     .@{activityIndicatorPrefixCls}-spinner {
       margin: 0;
     }
+
     .@{activityIndicatorPrefixCls}-toast {
       display: inline-block;
       position: relative;
-      top: 8px;
+      top: 4 * @hd;
     }
   }
 
@@ -54,18 +55,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 32px;
-    border-radius: 6px;
+    padding: @v-spacing-lg @h-spacing-lg;
+    border-radius: @radius-lg;
     background-clip: padding-box;
     color: @color-text-base-inverse;
-    background-color: rgba(34, 34, 34, 0.6);
+    background-color: @toast-fill;
     font-size: @font-size-subhead;
-    line-height: 40px;
+    line-height: 20 * @hd;
   }
 
   &-spinner-lg {
-    width: 64px;
-    height: 64px;
+    width: 32 * @hd;
+    height: 32 * @hd;
   }
 
   @keyframes spinner-anime {

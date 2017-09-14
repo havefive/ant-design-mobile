@@ -1,5 +1,25 @@
 .@{modalPrefixClass} {
   position: relative;
+  &:not(.@{modalPrefixClass}-transparent):not(.@{modalPrefixClass}-popup) {
+    width: 100%;
+    height: 100%;
+  }
+
+  &-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: @modal-zindex;
+    background-color: @fill-mask;
+
+    &-hidden {
+      display: none;
+    }
+  }
+
   &-wrap {
     position: fixed;
     overflow: auto;
@@ -8,19 +28,38 @@
     bottom: 0;
     left: 0;
     height: 100%;
-    z-index: 1050;
+    z-index: @modal-zindex;
     -webkit-overflow-scrolling: touch;
     outline: 0;
-    .display-box();
+    display: flex;
     align-items: center;
     justify-content: center;
+    &-popup {
+      display: block;
+    }
+  }
+
+  &-popup {
+    position: fixed;
+    left: 0;
+    width: 100%;
+
+    &-slide-down {
+      top: 0;
+    }
+
+    &-slide-up {
+      bottom: 0;
+    }
   }
 
   &&-transparent {
+    width: 270 * @hd;
     .@{modalPrefixClass}-content {
-      border-radius: @radius-md;
+      border-radius: @radius-lg;
       height: auto;
       padding-top: @v-spacing-lg;
+
       .@{modalPrefixClass}-body {
         padding: 0 @h-spacing-lg @v-spacing-lg;
       }
@@ -29,8 +68,8 @@
 
   &-title {
     margin: 0;
-    font-size: @font-size-heading;
-    line-height: 1;
+    font-size: @modal-font-size-heading;
+    line-height: @line-height-base;
     color: @color-text-base;
     text-align: center;
   }
@@ -46,28 +85,35 @@
     background-clip: padding-box;
     text-align: center;
     height: 100%;
+    overflow: hidden;
   }
 
   &-close {
     border: 0;
-    background: transparent;
-    font-size: @font-size-display-lg;
-    position: absolute;
-    left: @h-spacing-lg;
-    top: @v-spacing-md;
-    line-height: 1;
-    color: @color-text-tap;
-    text-decoration: none;
+    padding: 0;
+    background-color: transparent;
     outline: none;
-    &-x:after {
-      content: '×';
-      font-weight: 100;
+    position: absolute;
+    right: @h-spacing-lg;
+    z-index: 999;
+    height: @icon-size-sm;
+    width: @icon-size-sm;
+
+    &-x {
+      display: inline-block;
+      width: 15 * @hd;
+      height: 15 * @hd;
+      background-repeat: no-repeat;
+      background-size: cover;
+      .encoded-svg-background('modal_delete');
     }
   }
 
   &-body {
-    font-size: @font-size-base;
-    color: @color-text-paragraph;
+    font-size: @font-size-subhead;
+    color: @color-text-caption;
     height: 100%;
+    line-height: @line-height-paragraph;
+    overflow: auto;
   }
 }

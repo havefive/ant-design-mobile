@@ -3,121 +3,101 @@
 @buttonPrefixCls: am-button;
 
 .@{buttonPrefixCls} {
-  position: relative;
-  display: inline-block;
+  // do not use width:100%, can not set margin
+  display: block;
   outline: 0 none;
   -webkit-appearance: none;
-  width: 100%;
+  box-sizing: border-box;
   padding: 0;
-  .box-sizing();
   text-align: center;
-  font-size: @font-size-display-sm;
+  font-size: @button-font-size;
   height: @button-height;
   line-height: @button-height;
-  border: 0 none;
-  .border-radius(@radius-sm);
-  // 在 伪元素上放大再缩小，达到 1px border 效果
-  &:after {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 200%;
-    height: 200%;
-    content: " ";
-    .border-radius(@radius-sm * 2);
-    -webkit-transform: scale(.5);
-    transform: scale(.5);
-    -webkit-transform-origin: 0 0;
-    transform-origin: 0 0;
-    .box-sizing();
-  }
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  white-space: nowrap;
 
   // default
   color: @color-text-base;
   background-color: @fill-base;
-  &:after {
-    border: @border-width-sm solid @border-color-base;
-  }
-  &:active {
+
+  .hairline('all', @border-color-base, @radius-md);
+
+  &&-active {
     background-color: @fill-tap;
   }
-  // ghost
-  // &-ghost {
-  //   background-color: transparent;
-  //   &:after {
-  //     border: @border-width-sm solid @brand-primary;
-  //   }
-  //   &:active {
-  //     background-color: fade(@neutral-3, 20%);
-  //   }
-  // }
+  &&-disabled {
+    color: fade(@color-text-base, 30%);
+    opacity: 0.6;
+  }
 
   &-primary {
     color: @color-text-base-inverse;
-    background-color: @brand-primary;
-    &:after {
-      border: @border-width-sm solid @brand-primary;
+    background-color: @primary-button-fill;
+    .hairline('all', @primary-button-fill, @radius-md);
+
+    &.@{buttonPrefixCls}-active {
+      color: fade(@color-text-base-inverse, 30%);
+      background-color: @primary-button-fill-tap;
     }
-    &:active {
-      background-color: @brand-primary-tap;
-    }
-    &.@{buttonPrefixCls}-ghost {
-      color: @color-link;
-      background-color: transparent;
-      &:active {
-        // background-color: fade(@brand-3, 20%);
-        background-color: @brand-primary-tap;
-        // &:after {
-        //   border: @border-width-sm solid @brand-7;
-        // }
-      }
+    &.@{buttonPrefixCls}-disabled {
+      color: fade(@color-text-base-inverse, 60%);
+      opacity: 0.4;
     }
   }
 
-  &-disabled {
-    &:disabled {
-      color: @color-text-disabled;
-      background-color: @fill-disabled;
-      &:after {
-        border: 0;
-      }
-      // &.@{buttonPrefixCls}-ghost {
-      // }
+  &-ghost {
+    color: @ghost-button-color;
+    background-color: transparent;
+    .hairline('all', @ghost-button-color, @radius-md);
 
-      &.@{buttonPrefixCls}-warning {
-        color: @color-text-tap;
-        // background-color: fade(@neutral-3, 20%);
-      }
+    &.@{buttonPrefixCls}-active {
+      color: @ghost-button-fill-tap;
+      background-color: transparent;
+      .hairline('all', @ghost-button-fill-tap, @radius-md);
     }
+    &.@{buttonPrefixCls}-disabled {
+      color: fade(@color-text-base, 10%);
+      .hairline('all', fade(@color-text-base, 10%), @radius-md);
+      opacity: 1; // override default opacity: 0.6
+    }
+  }
+
+  &-warning {
+    color: @color-text-base-inverse;
+    background-color: @warning-button-fill;
+
+    &.@{buttonPrefixCls}-active {
+      color: fade(@color-text-base-inverse, 30%);
+      background-color: @warning-button-fill-tap;
+    }
+    &.@{buttonPrefixCls}-disabled {
+      color: fade(@color-text-base-inverse, 60%);
+      opacity: 0.4;
+    }
+  }
+
+  &-inline {
+    display: inline-block;
+    padding: 0 @h-spacing-lg;
   }
 
   &-small {
     font-size: @button-font-size-sm;
     height: @button-height-sm;
     line-height: @button-height-sm;
-    .border-radius(@radius-xs);
+    padding: 0 @h-spacing-lg;
   }
 
-  &-inline {
-    width: auto;
-    padding: 0 @h-spacing-sm;
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  &-warning {
-    color: @brand-warning;
-    background-color: @fill-base;
-    &:after {
-      border: @border-width-sm solid #f88b88;
-    }
-    &:active {
-      background-color: #fdcccb;
-    }
+  > .@{buttonPrefixCls}-icon {
+    margin-right: 0.5em;
   }
-
-  // To ensure that a space will be placed between character and `Icon`.
-  > .anticon + span,
-  > span + .anticon {
-    margin-left: 0.5em;
-  }
-
 }

@@ -1,201 +1,168 @@
 ---
-order: 0
-title: 基本
+order: 1
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
-输入框。
+## zh-CN
+
+受控组件建议使用([rc-form ](https://github.com/react-component/form))
+
+## en-US
+
+Recommended use of [rc-form ](https://github.com/react-component/form) for controlled component.
 
 ````jsx
-import { List, InputItem } from 'antd-mobile';
+import { List, InputItem, WhiteSpace } from 'antd-mobile';
 import { createForm } from 'rc-form';
 
-let BasicInput = React.createClass({
-  onClick() {
-    console.log(this.props.form.getFieldsValue());
-  },
+class BasicInputExample extends React.Component {
+  componentDidMount() {
+    // this.autoFocusInst.focus();
+  }
+  handleClick = () => {
+    this.customFocusInst.focus();
+  }
   render() {
     const { getFieldProps } = this.props.form;
+    return (
+      <div>
+        <List renderHeader={() => 'Customize to focus'}>
+          <InputItem
+            {...getFieldProps('autofocus')}
+            clear
+            placeholder="auto focus"
+            ref={el => this.autoFocusInst = el}
+          >标题</InputItem>
+          <InputItem
+            {...getFieldProps('focus')}
+            clear
+            placeholder="click the button below to focus"
+            ref={el => this.customFocusInst = el}
+          >标题</InputItem>
+          <List.Item>
+            <div
+              style={{ width: '100%', color: '#108ee9', textAlign: 'center' }}
+              onClick={this.handleClick}
+            >
+              click to focus
+            </div>
+          </List.Item>
+        </List>
 
-    return (<div>
-      <List
-        title="线型"
-      >
-        <List.Body>
+        <List renderHeader={() => 'Whether is controlled'}>
           <InputItem
-            {...getFieldProps('input1')}
-            placeholder="内容"
+            {...getFieldProps('control')}
+            placeholder="Hello World"
+          >受控组件</InputItem>
+          <InputItem
+            placeholder="please input content"
+            data-seed="logId"
+          >非受控组件</InputItem>
+        </List>
+
+        <WhiteSpace />
+
+        <List renderHeader={() => 'click label to focus input'}>
+          <InputItem
+            placeholder="click label to focus input"
+            ref={el => this.labelFocusInst = el}
+          ><div onClick={() => this.labelFocusInst.focus()}>标题</div></InputItem>
+        </List>
+
+        <List renderHeader={() => 'Show clear icon'}>
+          <InputItem
+            {...getFieldProps('inputclear')}
             clear
-            maxLength={10}
-            onBlur={function (e) { console.log('onBlur'); console.log(e); }}
-            onFocus={function (e) { console.log('onFocus'); console.log(e); }}
-          >基本</InputItem>
+            placeholder="displayed clear icon while typing"
+          >标题</InputItem>
+        </List>
+
+        <WhiteSpace />
+
+        <List renderHeader={() => 'Number of words for title'}>
           <InputItem
-            {...getFieldProps('input2', {
-              initialValue: '标签可以是node',
-            })}
-            placeholder="标签可以是node"
-          ><div style={{ backgroundImage: 'url(https://os.alipayobjects.com/rmsportal/zumwvwrngNMGSWe.png)', backgroundSize: 'cover', height: '0.44rem', width: '0.44rem' }} /></InputItem>
+            {...getFieldProps('label8')}
+            placeholder="limited title length"
+            labelNumber={5}
+          >标题过长超过默认的5个字</InputItem>
+        </List>
+
+        <WhiteSpace />
+
+        <List renderHeader={() => 'Custom title（text / image / empty)'}>
           <InputItem
-            value="仅供展示:editable={false}"
-            editable={false}
-          >不可编辑</InputItem>
-          <InputItem
-            {...getFieldProps('input3', {
-              initialValue: '无标签',
-            })}
-            clear
-            placeholder="内容"
+            {...getFieldProps('input3')}
+            placeholder="no label"
           />
           <InputItem
-            {...getFieldProps('input4')}
-            clear
-            placeholder="extra"
-            extra="元"
-          >带注释</InputItem>
-          <InputItem
-            {...getFieldProps('input5')}
-            name="camera"
-            placeholder="注释可以是node"
-            clear
-            extra={<img src="https://os.alipayobjects.com/rmsportal/mOoPurdIfmcuqtr.png" />}
-          >带注释</InputItem>
-          <InputItem
-            {...getFieldProps('input6', {
-              initialValue: '输入框',
-            })}
-            clear
-            placeholder="clear"
-          >带清除</InputItem>
-          <InputItem
-            {...getFieldProps('input7', {
-              initialValue: '校验出错',
-            })}
-            error
-            errorMsg="校验出错"
-            clear
-            placeholder="内容"
-          >报错样式</InputItem>
-          <InputItem
-            {...getFieldProps('input8', {
-              initialValue: '',
-            })}
-            error
-            onErrorClick={() => { alert(111); }}
-            placeholder="内容"
-            clear
-            extra={<img src="https://os.alipayobjects.com/rmsportal/mOoPurdIfmcuqtr.png" />}
-          >报错样式</InputItem>
-        </List.Body>
-      </List>
-      <List
-        title="两个字标签"
-      >
-        <List.Body>
-          <InputItem
-            {...getFieldProps('label3')}
-            placeholder="内容"
-            clear
-            maxLength={10}
-            labelNumber={2}
-            onBlur={function (e) { console.log('onBlur'); console.log(e); }}
-            onFocus={function (e) { console.log('onFocus'); console.log(e); }}
-          >姓名</InputItem>
-        </List.Body>
-      </List>
-      <List
-        title="三个字标签"
-      >
-        <List.Body>
-          <InputItem
-            {...getFieldProps('label3')}
-            placeholder="内容"
-            clear
-            maxLength={10}
-            labelNumber={3}
-            onBlur={function (e) { console.log('onBlur'); console.log(e); }}
-            onFocus={function (e) { console.log('onFocus'); console.log(e); }}
-          >校验码</InputItem>
-        </List.Body>
-      </List>
-      <List
-        title="四个字标签(默认)"
-      >
-        <List.Body>
-          <InputItem
-            {...getFieldProps('label4')}
-            placeholder="内容"
-            clear
-            maxLength={10}
-            onBlur={function (e) { console.log('onBlur'); console.log(e); }}
-            onFocus={function (e) { console.log('onFocus'); console.log(e); }}
-          >四字标签</InputItem>
-        </List.Body>
-      </List>
-      <List
-        title="五个字标签"
-      >
-        <List.Body>
-          <InputItem
-            {...getFieldProps('label5')}
-            placeholder="内容"
-            clear
-            maxLength={10}
-            labelNumber={5}
-            onBlur={function (e) { console.log('onBlur'); console.log(e); }}
-            onFocus={function (e) { console.log('onFocus'); console.log(e); }}
-          >五个字标签</InputItem>
-        </List.Body>
-      </List>
-      <List
-        title="六个字标签"
-      >
-        <List.Body>
-          <InputItem
-            {...getFieldProps('label6')}
-            placeholder="内容"
-            clear
-            maxLength={10}
-            labelNumber={6}
-            onBlur={function (e) { console.log('onBlur'); console.log(e); }}
-            onFocus={function (e) { console.log('onFocus'); console.log(e); }}
-          >六个字标签六</InputItem>
-        </List.Body>
-      </List>
-      <List
-        title="七个字标签"
-      >
-        <List.Body>
-          <InputItem
-            {...getFieldProps('label6')}
-            placeholder="内容"
-            clear
-            maxLength={10}
-            labelNumber={7}
-            onBlur={function (e) { console.log('onBlur'); console.log(e); }}
-            onFocus={function (e) { console.log('onFocus'); console.log(e); }}
-          >七个字标签七个</InputItem>
-        </List.Body>
-      </List>
-      <List
-        title="有边框,本期不实现"
-      >
-        <List.Body>
-          <InputItem
-            {...getFieldProps('zzzz', {
-              initialValue: '',
-              valuePropName: 'value',
-            })}
-            placeholder="内容"
-            clear
-            maxLength={10}
-            onBlur={function (e) { console.log('onBlur'); console.log(e); }}
-            onFocus={function (e) { console.log('onFocus'); console.log(e); }}
-          >五个字标签</InputItem>
-        </List.Body>
-      </List>
-    </div>);
-  },
-});
+            {...getFieldProps('inputtitle2')}
+            placeholder="title can be icon，image or text"
+          >
+            <div style={{ backgroundImage: 'url(https://zos.alipayobjects.com/rmsportal/DfkJHaJGgMghpXdqNaKF.png)', backgroundSize: 'cover', height: '22px', width: '22px' }} />
+          </InputItem>
+        </List>
 
-BasicInput = createForm()(BasicInput);
-ReactDOM.render(<BasicInput />, mountNode);
+        <WhiteSpace />
+
+        <List renderHeader={() => 'Customize the extra content in the right'}>
+          <InputItem
+            {...getFieldProps('preice')}
+            placeholder="0.00"
+            extra="¥"
+          >价格</InputItem>
+        </List>
+
+        <WhiteSpace />
+        <List renderHeader={() => 'Format'}>
+          <InputItem
+            {...getFieldProps('bankCard', {
+              initialValue: '8888 8888 8888 8888',
+            })}
+            type="bankCard"
+          >银行卡</InputItem>
+          <InputItem
+            {...getFieldProps('phone')}
+            type="phone"
+            placeholder="186 1234 1234"
+          >手机号码</InputItem>
+          <InputItem
+            {...getFieldProps('password')}
+            type="password"
+            placeholder="****"
+          >密码</InputItem>
+          <InputItem
+            {...getFieldProps('number')}
+            type="number"
+            placeholder="click to show number keyboard"
+          >数字键盘</InputItem>
+        </List>
+
+        <WhiteSpace />
+
+        <List renderHeader={() => 'Not editable / Disabled'}>
+          <InputItem
+            value="Not editable"
+            editable={false}
+          >姓名</InputItem>
+          <InputItem
+            value="style of disabled `InputItem`"
+            disabled
+          >姓名</InputItem>
+        </List>
+      </div>
+    );
+  }
+}
+
+const BasicInputExampleWrapper = createForm()(BasicInputExample);
+ReactDOM.render(<BasicInputExampleWrapper />, mountNode);
+````
+
+````css
+.demoTitle:before,
+.demoTitle:after {
+  border-bottom: none;
+}
+````

@@ -1,12 +1,20 @@
 ---
 order: 0
-title: 标签类型
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
-标签类型分为选择型标签和只读型标签，只读型标签无交互过程，仅展示内容。
+## zh-CN
+
+Tag 分为两种类型：`selectable` / `readonly`, 后者是无交互的，尺寸更小，通常用于内容展示。
+
+## en-US
+
+There are two kinds of Tag, selectable and readonly type, the latter is a smaller tag without interactive behavior, which is typically used for display content.
 
 ````jsx
-import { Tag, WingBlank, WhiteSpace } from 'antd-mobile';
+import { Tag } from 'antd-mobile';
 
 function onChange(selected) {
   console.log(`tag selected: ${selected}`);
@@ -14,17 +22,34 @@ function onChange(selected) {
 
 ReactDOM.render(
   <div className="tag-container">
-    <WhiteSpace />
-    <WingBlank size={20}>
-      <Tag>通用标签</Tag>
-      <WhiteSpace />
-      <Tag disabled>失效标签</Tag>
-      <WhiteSpace />
-      <Tag selected>默认选中</Tag>
-      <WhiteSpace />
-      <Tag onChange={onChange}>事件回调</Tag>
-    </WingBlank>
-    <WhiteSpace />
+    <Tag data-seed="logId">Basic</Tag>
+    <Tag selected>Selected</Tag>
+    <Tag disabled>Disabled</Tag>
+    <Tag onChange={onChange}>Callback</Tag>
+    <Tag closable
+      onClose={() => {
+        console.log('onClose');
+      }}
+      afterClose={() => {
+        console.log('afterClose');
+      }}
+    >
+      Closable
+    </Tag>
+    <Tag small>Small and Readonly</Tag>
   </div>
-, mountNode);
+  , mountNode);
+````
+
+````css
+.tag-container{
+  display: flex;
+  padding-top: 9px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.tag-container > div {
+  margin-left: 9px;
+  margin-bottom: 9px;
+}
 ````
