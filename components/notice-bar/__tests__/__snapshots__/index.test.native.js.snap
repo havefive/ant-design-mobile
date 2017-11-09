@@ -7,6 +7,7 @@ exports[`NoticeBar renders correctly 1`] = `
   accessibilityTraits={undefined}
   accessible={true}
   hitSlop={undefined}
+  nativeID={undefined}
   onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -56,6 +57,7 @@ exports[`NoticeBar renders correctly 1`] = `
           "flex": 1,
           "marginRight": 15,
           "overflow": "hidden",
+          "width": 0,
         },
         Object {
           "marginLeft": 5,
@@ -74,6 +76,7 @@ exports[`NoticeBar renders correctly 1`] = `
       }
     >
       <View
+        collapsable={undefined}
         style={
           Object {
             "flexDirection": "row",
@@ -85,6 +88,7 @@ exports[`NoticeBar renders correctly 1`] = `
         <Text
           accessible={true}
           allowFontScaling={true}
+          disabled={false}
           ellipsizeMode="tail"
           numberOfLines={1}
           onLayout={[Function]}

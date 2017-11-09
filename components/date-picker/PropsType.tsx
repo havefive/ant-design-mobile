@@ -8,21 +8,18 @@ interface DatePickerProps {
   maxDate?: any;
   onChange?: (x: any) => void;
   onValueChange?: (vals: any, index: number) => void;
+  visible?: boolean;
+  onDismiss?: () => void;
   locale?: any;
   minuteStep?: number;
-  use12Hours?: boolean; // web only
   disabled?: boolean;
   format?: (x: any) => void;
   extra?: string;
   children?: any;
-  triggerTypes?: string; // rn only
-  styles?: any; // rn only
-  prefixCls?: string; // web only
-  className?: string; // web only
-  pickerPrefixCls?: string; // web only
-  popupPrefixCls?: string; // web only
-  dismissText?: string | React.ReactElement<any>; // React.ReactElement only for web
-  okText?: string | React.ReactElement<any>; // React.ReactElement only for web
+  /** React.ReactElement only for web */
+  dismissText?: string | React.ReactElement<any>;
+  /** React.ReactElement only for web */
+  okText?: string | React.ReactElement<any>;
 }
 
 export default DatePickerProps;

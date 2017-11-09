@@ -1,7 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
 import ReactCarousel from 'rmc-nuka-carousel';
-import CarouselProps from './PropsType';
+import BasePropsType from './PropsType';
+
+export interface CarouselProps extends BasePropsType {
+  className?: string;
+  prefixCls?: string;
+}
 
 export default class Carousel extends React.Component<CarouselProps, any> {
   static defaultProps = {
@@ -10,7 +15,6 @@ export default class Carousel extends React.Component<CarouselProps, any> {
     arrows: false,
     autoplay: false,
     infinite: false,
-    edgeEasing: 'linear',
     cellAlign: 'center',
     selectedIndex: 0,
     dotStyle: {},
@@ -49,20 +53,19 @@ export default class Carousel extends React.Component<CarouselProps, any> {
     };
 
     let Decorators: any[] = [];
-    const { selectedIndex: current } = this.state;
 
     if (dots) {
       Decorators = [{
-        component: ({ slideCount, slidesToScroll }) => {
+        component: ({ slideCount, slidesToScroll, currentSlide }) => {
           const arr: number[] = [];
           for (let i = 0; i < slideCount; i += slidesToScroll) {
             arr.push(i);
           }
           const dotDom = arr.map(index => {
             const dotCls = classnames(`${prefixCls}-wrap-dot`, {
-              [`${prefixCls}-wrap-dot-active`]: index === current,
+              [`${prefixCls}-wrap-dot-active`]: index === currentSlide,
             });
-            const _dotStyle = index === current ? dotActiveStyle : dotStyle;
+            const _dotStyle = index === currentSlide ? dotActiveStyle : dotStyle;
             return (
               <div className={dotCls} key={index}>
                 <span style={_dotStyle} />

@@ -11,7 +11,7 @@ exports[`renders ./components/activity-indicator/demo/basic.md correctly 1`] = `
       <p
         class="sub-title"
       >
-        icon without text
+        Without text
       </p>
       <div
         class="loading-example"
@@ -25,13 +25,10 @@ exports[`renders ./components/activity-indicator/demo/basic.md correctly 1`] = `
           />
         </div>
       </div>
-      <div
-        class="am-whitespace am-whitespace-xl"
-      />
       <p
         class="sub-title"
       >
-        icon with text
+        With text
       </p>
       <div
         class="loading-example"
@@ -50,13 +47,10 @@ exports[`renders ./components/activity-indicator/demo/basic.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="am-whitespace am-whitespace-xl"
-      />
       <p
         class="sub-title"
       >
-        icon with large size and customized text style
+        With large size and customized text style
       </p>
       <div
         class="loading-example"
@@ -73,7 +67,7 @@ exports[`renders ./components/activity-indicator/demo/basic.md correctly 1`] = `
             />
           </div>
           <span
-            style="margin-top:8px;"
+            style="margin-top:8px"
           >
             Loading...
           </span>
@@ -92,7 +86,7 @@ exports[`renders ./components/activity-indicator/demo/basic.md correctly 1`] = `
         role="button"
       >
         <span>
-          Click to show Toast
+          click to show Toast
         </span>
       </a>
       <div

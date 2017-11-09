@@ -44,7 +44,7 @@ exports[`renders ./components/switch/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-list-ripple"
-        style="display:none;"
+        style="display:none"
       />
     </div>
     <div
@@ -78,7 +78,7 @@ exports[`renders ./components/switch/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-list-ripple"
-        style="display:none;"
+        style="display:none"
       />
     </div>
     <div
@@ -113,7 +113,7 @@ exports[`renders ./components/switch/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-list-ripple"
-        style="display:none;"
+        style="display:none"
       />
     </div>
     <div
@@ -149,7 +149,7 @@ exports[`renders ./components/switch/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-list-ripple"
-        style="display:none;"
+        style="display:none"
       />
     </div>
     <div
@@ -184,7 +184,7 @@ exports[`renders ./components/switch/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-list-ripple"
-        style="display:none;"
+        style="display:none"
       />
     </div>
     <div
@@ -213,14 +213,14 @@ exports[`renders ./components/switch/demo/basic.md correctly 1`] = `
             />
             <div
               class="checkbox"
-              style="background-color:red;"
+              style="background-color:red"
             />
           </label>
         </div>
       </div>
       <div
         class="am-list-ripple"
-        style="display:none;"
+        style="display:none"
       />
     </div>
     <div
@@ -255,7 +255,7 @@ exports[`renders ./components/switch/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-list-ripple"
-        style="display:none;"
+        style="display:none"
       />
     </div>
     <div
@@ -284,14 +284,14 @@ exports[`renders ./components/switch/demo/basic.md correctly 1`] = `
             />
             <div
               class="checkbox"
-              style="background-color:red;"
+              style="background-color:red"
             />
           </label>
         </div>
       </div>
       <div
         class="am-list-ripple"
-        style="display:none;"
+        style="display:none"
       />
     </div>
   </div>

@@ -10,7 +10,6 @@ button
 ````jsx
 import { Button, WhiteSpace, WingBlank } from 'antd-mobile';
 
-/* eslint global-require: 0 */
 const ButtonExample = () => (
   <WingBlank>
     <Button>default</Button><WhiteSpace />
@@ -24,29 +23,24 @@ const ButtonExample = () => (
 
     <Button loading>loading button</Button><WhiteSpace />
     <Button icon="check-circle-o">with icon</Button><WhiteSpace />
-    <Button icon={<img src="https://gw.alipayobjects.com/zos/rmsportal/jBfVSpDwPbitsABtDDlB.svg" className="my-icon" alt="icon" />}>with custom icon</Button><WhiteSpace />
+    <Button icon={<img src="https://gw.alipayobjects.com/zos/rmsportal/jBfVSpDwPbitsABtDDlB.svg" alt="" />}>with custom icon</Button><WhiteSpace />
 
     {/* <Button activeStyle={false}>无点击反馈</Button><WhiteSpace /> */}
     {/* <Button activeStyle={{ backgroundColor: 'red' }}>custom feedback style</Button><WhiteSpace /> */}
 
     <WhiteSpace />
     <Button type="primary" inline style={{ marginRight: '4px' }}>inline primary</Button>
-    <Button type="ghost" inline style={{ marginRight: '4px' }}>inline ghost</Button>
+    {/* use `am-button-borderfix`. because Multiple buttons inline arranged, the last one border-right may not display */}
+    <Button type="ghost" inline style={{ marginRight: '4px' }} className="am-button-borderfix">inline ghost</Button>
 
     <WhiteSpace />
     <Button type="primary" inline size="small" style={{ marginRight: '4px' }}>primary</Button>
     <Button type="primary" inline size="small" disabled>primary disabled</Button>
     <WhiteSpace />
     <Button type="ghost" inline size="small" style={{ marginRight: '4px' }}>ghost</Button>
-    <Button type="ghost" inline size="small" disabled>ghost disabled</Button>
+    {/* use `am-button-borderfix`. because Multiple buttons inline arranged, the last one border-right may not display */}
+    <Button type="ghost" inline size="small" className="am-button-borderfix" disabled>ghost disabled</Button>
   </WingBlank>
 );
 ReactDOM.render(<ButtonExample />, mountNode);
-````
-
-````css
-.my-icon {
-  width: 22px;
-  height: 22px;
-}
 ````

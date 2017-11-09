@@ -1,6 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
-import SwitchProps from './PropsType';
+import BasePropsType from './PropsType';
+
+export interface SwitchProps extends BasePropsType {
+  prefixCls?: string;
+  className?: string;
+  platform?: string;
+}
 
 export default class Switch extends React.Component<SwitchProps, any> {
   static defaultProps = {
@@ -8,9 +14,9 @@ export default class Switch extends React.Component<SwitchProps, any> {
     name: '',
     checked: false,
     disabled: false,
-    onChange() {},
+    onChange() { },
     platform: 'ios',
-    onClick() {},
+    onClick() { },
   };
 
   onChange = (e) => {
@@ -55,22 +61,22 @@ export default class Switch extends React.Component<SwitchProps, any> {
     }
 
     return (<label className={wrapCls}>
-        <input
-          type="checkbox"
-          name={name}
-          className={`${prefixCls}-checkbox`}
-          disabled={disabled}
-          checked={checked}
-          onChange={this.onChange}
-          value={checked ? 'on' : 'off'}
-          {...(!disabled ? { onClick: this.onClick } : {})}
-          {...globalProps}
-        />
-        <div
-          className={fackInputCls}
-          style={style}
-          {...(disabled ? { onClick: this.onClick } : {})}
-        />
-      </label>);
+      <input
+        type="checkbox"
+        name={name}
+        className={`${prefixCls}-checkbox`}
+        disabled={disabled}
+        checked={checked}
+        onChange={this.onChange}
+        value={checked ? 'on' : 'off'}
+        {...(!disabled ? { onClick: this.onClick } : {})}
+        {...globalProps}
+      />
+      <div
+        className={fackInputCls}
+        style={style}
+        {...(disabled ? { onClick: this.onClick } : {})}
+      />
+    </label>);
   }
 }

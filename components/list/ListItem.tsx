@@ -1,8 +1,20 @@
 /* tslint:disable:jsx-no-multiline-js */
 import React from 'react';
 import classnames from 'classnames';
-import { ListItemProps, BriefProps } from './PropsType';
+import { ListItemProps as ListItemBasePropsType, BriefProps as BriefBasePropsType } from './PropsType';
 import TouchFeedback from 'rmc-feedback';
+
+export interface ListItemProps extends ListItemBasePropsType {
+  prefixCls?: string;
+  className?: string;
+  role?: string;
+}
+
+export interface BriefProps extends BriefBasePropsType {
+  prefixCls?: string;
+  className?: string;
+  role?: string;
+}
 
 export class Brief extends React.Component<BriefProps, any> {
   render() {
@@ -108,6 +120,7 @@ class ListItem extends React.Component<ListItemProps, any> {
       [`${prefixCls}-arrow-vertical`]: arrow === 'down' || arrow === 'up',
       [`${prefixCls}-arrow-vertical-up`]: arrow === 'up',
     });
+
     const content = <div
       {...otherProps}
       onClick={(ev) => {
@@ -126,8 +139,17 @@ class ListItem extends React.Component<ListItemProps, any> {
       <div style={coverRippleStyle} className={rippleCls} />
     </div>;
 
+    const touchProps = {};
+    Object.keys(otherProps).forEach(key => {
+      if (/onTouch/i.test(key)) {
+        touchProps[key] = otherProps[key];
+        delete otherProps[key];
+      }
+    });
+
     return (
       <TouchFeedback
+        {...touchProps}
         disabled={disabled || !onClick}
         activeStyle={activeStyle}
         activeClassName={`${prefixCls}-item-active`}

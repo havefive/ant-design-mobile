@@ -22,8 +22,9 @@ const App = () => {
     <div className="am-slider-example">
       <WhiteSpace size="lg" />
       <WingBlank size="lg">
-        <p className="title">Basic Range</p>
+        <p className="sub-title">Basic range</p>
         <Range
+          style={{ marginLeft: 30, marginRight: 30 }}
           min={0}
           max={20}
           defaultValue={[3, 10]}
@@ -33,8 +34,9 @@ const App = () => {
       </WingBlank>
       <WhiteSpace size="lg" />
       <WingBlank size="lg">
-        <p className="title">Disabled Range</p>
+        <p className="sub-title">Disabled range</p>
         <Range
+          style={{ marginLeft: 30, marginRight: 30 }}
           min={0}
           max={20}
           defaultValue={[3, 10]}
@@ -45,8 +47,9 @@ const App = () => {
       </WingBlank>
       <WhiteSpace size="lg" />
       <WingBlank size="lg">
-        <p className="title">Range with Customized Style</p>
+        <p className="sub-title">Range with customized style</p>
         <Range
+          style={{ marginLeft: 30, marginRight: 30 }}
           min={0}
           max={20}
           defaultValue={[3, 10]}
@@ -76,5 +79,11 @@ ReactDOM.render(<App />, mountNode);
 }
 .demo-preview-item .am-slider-wrapper:last-child {
   margin-bottom: 10px;
+}
+.sub-title {
+  color: #888;
+  font-size: 14px;
+  padding: 30px 0 18px 0;
+  margin: 0;
 }
 ````

@@ -31,19 +31,17 @@ class App extends React.Component {
       <div>
         <WingBlank>
           <div className="loading-container">
-            <p className="sub-title">icon without text</p>
+            <p className="sub-title">Without text</p>
             <div className="loading-example">
               <ActivityIndicator animating />
             </div>
-            <WhiteSpace size="xl" />
-            <p className="sub-title">icon with text</p>
+            <p className="sub-title">With text</p>
             <div className="loading-example">
               <ActivityIndicator
                 text="Loading..."
               />
             </div>
-            <WhiteSpace size="xl" />
-            <p className="sub-title">icon with large size and customized text style</p>
+            <p className="sub-title">With large size and customized text style</p>
             <div className="loading-example">
               <div className="align">
                 <ActivityIndicator size="large" />
@@ -53,7 +51,7 @@ class App extends React.Component {
           </div>
           <div className="toast-container">
             <WhiteSpace size="xl" />
-            <Button onClick={this.showToast}>Click to show Toast</Button>
+            <Button onClick={this.showToast}>click to show Toast</Button>
             <div className="toast-example">
               <ActivityIndicator
                 toast

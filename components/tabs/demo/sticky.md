@@ -12,8 +12,8 @@ import { Tabs, WhiteSpace } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
 
 function renderTabBar(props) {
-  return (<Sticky style={{ zIndex: 1 }}>
-    <Tabs.DefaultTabBar {...props} />
+  return (<Sticky>
+    {({ style }) => <div style={{ ...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
   </Sticky>);
 }
 const tabs = [
@@ -31,13 +31,13 @@ const TabExample = () => (
         renderTabBar={renderTabBar}
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-          Content of First Tab
+          Content of first tab
         </div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-          Content of Second Tab
+          Content of second tab
         </div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-          Content of Third Tab
+          Content of third tab
         </div>
       </Tabs>
     </StickyContainer>

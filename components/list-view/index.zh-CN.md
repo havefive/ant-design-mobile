@@ -6,13 +6,12 @@ subtitle: 长列表
 ---
 
 适用于显示同类的长列表数据类型，对渲染性能有一定的优化效果。
-`ListView`经常和 [RefreshControl](https://mobile.ant.design/components/refresh-control-cn/) 搭配使用。
 
 ## API
 
-适用平台：WEB、React-Native(`DEPRECATED`)
+适用平台：WEB
 
-注意: **React Native [ListView](https://facebook.github.io/react-native/docs/listview.html#content) 现在已经被标记了`DEPRECATED`**。因为我们内部是直接从 'react-native' 里导入`ListView`，所以我们也将废弃 ListView RN 版本。
+> 注意: 我们使用 [react-native@0.26 ListView](http://facebook.github.io/react-native/releases/0.26/docs/listview.html) 的一些 API，尽管 react-native ListView 已经被官方标记为 `DEPRECATED`，但我们的 `WEB` 版本仍然正常工作。
 
 
 属性 | 说明 | 类型 | 默认值
@@ -33,15 +32,13 @@ subtitle: 长列表
 | onContentSizeChange | 此函数会在 ScrollView 内部可滚动内容的视图发生变化时调用。 | (contentWidth, contentHeight) => {} | - |
 | onScroll | 在滚动的过程中，每帧最多调用一次此回调函数。调用的频率可以用`scrollEventThrottle`属性来控制。| e => {} | - |
 | scrollEventThrottle | 控制在滚动过程中，scroll事件被调用的频率 | number | 50 |
-| refreshControl | 指定 [RefreshControl](https://mobile.ant.design/components/refresh-control-cn/) 组件，用于为ScrollView 提供下拉刷新功能。 | element | - |
 | onLayout | 当组件挂载或者布局变化的时候调用 | ({nativeEvent:{ layout:{ width, height }}}) => {} | - |
 | ---- |
 | renderBodyComponent (`web only`) | 自定义 body 的包裹组件 | () => renderable | - |
-| renderSectionBodyWrapper (`web only`) | 渲染自定义的区块包裹组件 | (sectionID) => renderable | - |
+| renderSectionWrapper (`web only`) | 渲染自定义的区块包裹组件 | (sectionID) => renderable | - |
+| renderSectionBodyWrapper (`web only`) | 渲染自定义的区块 body 包裹组件 | (sectionID) => renderable | - |
 | useBodyScroll (`web only`) | 使用 html 的 `body` 作为滚动容器 | bool | false |
-| useZscroller (`web only`) | 使用 [zscroller](https://github.com/yiminghe/zscroller) 来模拟实现滚动容器 (可用于一些低端 Android 机上)，注意：开启后`useBodyScroll`和`stickyHeader`设置会自动被忽略 | bool | false |
-| scrollerOptions (`web only`) | [zscroller options](https://github.com/yiminghe/zscroller#options) | Object | - |
-| stickyHeader (`web only`) | 固定区块标题到页面顶部 (注意: 设置后会自动使用 html 的 `body` 作为滚动容器)，启用后还可以设置 `stickyProps / stickyContainerProps` (详见 [react-sticky](https://github.com/captivationsoftware/react-sticky)) | bool | false |
+| pullToRefresh (`web only`) | 使用 pullToRefresh， 你需要和 `PullToRefresh` 组件一起使用 | bool | false |
 
 ### 方法
 
@@ -55,7 +52,7 @@ subtitle: 长列表
 
 此组件常用于 “通讯录”/“城市列表” 等场景中，支持索引导航功能。
 
-> 你可以使用 ListView 上的几乎所有 APIs，除了`useZscroller`
+> 你可以使用 ListView 上的几乎所有 APIs。
 >
 > 注意：由于索引列表可以点击任一项索引来定位其内容、即内容需要直接滚动到任意位置，这样就难以做到像 ListView 一样能在滚动时自动懒渲染。目前实现上只支持分两步渲染，能借此达到首屏优先显示目的，但如果列表数据量过大时、整体性能仍会有影响。
 
@@ -69,25 +66,26 @@ subtitle: 长列表
 | delayActivityIndicator | 延迟渲染的 loading 指示器 | react node | - |
 
 
-## 常见问题与实现原理
+## 提示
 
-- onEndReached 为什么会不停调用？ https://github.com/ant-design/ant-design-mobile/issues/520#issuecomment-263510596
-- 如何设置滚动到列表的某一位置？(例如，点击列表某一项进入另一个页面，再返回到原位置) #541
-- 其他问题：#633 #573
+ListView 有两种类型的滚动容器：
 
-ListView 有三种类型的滚动容器：
+1. 局部 div 容器
+    - 默认，注意：**需要手动给 ListView 设置高度**
+2. html 的 body 容器
+    - 设置`useBodyScroll`后生效 (不需要设置高度)
 
-1. html 的 body 容器
-2. 局部 div 容器 (通过 ref 获取到)
-3. 使用 zscroller 的模拟滚动容器
+<br />
 
-前两种获取到相应元素后，调用 scrollTo 方法、滚动到指定位置；
-第三种通过 ref 获取到组件对象、再获取到 domScroller 、调用 scrollTo 方法。
-但滚动到具体什么位置，业务上其实也比较难确定。
-
-另一问题：对 dataSource 对象变化时的处理方式是什么？何时调用 onEndReached 方法？
+对 dataSource 对象变化时的处理方式是什么？何时调用 onEndReached 方法？
 
 ListView 在 componentWillReceiveProps 里会监听 dataSource 对象的变化，并做一次
 [`this._renderMoreRowsIfNeeded()`](https://github.com/react-component/m-list-view/blob/90badfdb6e94093136c86e5874ce6054eae88a0d/src/ListView.js#L156) ，
 由于此时[`this.state.curRenderedRowsCount === this.props.dataSource.getRowCount()`](https://github.com/react-component/m-list-view/blob/90badfdb6e94093136c86e5874ce6054eae88a0d/src/ListView.js#L348)
 即已经渲染的数据与 dataSource 里已有的数据项个数相同，所以 ListView 认为应该再调用 onEndReached 方法。
+
+onEndReached 为什么会不停调用？[520#issuecomment-263510596](https://github.com/ant-design/ant-design-mobile/issues/520#issuecomment-263510596)
+
+<br />
+
+其他问题：[#633](https://github.com/ant-design/ant-design-mobile/issues/633) [#573](https://github.com/ant-design/ant-design-mobile/issues/573) [#541](https://github.com/ant-design/ant-design-mobile/issues/541)

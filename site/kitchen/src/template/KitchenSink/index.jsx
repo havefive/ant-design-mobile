@@ -1,4 +1,6 @@
 /* eslint arrow-body-style: 0 */
+/* eslint no-console:0 */
+
 import React from 'react';
 import { List, Icon } from 'antd-mobile';
 import { addLocaleData, IntlProvider, FormattedMessage } from 'react-intl';
@@ -26,7 +28,6 @@ export default class App extends React.Component {
     const appLocale = lang.toLowerCase() === 'zh-cn' ? cnLocale : enLocale;
     addLocaleData(appLocale.data);
     this.state = {
-      open: false,
       appLocale,
       cateOpend: [false, false, false, false, false, false, false],
       ...this.getStateCache(),
@@ -37,21 +38,33 @@ export default class App extends React.Component {
     if (window.parent && window.parent.postMessage) {
       window.parent.postMessage('kitchen_loaded', '/');
     }
+    if (this.state.scrollTop) {
+      setTimeout(() => {
+        document.documentElement.scrollTop = this.state.scrollTop;
+        document.body.scrollTop = this.state.scrollTop;
+      }, 500);
+    }
   }
 
   getStateCache = () => {
     try {
-      return JSON.parse(localStorage.getItem('_mobile-index-state'));
+      const data = JSON.parse(localStorage.getItem('_mobile-index-state'));
+      if (data && +new Date() - data.lastDate < 30 * 60000) {
+        return data;
+      }
     } catch (error) {
       console.warn('state cache get error:', error);
     }
     return {};
   }
 
-  setStateCache = (data) => {
+  setStateCache = (newData = {}) => {
     try {
+      const { appLocale, ...data } = this.state;
       localStorage.setItem('_mobile-index-state', JSON.stringify({
         ...data,
+        lastDate: +new Date(),
+        ...newData,
       }));
     } catch (error) {
       console.warn('state cache set error:', error);
@@ -62,13 +75,18 @@ export default class App extends React.Component {
     const { cateOpend } = this.state;
     cateOpend[index] = !cateOpend[index];
     this.setState({ cateOpend }, () => {
-      const { appLocale, ...data } = this.state;
-      this.setStateCache(data);
+      this.setStateCache({
+        scrollTop: 0,
+      });
     });
   }
 
   addSearch = () => {
     return window.location.search || '';
+  }
+
+  scrollTop = () => {
+    return document.documentElement.scrollTop || document.body.scrollTop;
   }
 
   render() {
@@ -78,7 +96,7 @@ export default class App extends React.Component {
     picked.components
       .filter(item => item.meta.filename.includes(appLocale.locale))
       .forEach((i) => {
-        const meta = i.meta;
+        const { meta } = i;
         if (!lists[meta.type]) {
           lists[meta.type] = [];
         }
@@ -117,7 +135,7 @@ export default class App extends React.Component {
           <div className="am-demo-bd">
             {
               Object.keys(lists)
-                .sort((a, b) => sort(config.categoryOrder[a], config.categoryOrder[b]))
+                .sort((a, b) => config.categoryOrder.indexOf(a) - config.categoryOrder.indexOf(b))
                 .map((cate, index) => (lists[cate].length ? (
                   <List
                     key={`${cate}-${index}`}
@@ -140,8 +158,13 @@ export default class App extends React.Component {
                             <List.Item
                               arrow="horizontal"
                               key={`${j.filename}-${cate}`}
-                              onClick={() => location.href = `${rootPath}/${paths[1]}${this.addSearch()}#${
-                                paths[1] + config.hashSpliter + j.order}`}
+                              onClick={() => {
+                                this.setStateCache({
+                                  scrollTop: this.scrollTop(),
+                                });
+                                window.location.href = `${rootPath}/${paths[1]}${this.addSearch()}#${
+                                  paths[1] + config.hashSpliter + j.order}`;
+                              }}
                             >
                               {`${item.title} ${appLocale.locale === 'zh-CN' ? item.subtitle : ''}-${j.title[appLocale.locale]}`}
                             </List.Item>
@@ -151,7 +174,12 @@ export default class App extends React.Component {
                           <List.Item
                             arrow="horizontal"
                             key={`${item.filename}-${cate}`}
-                            onClick={() => { location.href = `${rootPath}/${paths[1]}${this.addSearch()}`; }}
+                            onClick={() => {
+                              this.setStateCache({
+                                scrollTop: this.scrollTop(),
+                              });
+                              window.location.href = `${rootPath}/${paths[1]}${this.addSearch()}`;
+                            }}
                           >
                             {`${item.title} `}
                             {!item.subtitle || appLocale.locale === 'en-US' ? null : item.subtitle}

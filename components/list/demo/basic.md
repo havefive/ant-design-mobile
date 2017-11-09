@@ -23,7 +23,7 @@ class ListExample extends React.Component {
         <Item extra={'extra content'}>Title</Item>
       </List>
       <List renderHeader={() => 'Subtitle'} className="my-list">
-        <Item arrow="horizontal" multipleLine>
+        <Item arrow="horizontal" multipleLine onClick={() => {}}>
           Title <Brief>subtitle</Brief>
         </Item>
         <Item
@@ -62,7 +62,13 @@ class ListExample extends React.Component {
           arrow="horizontal"
           onClick={() => {}}
         >My wallet</Item>
-        <Item thumb="https://zos.alipayobjects.com/rmsportal/UmbJMbWOejVOpxe.png" arrow="horizontal">My Cost Ratio</Item>
+        <Item
+          thumb="https://zos.alipayobjects.com/rmsportal/UmbJMbWOejVOpxe.png"
+          onClick={() => {}}
+          arrow="horizontal"
+        >
+          My Cost Ratio
+        </Item>
       </List>
       <List renderHeader={() => 'Text Wrapping'} className="my-list">
         <Item data-seed="logId">Single line，long text will be hidden with ellipsis；</Item>
@@ -78,7 +84,7 @@ class ListExample extends React.Component {
         <Item disabled={this.state.disabled} extra="" onClick={() => { console.log('click', this.state.disabled); this.setState({ disabled: true }); }}>Click to disable</Item>
         <Item>
           <select defaultValue="1">
-            <option value="1">html select element</option>
+            <option value="1">Html select element</option>
             <option value="2" disabled>Unable to select</option>
             <option value="3">option 3</option>
           </select>

@@ -13,10 +13,17 @@ Each icon has its own semantic naming，the naming rules are as follows:
 
 ## How to Use (WEB)
 
-
 ```html
 <Icon type="check" />
 ```
+
+### Tips
+
+Now, we only support the built-in 'check-circle', 'check', 'check-circle-o', 'cross-circle', 'cross', 'cross-circle-o', 'up' , 'left', 'right', 'ellipsis', 'loading' these icon types, **no longer support other custom types of icon**. If you need to use your custom icon type, there are several ways:
+
+1. view svg icon document for 1.x => 2.0 in [/docs/react/upgrade-notes](/docs/react/upgrade-notes#1.x-=>-2.0)
+2. Use your own iconfont file
+3. Other methods, you can reuse the `.am-icon` style name we have provided
 
 
 ## How to Use (React-Native)
@@ -43,4 +50,4 @@ Support：WEB、React-Native
 |------------|----------------|----------------|--------------|
 | type    |   string name of built-in icon for `WEB` or unicode string for `RN`    | String   |
 | size    |   icon size     | 'xxs'/'xs'/'sm'/'md'/'lg' (`RN/WEB`)/ number(`RN Only`)  | `md` |
-| color(`RN Only`) | icon color  | Color | '#000' |
+| color   | icon color  | Color | '#000' |

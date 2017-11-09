@@ -15,7 +15,7 @@ import { Carousel, WhiteSpace, WingBlank } from 'antd-mobile';
 class App extends React.Component {
   state = {
     data: ['', '', ''],
-    initialHeight: 200,
+    initialHeight: 176,
   }
   componentDidMount() {
     // simulate img loading
@@ -29,7 +29,7 @@ class App extends React.Component {
     const hProp = this.state.initialHeight ? { height: this.state.initialHeight } : {};
     return (
       <WingBlank>
-        <div className="sub-title">normal</div>
+        <div className="sub-title">Normal</div>
         <Carousel
           className="my-carousel"
           autoplay={false}
@@ -42,8 +42,8 @@ class App extends React.Component {
           {this.state.data.map(ii => (
             <a href="http://www.baidu.com" key={ii} style={hProp}>
               <img
-                src={`https://zos.alipayobjects.com/rmsportal/${ii || 'QcWDkUhvYIVEcvtosxMF'}.png`}
-                alt="icon"
+                src={`https://zos.alipayobjects.com/rmsportal/${ii}.png`}
+                alt=""
                 onLoad={() => {
                   // fire window resize event to change height
                   window.dispatchEvent(new Event('resize'));
@@ -57,7 +57,7 @@ class App extends React.Component {
         </Carousel>
 
         <WhiteSpace />
-        <div className="sub-title">vertical</div>
+        <div className="sub-title">Vertical</div>
         <Carousel className="my-carousel"
           vertical
           dots={false}
@@ -66,13 +66,13 @@ class App extends React.Component {
           autoplay
           infinite
         >
-          <div className="v-item">Carousel 1</div>
-          <div className="v-item">Carousel 2</div>
-          <div className="v-item">Carousel 3</div>
+          <div className="v-item">carousel 1</div>
+          <div className="v-item">carousel 2</div>
+          <div className="v-item">carousel 3</div>
         </Carousel>
 
         <WhiteSpace />
-        <div className="sub-title">lottery</div>
+        <div className="sub-title">Lottery</div>
         <Carousel className="my-carousel"
           vertical
           dots={false}
@@ -97,7 +97,6 @@ ReactDOM.render(<App />, mountNode);
 ````
 ````css
 .my-carousel {
-  background: #fff;
 }
 .my-carousel a {
   display: inline-block;

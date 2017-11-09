@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from './Modal';
+import closest from '../_util/closest';
 import { Action } from './PropsType';
 
 export default function operation(
@@ -34,6 +35,16 @@ export default function operation(
     return button;
   });
 
+  function onWrapTouchStart(e) {
+    if (!/iPhone|iPod|iPad/i.test(navigator.userAgent)) {
+      return;
+    }
+    const pNode = closest(e.target, `.am-modal-footer`);
+    if (!pNode) {
+      e.preventDefault();
+    }
+  }
+
   ReactDOM.render(
     <Modal
       visible
@@ -48,6 +59,7 @@ export default function operation(
       maskTransitionName="am-fade"
       className="am-modal-operation"
       platform={platform}
+      wrapProps={{ onTouchStart: onWrapTouchStart }}
     /> , div,
   );
 

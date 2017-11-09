@@ -7,54 +7,39 @@ Here list some of main incompatible changes and recommended changes in the upgra
 
 ## 1.x => 2.0
 
-Very pleased to inform you, `antd-mobile@2.0` has entered a relatively stable beta version of the state. Relative to 1.x, `antd-mobile@2.0` is faster, more lightweight, easier to get started. welcome to start using!
-
-### 2.x Major changes overview
-
-- "Web page HD display" / "SVG Icon" optimization features, Changed from "built-in" to "external", significantly reducing the complexity of getting started.
-- Remove `moment.js` /` hammer.js` and other heavyweight dependencies.
-- Delete the not commonly used `Table` component and merge the `Popup` component into the `Modal`.
-- Refactor `Tabs` / `Modal` components to reduce size and optimize functionality.
-- Add the `Calendar` / `DatePickerView` components to meet more business scenario requirements.
-
 ### 2.x Breaking changes
 
 #### HD program
 
-In 1.x, we use the HD program [script](https://gw.alipayobjects.com/os/rmsportal/dVgyohpfmDMFFeDasFns.js) and the [pxtorem](https://github.com/cuth/postcss-pxtorem) tool, Use the physical pixels width of the iPhone6 as a benchmark (`750px`), use `rem` to make the page scale scaling, finally to the page display high-definition effects.
-
-In 2.0, we changed the "HD" scheme from "built-in" to "external", return to the most popular way, that is, all the defaults are changed to the logical pixels width of iPhone6 `375px` (ideal viewport width). And the default is no longer provided `rem` unit usage example.
+> If you do not use viewport scale in your code, you can skip this step.
 
 How to upgrade?
 
 1. make sure add a `data-scale` attibute in your `html` tag, eg: `<html data-scale="true"></html>`, or you can do it through js, eg: `document.documentElement.setAttribute('data-scale', true);`.
 
-2.Follow [Customize Theme Doc](https://ant.design/docs/react/customize-theme)  to modify antd-mobile theme variable `@hd` to be `@hd: '2px'`.
+2.Follow [Customize Theme Doc](https://mobile.ant.design/docs/react/customize-theme) to modify antd-mobile theme variable `@hd` to be `2px`.
 
 #### svg icon
 
-In 2.0, `Icon.props.type` no longer support require a locale svg file，only can accept a  `string` which represent icon name.
+How to upgrade, depend on which case you use:
 
-1. If you previously use Icon like this way： `<Icon type="loading" />`, no need to do any change. ( As for how many icon names are supported, see [Icon Doc](http://beta.mobile.ant.design/components/icon))。
+1. If you previously only use antd-mobile built-in Icon like this： `<Icon type="loading" />`, no need to do any change.
+2. If you previously use your local svg file to do custom Icon like this way： `<Icon type={require('../foo.svg')} />`. Suggest you follow below solution:
 
-2.  If you previously use Icon like this way： `<Icon type={require('../foo.svg')} />`. Suggest you follow below solution:
+```diff
+- import { Icon } from 'antd-mobile';
+- <Icon type={require('./foo.svg)'} />
 
-```jsx
-// your previously code
-import { Icon } from 'antd-mobile';
-
-<Icon type={require('./foo.svg)'} />
-
-// need to modify to like below way
-const CustomIcon = ({ type, className = '', size = 'md', ...restProps }) => (
-    <svg
-      className={`am-icon am-icon-${type.substr(1)} am-icon-${size} ${className}`}
-      {...restProps}
-    >
-      <use xlinkHref={type} />
-    </svg>
-);
-<CustomIcon type={require('./foo.svg)'} />
++ const CustomIcon = ({ type, className = '', size = 'md', ...restProps }) => (
++     <svg
++       className={`am-icon am-icon-${type.substr(1)} am-icon-${size} ${className}`}
++       {...restProps}
++     >
++       <use xlinkHref={type} /> {/* svg-sprite-loader@0.3.x */}
++       {/* <use xlinkHref={#${type.default.id}} /> */} {/* svg-sprite-loader@lastest */}
++     </svg>
++ );
++ <CustomIcon type={require('./foo.svg)'} />
 ```
 
 #### DatePicker
@@ -118,6 +103,19 @@ const tabs = [
 </Tabs>
 ```
 
+#### TabBar
+The `Bar`'s style of TabBar is no longer use `fixed`, `TabBar`'s height, position is determined by wrapper，improve layout flexibility.
+
+easy to upgrade:
+
+```jsx
+<div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
+  <TabBar>...</TabBar>
+</div>
+```
+
+(more detail: [TabBar Demo](http://mobile.ant.design/components/tab-bar-cn/))
+
 #### Popup
 
 Since the underlying dependencies and bulk styles of the Popup component are the same as the Modal component, and the API call method of the `Popup.show ()` is difficult to update the data, we removed the Popup component and added `popup` prop to the Modal component to implement the Popup component's functionality.
@@ -138,12 +136,39 @@ Example of implementing Popup using Modal components:
 + </Modal>
 ```
 
+#### ListView & RefreshControl
+
+**Note: they have very big optimization from `beta.6` version**. If you have used the `useZscroller` prop of the `ListView` before, or the `RefreshControl` component. You need to follow new usage.
+
+Now `useZscroller` `scrollerOptions` `refreshControl` these props no longer work. **Use the web's native scroller instead of zscroller, using the `PullToRefresh` component instead of the `RefreshControl` component**.
+
+Upgrade example:
+
+  ```diff
+  - import { ListView, RefreshControl } from 'antd-mobile';
+  + import { ListView, PullToRefresh } from 'antd-mobile';
+  <ListView
+     dataSource={this.state.dataSource}
+  -  refreshControl={<RefreshControl
+  +  pullToRefresh={<PullToRefresh
+       refreshing={this.state.refreshing}
+       onRefresh={this.onRefresh}
+  -    icon={this.renderCustomIcon()}
+  +    indicator={{ deactivate: '下拉' }}
+     />}
+  />
+  ```
+
+> **Note: we do not recommend using simulated scroller**. If you have special needs insisted on using it. Please see [list-view zscroller](https://github.com/react-component/m-list-view/blob/master/HISTORY.md#zscroller) for details.
+
+
 #### Others
 
 - Delete the `Table` component, and you can use [rc-table](https://github.com/react-component/table) instead.
 - Each component's `ref` changed from `string` to `function` (e.g. `input` component: `this.refs.input` => `this.input`)
 - Part of the Web's components styles were differ from the UA of iOS or Android platform, but now all components use iOS platform styles as default.
 - For `Button` / `InputItem` / `TextareaItem` / `Progress` / `List`/ `Result`/ `Switch` / `Slider` / `Flex` / `pagination` / `ActionSheet` components, Their detail styles or APIs have some fine tuning.
+- `ListView`'s sticky feature change from "built-in" to "external".
 
 For more details, please see change logs.
 

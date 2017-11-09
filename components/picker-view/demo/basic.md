@@ -2,7 +2,7 @@
 order: 0
 title:
   zh-CN: 选择器
-  en-US: 'Picker View'
+  en-US: 'Basic'
 ---
 
 ````jsx
@@ -40,10 +40,14 @@ class PickerViewExample extends React.Component {
       value,
     });
   }
+  onScrollChange = (value) => {
+    console.log(value);
+  }
   render() {
     return (
       <PickerView
         onChange={this.onChange}
+        onScrollChange={this.onScrollChange}
         value={this.state.value}
         data={seasons}
         cascade={false}

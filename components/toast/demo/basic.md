@@ -5,7 +5,6 @@ title:
   en-US: Basic
 ---
 
-text、icon、success、failure、offline、loading
 
 ````jsx
 import { Toast, WhiteSpace, WingBlank, Button } from 'antd-mobile';
@@ -42,28 +41,40 @@ const customIcon = () => (
   </svg>
 );
 
-/* eslint global-require: 0 */
-const ToastExample = () => (
-  <WingBlank>
-    <WhiteSpace />
-    <Button onClick={showToast}>Text toast</Button>
-    <WhiteSpace />
-    <Button onClick={showToastNoMask}>Without mask</Button>
-    <WhiteSpace />
-    <Button onClick={() => Toast.info(customIcon(), 1)}>
-      Cumstom Icon
-    </Button>
-    <WhiteSpace />
-    <Button onClick={successToast}>Success toast</Button>
-    <WhiteSpace />
-    <Button onClick={failToast}>Failed toast</Button>
-    <WhiteSpace />
-    <Button onClick={offline}>Network failure toast</Button>
-    <WhiteSpace />
-    <Button onClick={loadingToast}>Loading toast</Button>
-    <WhiteSpace />
-  </WingBlank>
-);
+class ToastExample extends React.Component {
+  componentDidMount() {
+    Toast.loading('Loading...', 30, () => {
+      console.log('Load complete !!!');
+    });
+
+    setTimeout(() => {
+      Toast.hide();
+    }, 3000);
+  }
+  render() {
+    return (
+      <WingBlank>
+        <WhiteSpace />
+        <Button onClick={showToast}>text only</Button>
+        <WhiteSpace />
+        <Button onClick={showToastNoMask}>without mask</Button>
+        <WhiteSpace />
+        <Button onClick={() => Toast.info(customIcon(), 1)}>
+          cumstom icon
+        </Button>
+        <WhiteSpace />
+        <Button onClick={successToast}>success</Button>
+        <WhiteSpace />
+        <Button onClick={failToast}>fail</Button>
+        <WhiteSpace />
+        <Button onClick={offline}>network failure</Button>
+        <WhiteSpace />
+        <Button onClick={loadingToast}>loading</Button>
+        <WhiteSpace />
+      </WingBlank>
+    );
+  }
+}
 
 ReactDOM.render(<ToastExample />, mountNode);
 ````

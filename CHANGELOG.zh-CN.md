@@ -14,19 +14,54 @@ toc: false
 * 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 ---
+### 2.0.2
+
+`2017-11-04`
+
+- **Bug Fix**
+
+  - Fix：使用了（含） `List.Item` 的组件绑定 onTouch 事件不生效；
+  - Fix: Tabs z-index 值太高引起遮挡问题; ([#2014](https://github.com/ant-design/ant-design-mobile/issues/2014))
+  - Fix: Picker onOk 触发问题；([#2042](https://github.com/ant-design/ant-design-mobile/issues/2042))
+
+- **Enhancement**
+
+  - RN stepper 默认输入框使用数字键盘；
+
+### 2.0.1
+
+`2017-10-28`
+
+- **Bug Fix**
+
+  - Fix `Modal` android 下按钮事件触发多次 ([#1975](https://github.com/ant-design/ant-design-mobile/issues/1975)).
+  - Fix: `Accordion` 在 RN > 0.49 下 crash ([#1969](https://github.com/ant-design/ant-design-mobile/pull/1969))
+  - Fix: `Toast` 在 componentDidMount 下不显示和 react@16 不兼容 ([#1980](https://github.com/ant-design/ant-design-mobile/issues/1980))
+  - Fix: `Modal.alert/prompt` 按钮 iOS 下关闭失效；([#1976](https://github.com/ant-design/ant-design-mobile/issues/1976))
+  - Fix: `Modal` RN 下 promise 失效;
+  - Fix: `Picker/DatePicker` 不能设置 `okText/dismissText/extra`； ([#1984](https://github.com/ant-design/ant-design-mobile/issues/1984))
+  - Fix: `Picker` RN 国际化失效；([#2001](https://github.com/ant-design/ant-design-mobile/issues/2001))
+  - Fix: `SearchBar` clear icon 遮盖 input 输入内容；([#2010](https://github.com/ant-design/ant-design-mobile/issues/2010))
+  - Fix: `SearchBar` clear 不能 focus；
+  - Fix: `TextareaItem` autoHeight 在 RN@49 下 crash; ([#1970](https://github.com/ant-design/ant-design-mobile/issues/1970))
+
 
 ### 2.0.0
 
-`2017-xx-xx`
+`2017-10-20`
 
 - **Feature**
 
   - [Web] `DatePicker`新增 API `use12Hours`, 支持 12 小时制 ([#1578](https://github.com/ant-design/ant-design-mobile/issues/1578))
   - [Web] `Button` 组件分别对应各个 type 新增各自的 disabled 状态样式
   - [Web] `Grid` 新增 `square` api, 支持高度自适应模式
+  - [Web] `Grid` 新增 `activeClassName`, `activeStyle` api, 支持自定义触摸反馈样式
   - [Web] `Modal.alert / Modal.prompt / Modal.opeartion` 新增可选参数 `platform`
+  - [Web] `ListView`(beta.3) 新增 pull-up 功能
   - [Web/RN] 新增 `DatePickerView` 组件，支持更灵活的时间选择器用法 ([#1232](https://github.com/ant-design/ant-design-mobile/issues/1232))
   - [Web/RN] 新增 `Calendar` 组件，支持跨日期的日期时间选择 ([#1610](https://github.com/ant-design/ant-design-mobile/issues/1610))
+  - [Web] `Picker` `SearchBar` 多语言支持
+  - [Web/RN] `NoticeBar` 增加自定义操作文案 action 属性 ([#1959](https://github.com/ant-design/ant-design-mobile/issues/1959))
 
 - **Break Change**
 
@@ -36,7 +71,7 @@ toc: false
   - [Web/RN] 各个组件的 `ref` 从 `string` 修改为 `function` ([#1354](https://github.com/ant-design/ant-design-mobile/issues/1354))
   - [Web/RN] 重构 `Tabs` 组件，底层重写，**APIs 大量更改**
   - [Web/RN] 去除 `Popup` 组件，给 `Modal` 组件新增 `popup` 属性，相应地 Modal 组件中原 `animationType` 属性开始支持 web 版本、用以标识 popup 弹出动画的类型 [#1125](https://github.com/ant-design/ant-design-mobile/issues/1125)
-  - [Web/RN] `InputItem` / `TextareaItem` 组件
+  - [Web/RN] `InputItem` / `TextareaItem` /`SearchBar` 组件
       - 将 `style` 属性传至 input(web) / TextInput(rn)
       - 去除 `focused` / `autoFocus` 属性 (用 `focus()` 实例方法实现同样效果)
   - [Web/RN] `DatePicker` 组件去除 moment.js 依赖
@@ -51,9 +86,23 @@ toc: false
   - [Web] 去除 `createTooltip` 组件，如果你需要 range/slider 带 tooltip 功能，你可以用 [react-component/slider/createSliderWithTooltip](https://github.com/react-component/slider/blob/master/src/createSliderWithTooltip.jsx) 实现
   - [Web] `Switch` 组件的 `style` 属性设置，从外围元素改为内层元素上
   - [Web] `Slider` 去除默认的 margin & padding 样式
+  - [Web] `Carousel` 的 `easing` 属性类型从 string 改为 Function
   - [Web] `Flex` 清理冗余 `align` 属性值 `top / middle / bottom`
+  - [Web] `ListView`(beta.3) 移除 `stickyHeader` 属性和 [react-sticky](https://github.com/captivationsoftware/react-sticky) 依赖，但是你仍然可以使用 react-sticky 和 `useBodyScroll` 属性来自己实现相应效果 (查看 demo)
+      > 因为 sticky 效果实际并不常用，而且不包含 UI，因此不适合集成在 ListView 里
+  - [Web] `RefreshControl`(beta.3) 修改内部的 dom className
+      - 从 `${prefixCls}-ptr` 改为 `${prefixCls}-indicator`
+      - 从 `${prefixCls}-ptr-icon` 改为 `${prefixCls}-indicator-icon-wrapper`
+      - 从 `${prefixCls}-ptr-loading` 改为 `${prefixCls}-indicator-loading-wrapper`
+  - [Web] `ListView`(beta.6) 新增 `pullToRefresh` 属性，移除 `useZscroller` `scrollerOptions` `refreshControl` `pullUpEnabled` `pullUpRefreshing` `pullUpOnRefresh` `pullUpDistanceToRefresh` `pullUpRenderer` 属性
+  - [Web] `RefreshControl`(beta.6) 已经被移除，请使用新增的 `PullToRefresh` 组件代替
+  - [RN] `RefreshControl`(beta.6) 已经被移除，请直接引用 react-native RefreshControl
   - [RN] `ActionSheet.showShareActionSheetWithOptions` 利用 react native `Share` 进行重新实现
   - [RN] `Button` 组件 style 里 `disabledRaw` / `disabledRawText` 修改为 `defaultDisabledRaw` / `defaultDisabledRawText`
+  - [Web] `NavBar`(rc.1) 修改属性 `iconName` 为 `icon`，你需要使用 `Icon` 组件或自定义图标
+  - [Web] `ActionSheet`(rc.1) 删除 `iconName` 属性，使用 `icon` 代替
+  - [RN] `ListView`(rc.3) 已经被移除，请直接引用 react-native ListView
+  - [Web/RN] `ImagePicker`(rc.3) 增加 `onFail` 属性，移除内置的 `Toast.fail` 提示
 
 - **Theme**
 
@@ -64,6 +113,53 @@ toc: false
   - 不再需要配置 `webpack.resolve`
   - `rmc-picker` 升级，简化 picker 相关的 dom 结构。（[#1593](https://github.com/ant-design/ant-design-mobile/issues/1593)）
   - 去除全局的 `user-select: none`。[#1793](https://github.com/ant-design/ant-design-mobile/issues/1793)
+
+## 1.7.1
+`2017-10-20`
+
+- Fix `InputItem`/`TextareaItem` 删除按钮不显示问题. ([#1955](https://github.com/ant-design/ant-design-mobile/issues/1955))
+
+## 1.7.0
+`2017-10-13`
+
+- **Feature**
+
+  - `Menu` 添加多选功能.
+
+- **Bug Fix**
+
+  - Fix `Icon` 拼写错误.
+  - Fix `Popover` 样式修复.
+  - Fix `Steps` 样式修复.
+
+## 1.6.10/1.6.11
+`2017-09-25`
+
+- **Bug Fix**
+
+  - Fix `InputItem` 不能 focus 在点击 clear icon 后.
+
+## 1.6.9
+`2017-09-25`
+
+- **Bug Fix**
+
+  - Fix `Modal.prompt` 聚焦延迟. ([#1857](https://github.com/ant-design/ant-design-mobile/issues/1857))
+  - Fix `TextareaItem` 当 `autoHeight` 属性为 true，且输入很多文字时，切换 active 元素导致页面滚动. ([#1858](https://github.com/ant-design/ant-design-mobile/issues/1858))
+  - Fix `Popvoer` ts 属性定义错误.
+
+- **Improve && Enhancement**
+
+  - Add `indicatorStyle` 和 `itemStyle` 属性用于 `Picker/PickerView`. ([#1856](https://github.com/ant-design/ant-design-mobile/issues/1856))
+
+## 1.6.8
+`2017-09-18`
+
+- **Bug Fix**
+
+  - Fix `segmented-control` 激活状态样式. ([#1832](https://github.com/ant-design/ant-design-mobile/issues/1832))
+  - Fix `InputItem` `TextareaItem` [类型定义](https://github.com/ant-design/ant-design-mobile/commit/5fd21d1539f19fe80fd415716d349d82c1a77408).
+  - Fix `swipe-action` [样式问题](https://github.com/ant-design/ant-design-mobile/commit/ab2297c64fcde0766b502b96349bc8824cbd8bff).
 
 ## 1.6.7
 `2017-09-11`

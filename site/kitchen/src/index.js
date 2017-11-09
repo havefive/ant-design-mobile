@@ -5,7 +5,7 @@ const _indexDemos = ['drawer'];
 const _subListDemos = ['list-view'];
 
 const pluginAntdConfig = {
-  babelConfig: {
+  babelConfig: JSON.stringify({
     plugins: [
       [
         require.resolve('babel-plugin-import'), {
@@ -14,8 +14,10 @@ const pluginAntdConfig = {
           libraryDirectory: 'components',
         },
       ],
+      require.resolve('babel-plugin-transform-class-properties'),
+      require.resolve('babel-plugin-transform-object-rest-spread'),
     ],
-  },
+  }),
 };
 
 module.exports = {

@@ -6,6 +6,12 @@ import RMCMultiPicker from 'rmc-picker/lib/MultiPicker';
 import RMCPicker from 'rmc-picker/lib/Picker';
 import treeFilter from 'array-tree-filter';
 import tsPropsType from './PropsType';
+import { getComponentLocale } from '../_util/getLocale';
+
+export interface PickerPropsType extends tsPropsType {
+  pickerPrefixCls?: string;
+  popupPrefixCls?: string;
+}
 
 export function getDefaultProps() {
   const defaultFormat = (values) => {
@@ -19,15 +25,13 @@ export function getDefaultProps() {
     format: defaultFormat,
     cols: 3,
     cascade: true,
-    extra: '请选择',
-    okText: '确定',
-    dismissText: '取消',
     title: '',
   };
 }
 
-export default abstract class AbstractPicker extends React.Component<tsPropsType, any> {
+export default abstract class AbstractPicker extends React.Component<PickerPropsType, any> {
   protected abstract popupProps: {};
+  private scrollValue: any;
 
   getSel = () => {
     const value = this.props.value || [];
@@ -42,15 +46,21 @@ export default abstract class AbstractPicker extends React.Component<tsPropsType
       });
     }
     return this.props.format && this.props.format(treeChildren.map((v) => {
-        return v.label;
-      }));
+      return v.label;
+    }));
   }
 
   getPickerCol = () => {
-    const { data, pickerPrefixCls } = this.props;
+    const { data, pickerPrefixCls, itemStyle, indicatorStyle } = this.props;
     return data.map((col, index) => {
       return (
-        <RMCPicker key={index} prefixCls={pickerPrefixCls} style={{ flex: 1 }}>
+        <RMCPicker
+          key={index}
+          prefixCls={pickerPrefixCls}
+          style={{ flex: 1 }}
+          itemStyle={itemStyle}
+          indicatorStyle={indicatorStyle}
+        >
           {col.map(item => {
             return (
               <RMCPicker.Item key={item.value} value={item.value}>
@@ -62,11 +72,44 @@ export default abstract class AbstractPicker extends React.Component<tsPropsType
       );
     });
   }
+
+  onOk = (v: any) => {
+    if (this.scrollValue !== undefined) {
+      v = this.scrollValue;
+    }
+    if (this.props.onChange) {
+      this.props.onChange(v);
+    }
+    if (this.props.onOk) {
+      this.props.onOk(v);
+    }
+  }
+
+  setScrollValue = (v: any) => {
+    this.scrollValue = v;
+  }
+
+  fixOnOk = (cascader: any) => {
+    if (cascader && cascader.onOk !== this.onOk) {
+      cascader.onOk = this.onOk;
+      cascader.forceUpdate();
+    }
+  }
+
+  onPickerChange = (v: any) => {
+    this.setScrollValue(v);
+    if (this.props.onPickerChange) {
+      this.props.onPickerChange(v);
+    }
+  }
+
   render() {
     const {
-      children, value = [], extra, okText, itemStyle, dismissText, popupPrefixCls,
-      cascade, prefixCls, pickerPrefixCls, data, cols, onPickerChange, ...restProps,
+      children, value = [], popupPrefixCls, itemStyle, indicatorStyle, okText, dismissText,
+      extra, cascade, prefixCls, pickerPrefixCls, data, cols, onOk, ...restProps,
     } = this.props;
+
+    const _locale = getComponentLocale(this.props, this.context, 'Picker', () => require('./locale/zh_CN'));
 
     let cascader;
     let popupMoreProps = {};
@@ -77,8 +120,10 @@ export default abstract class AbstractPicker extends React.Component<tsPropsType
           pickerPrefixCls={pickerPrefixCls}
           data={data}
           cols={cols}
-          onChange={onPickerChange}
+          onChange={this.onPickerChange}
+          onScrollChange={this.setScrollValue}
           pickerItemStyle={itemStyle}
+          indicatorStyle={indicatorStyle}
         />
       );
     } else {
@@ -86,7 +131,7 @@ export default abstract class AbstractPicker extends React.Component<tsPropsType
         <RMCMultiPicker
           style={{ flexDirection: 'row', alignItems: 'center' }}
           prefixCls={prefixCls}
-          pickerItemStyle={itemStyle}
+          onScrollChange={this.setScrollValue}
         >
           {this.getPickerCol()}
         </RMCMultiPicker>
@@ -103,11 +148,12 @@ export default abstract class AbstractPicker extends React.Component<tsPropsType
         {...restProps}
         prefixCls={popupPrefixCls}
         value={value}
-        dismissText={dismissText}
-        okText={okText}
+        dismissText={dismissText || _locale.dismissText}
+        okText={okText || _locale.okText}
         {...popupMoreProps}
+        ref={this.fixOnOk}
       >
-        {children && React.cloneElement(children, { extra: this.getSel() || extra })}
+        {children && React.cloneElement(children, { extra: this.getSel() || extra || _locale.extra })}
       </RMCPopupCascader>
     );
   }

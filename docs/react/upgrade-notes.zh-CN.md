@@ -7,57 +7,42 @@ title: 升级指南
 
 ## 1.x => 2.0
 
-很高兴的通知各位，`antd-mobile@2.0` 已经进入比较稳定的 beta 版本状态。相对于 1.x，`antd-mobile@2.0` 更快、更轻量、更容易上手。欢迎大家开始使用！
-
-### 2.x 主要变化概览
-
-- "Web 页面高清显示" / "SVG Icon" 等优化方案，从“内置”改为“外置”，显著降低上手使用的复杂度。
-- 去除 `moment.js` / `hammer.js` 等重量级底层依赖依赖。
-- 删除不常用的 `Table` 组件，把 `Popup` 组件合并到 `Modal` 组件中。
-- 重构 `Tabs` / `Modal` 组件，以减小体积、优化功能。
-- 新增 `Calendar` / `DatePickerView` 组件，满足更多业务场景需求。
-
-### 2.x 不兼容改动
+### 2.0 不兼容改动
 
 #### 高清方案
 
-在 1.x 中，我们使用 [高清方案脚本](https://gw.alipayobjects.com/os/rmsportal/dVgyohpfmDMFFeDasFns.js) 和 [pxtorem](https://github.com/cuth/postcss-pxtorem) 工具，使用 iPhone6 的物理像素宽度 `750px` 作为基准，并且使用 `rem` 来使页面等比缩放，最终达到页面高清显示的细腻效果。
-
-在 2.0 中，我们把“高清”方案从“内置”改为“外置”，默认回归到最大众化的方式，即所有样式默认都改为以 iPhone6 的逻辑像素宽度 `375px`(ideal viewport width) 为基准，默认不再提供 `rem` 单位用法示例。
+> 如果没有使用 `antd-mobile@1.x` 或者类似的 viewport 缩放方案则可以跳过这一步。
 
 如何升级？
 
-1. 确保在你页面的 html 标签上加上 `data-scale` 属性， 如 `<html data-scale="true"></html>`, 或者通过 js 动态添加 `document.documentElement.setAttribute('data-scale', true);`。
+1. 确保在页面的 html 标签上添加 `data-scale` 属性， 如 `<html data-scale="true"></html>`, 或者通过脚本动态添加 `document.documentElement.setAttribute('data-scale', true);`。
 
-2. 参照 [自定义主题文档](https://ant.design/docs/react/customize-theme-cn)  将 antd-mobile 提供的单位变量 `@hd` 赋值为 `@hd: '2px'`。
+2. 参照 [自定义主题文档](https://mobile.ant.design/docs/react/customize-theme-cn) 将 antd-mobile 提供的主题变量 `@hd` 赋值为 `2px`。
 
 
-#### svg icon
+#### Icon
 
-在 2.0 中 `Icon.props.type` 不再支持传入 require 的本地 svg 文件，只支持传入 `string` 形式的 Icon 名称。
+如何升级，分如下两种情况？
 
-如何升级？
 
-1. 对于原有代码中 `<Icon type="loading" />` 此类传入字符串的 icon 名称的使用场景，无需任何修改，仍然支持 (具体支持哪些 icon name, 请查阅 [文档](http://beta.mobile.ant.design/components/icon-cn))。
+1. 对于 `<Icon type="loading" />` 此类使用 antd-mobile 内置 Icon 的场景，无需任何修改。
 
-2. 对于原有代码有 `<Icon type={require('../foo.svg')} />` 如何升级 ？ 建议用一个自定义的 `AntdMobileOldIcon` 组件替换 antd-mobile `Icon`, 可直接 copy 如下的代码：
+2. 对于 `<Icon type={require('../foo.svg')} />` 此类使用本地 svg 文件的场景，建议用保留 svg-sprite-loader 相关配置不变，然后使用自定义的 `CustomIcon` 组件替换 antd-mobile `Icon`，示例如下：
 
-```jsx
-// 原来的使用方式
-import { Icon } from 'antd-mobile';
+```diff
+- import { Icon } from 'antd-mobile';
+- <Icon type={require('./foo.svg)'} />
 
-<Icon type={require('./foo.svg)'} />
-
-// 修改成
-const CustomIcon = ({ type, className = '', size = 'md', ...restProps }) => (
-    <svg
-      className={`am-icon am-icon-${type.substr(1)} am-icon-${size} ${className}`}
-      {...restProps}
-    >
-      <use xlinkHref={type} />
-    </svg>
-);
-<CustomIcon type={require('./foo.svg)'} />
++ const CustomIcon = ({ type, className = '', size = 'md', ...restProps }) => (
++     <svg
++       className={`am-icon am-icon-${type.substr(1)} am-icon-${size} ${className}`}
++       {...restProps}
++     >
++       <use xlinkHref={type} /> {/* svg-sprite-loader@0.3.x */}
++       {/* <use xlinkHref={#${type.default.id}} /> */} {/* svg-sprite-loader@lastest */}
++     </svg>
++ );
++ <CustomIcon type={require('./foo.svg)'} />
 ```
 
 #### DatePicker
@@ -121,6 +106,17 @@ const tabs = [
 </Tabs>
 ```
 
+#### TabBar
+底部Bar将不再使用 `fixed` 样式，整个 `TabBar` 的高度、位置将由外层决定，提高布局灵活性。
+
+简单的升级方案：
+在TabBar外层包裹一个div，可参见 [TabBar Demo](http://mobile.ant.design/components/tab-bar-cn/)。
+```jsx
+<div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
+  <TabBar>...</TabBar>
+</div>
+```
+
 #### Popup
 
 由于 Popup 组件的底层依赖和大量样式都与 Modal 组件相同，并且 `Popup.show()` 的 API 调用方法在数据更新时遇到困难，因此我们删除了 Popup 组件，并且在 Modal 组件上增加 `popup` 属性、来实现 Popup 组件的功能。
@@ -141,14 +137,48 @@ const tabs = [
 + </Modal>
 ```
 
+#### ListView & RefreshControl
+
+**注意: 从 `beta.6` 版本开始，他们有很大的优化**，如果你之前有使用 ListView 的 `useZscroller` 属性、或者 `RefreshControl` 组件，你需要按新的用法来升级。
+
+现在 `useZscroller` `scrollerOptions` `refreshControl` 这些属性不再起作用。**使用 web 的原生 scroller 来代替 zscroller，使用 `PullToRefresh` 组件来代替 `RefreshControl` 组件**。
+
+升级示例:
+
+  ```diff
+  - import { ListView, RefreshControl } from 'antd-mobile';
+  + import { ListView, PullToRefresh } from 'antd-mobile';
+  <ListView
+     dataSource={this.state.dataSource}
+  -  refreshControl={
+  -    <RefreshControl
+  -      refreshing={this.state.refreshing}
+  -      onRefresh={this.onRefresh}
+  -      icon={this.renderCustomIcon()}
+  -    />
+  -  }
+  +  pullToRefresh={
+  +    <PullToRefresh
+  +      refreshing={this.state.refreshing}
+  +      onRefresh={this.onRefresh}
+  +      indicator={{ deactivate: '下拉' }}
+  +    />
+  +  }
+  />
+  ```
+
+> **注意：我们不推荐使用模拟 scroller**。如果你有特殊需求执意要用，请查看 [list-view zscroller](https://github.com/react-component/m-list-view/blob/master/HISTORY.md#zscroller) 这里的详细用法。
+
+
 #### Others
 
 - 删除 `Table` 组件，可以自行使用 [rc-table](https://github.com/react-component/table) 包装。
 - 各个组件的 `ref` 从 `string` 修改为 `function` (比如 `input` 组件 `this.refs.input` => `this.input`)
 - 部分 Web 版本组件原来会根据 UA 对 iOS 或 Android 平台应用不同的样式，现在修改为默认应用 iOS 平台样式。
-- `Button` / `InputItem` / `TextareaItem` / `Progress` / `List`/ `Result`/ `Switch` / `Slider` / `Flex` / `pagination` / `ActionSheet` 等组件的 细节样式 或 API 都有部分微调
+- `Button` / `InputItem` / `TextareaItem` / `Progress` / `List`/ `Result`/ `Switch` / `Slider` / `Flex` / `pagination` / `ActionSheet` 等组件的 细节样式 或 API 都有部分微调。
+- `ListView` 的 sticky 特性从内置改为外置。
 
-更细节的信息，请查看 change logs
+更细节的信息，请查看 [changelog](/changelog)。
 
 
 ## 0.9.x => 1.0

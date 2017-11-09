@@ -2,7 +2,7 @@
 
 exports[`renders ./components/accordion/demo/accordion.md correctly 1`] = `
 <div
-  style="margin-top:10px;margin-bottom:10px;"
+  style="margin-top:10px;margin-bottom:10px"
 >
   <div
     class="am-accordion my-accordion"
@@ -55,7 +55,7 @@ exports[`renders ./components/accordion/demo/accordion.md correctly 1`] = `
 
 exports[`renders ./components/accordion/demo/basic.md correctly 1`] = `
 <div
-  style="margin-top:10px;margin-bottom:10px;"
+  style="margin-top:10px;margin-bottom:10px"
 >
   <div
     class="am-accordion my-accordion"
@@ -95,12 +95,12 @@ exports[`renders ./components/accordion/demo/basic.md correctly 1`] = `
                   <div
                     class="am-list-content"
                   >
-                    Content 1
+                    content 1
                   </div>
                 </div>
                 <div
                   class="am-list-ripple"
-                  style="display:none;"
+                  style="display:none"
                 />
               </div>
               <div
@@ -112,12 +112,12 @@ exports[`renders ./components/accordion/demo/basic.md correctly 1`] = `
                   <div
                     class="am-list-content"
                   >
-                    Content 2
+                    content 2
                   </div>
                 </div>
                 <div
                   class="am-list-ripple"
-                  style="display:none;"
+                  style="display:none"
                 />
               </div>
               <div
@@ -129,12 +129,12 @@ exports[`renders ./components/accordion/demo/basic.md correctly 1`] = `
                   <div
                     class="am-list-content"
                   >
-                    Content 3
+                    content 3
                   </div>
                 </div>
                 <div
                   class="am-list-ripple"
-                  style="display:none;"
+                  style="display:none"
                 />
               </div>
             </div>

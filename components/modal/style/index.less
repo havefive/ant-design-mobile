@@ -172,8 +172,15 @@
 
       .@{modalPrefixClass}-button {
         color: @color-text-base;
-        text-align: center;
+        text-align: left;
+        padding-left: @h-spacing-lg;
       }
     }
+  }
+
+  &-alert-content,
+  &-propmt-content {
+    zoom: 1;
+    overflow: hidden;
   }
 }

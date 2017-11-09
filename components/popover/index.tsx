@@ -1,7 +1,11 @@
 import React from 'react';
-import Tooltip from 'rc-tooltip';
+import Tooltip from 'rmc-tooltip';
 import Item from './Item';
 import tsPropsType from './PropsType';
+
+export interface PopOverPropsType extends tsPropsType {
+  prefixCls?: string;
+}
 
 function recursiveCloneChildren(children, cb = (ch: any, _i: number) => ch) {
   return React.Children.map(children, (child, index) => {
@@ -13,7 +17,7 @@ function recursiveCloneChildren(children, cb = (ch: any, _i: number) => ch) {
   });
 }
 
-export default class Popover extends React.Component<tsPropsType, any> {
+export default class Popover extends React.Component<PopOverPropsType, any> {
   static defaultProps = {
     prefixCls: 'am-popover',
     placement: 'bottomRight',
@@ -23,7 +27,7 @@ export default class Popover extends React.Component<tsPropsType, any> {
   static Item = Item;
 
   render() {
-    const { overlay, onSelect = () => {}, ...restProps } = this.props;
+    const { overlay, onSelect = () => { }, ...restProps } = this.props;
 
     const overlayNode = recursiveCloneChildren(overlay, (child, index) => {
       const extraProps: any = { firstItem: false };
@@ -34,6 +38,11 @@ export default class Popover extends React.Component<tsPropsType, any> {
       }
       return child;
     });
-    return <Tooltip {...restProps} overlay={overlayNode} />;
+    const wrapperNode = (
+      <div className={`${this.props.prefixCls}-inner-wrapper`}>
+        {overlayNode}
+      </div>
+    );
+    return <Tooltip {...restProps} overlay={wrapperNode} />;
   }
 }

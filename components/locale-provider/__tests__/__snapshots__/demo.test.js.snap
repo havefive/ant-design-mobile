@@ -4,15 +4,35 @@ exports[`renders ./components/locale-provider/demo/basic.md correctly 1`] = `
 <div
   class="am-wingblank am-wingblank-lg"
 >
-  <a
-    aria-disabled="false"
-    class="am-button am-button-primary"
-    role="button"
+  <div
+    class="am-segment"
+    role="tablist"
   >
-    <span>
-      change to chinese
-    </span>
-  </a>
+    <div
+      aria-disabled="false"
+      aria-selected="true"
+      class="am-segment-item am-segment-item-selected"
+      role="tab"
+      style="color:#fff;background-color:;border-color:"
+    >
+      <div
+        class="am-segment-item-inner"
+      />
+      切换到英文
+    </div>
+    <div
+      aria-disabled="false"
+      aria-selected="false"
+      class="am-segment-item"
+      role="tab"
+      style="color:;background-color:transparent;border-color:"
+    >
+      <div
+        class="am-segment-item-inner"
+      />
+      Change to Chinese
+    </div>
+  </div>
   <div
     class="am-whitespace am-whitespace-md"
   />
@@ -70,7 +90,7 @@ exports[`renders ./components/locale-provider/demo/basic.md correctly 1`] = `
     />
     <div
       class="am-list date-picker-list"
-      style="background-color:white;"
+      style="background-color:white"
     >
       <div
         class="am-list-body"
@@ -85,12 +105,12 @@ exports[`renders ./components/locale-provider/demo/basic.md correctly 1`] = `
               <div
                 class="am-list-content"
               >
-                date
+                datePicker
               </div>
               <div
                 class="am-list-extra"
               >
-                Click to see i18n text
+                please select
               </div>
               <div
                 aria-hidden="true"
@@ -99,7 +119,35 @@ exports[`renders ./components/locale-provider/demo/basic.md correctly 1`] = `
             </div>
             <div
               class="am-list-ripple"
-              style="display:none;"
+              style="display:none"
+            />
+          </div>
+        </div>
+        <div>
+          <div
+            class="am-list-item am-list-item-middle"
+          >
+            <div
+              class="am-list-line"
+            >
+              <div
+                class="am-list-content"
+              >
+                picker
+              </div>
+              <div
+                class="am-list-extra"
+              >
+                请选择
+              </div>
+              <div
+                aria-hidden="true"
+                class="am-list-arrow am-list-arrow-horizontal"
+              />
+            </div>
+            <div
+              class="am-list-ripple"
+              style="display:none"
             />
           </div>
         </div>
@@ -109,25 +157,72 @@ exports[`renders ./components/locale-provider/demo/basic.md correctly 1`] = `
       class="am-whitespace am-whitespace-md"
     />
     <div
-      class="am-list-item am-input-item"
+      class="am-list-item am-input-item am-list-item-middle"
     >
       <div
-        class="am-input-control"
+        class="am-list-line"
       >
         <div
-          class="fake-input-container"
+          class="am-input-control"
         >
           <div
-            class="fake-input-placeholder"
+            class="fake-input-container"
           >
-            money input
+            <div
+              class="fake-input-placeholder"
+            >
+              money input
+            </div>
+            <div
+              class="fake-input"
+            />
           </div>
-          <div
-            class="fake-input"
-          />
         </div>
       </div>
     </div>
+    <div
+      class="am-whitespace am-whitespace-md"
+    />
+    <form
+      action="#"
+      class="am-search"
+    >
+      <div
+        class="am-search-input"
+      >
+        <div
+          class="am-search-synthetic-ph"
+        >
+          <span
+            class="am-search-synthetic-ph-container"
+          >
+            <i
+              class="am-search-synthetic-ph-icon"
+            />
+            <span
+              class="am-search-synthetic-ph-placeholder"
+              style="visibility:visible"
+            >
+              Search
+            </span>
+          </span>
+        </div>
+        <input
+          class="am-search-value"
+          placeholder="Search"
+          type="search"
+          value=""
+        />
+        <a
+          class="am-search-clear"
+        />
+      </div>
+      <div
+        class="am-search-cancel am-search-cancel-show"
+      >
+        取消
+      </div>
+    </form>
   </div>
 </div>
 `;

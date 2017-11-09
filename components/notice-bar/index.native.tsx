@@ -53,27 +53,29 @@ export default class NoticeBar extends React.Component<INoticeNativeProps, any> 
   }
 
   render() {
-    const { children, mode, icon, style, marqueeProps } = this.props;
+    const { children, mode, icon, style, action, marqueeProps } = this.props;
     const styles = this.props.styles!;
 
     let operationDom: any = null;
     if (mode === 'closable') {
-      operationDom = (
+      operationDom =  (
         <TouchableWithoutFeedback onPress={this.onClick}>
-          <View><Text style={[styles.close]}>×</Text></View>
+          <View style={styles.actionWrap}>
+            {action ? action : <Text style={[styles.close]}>×</Text>}
+          </View>
         </TouchableWithoutFeedback>
       );
     } else if (mode === 'link') {
       operationDom = (
-        <Text style={[styles.link]}>∟</Text>
+        <View style={styles.actionWrap}>
+          {action ? action : <Text style={[styles.link]}>∟</Text>}
+        </View>
       );
     }
 
-    const iconDom = icon && React.isValidElement(icon) ? <View style={styles.left15}>{icon}</View> : null;
-
     const main = (
       <View style={[styles.notice, style]}>
-        {iconDom}
+        {icon && <View style={styles.left15}>{icon}</View>}
         <View style={[styles.container, icon ? styles.left6 : styles.left15]}>
           <Marquee style={styles.content} text={children} {...marqueeProps} />
         </View>

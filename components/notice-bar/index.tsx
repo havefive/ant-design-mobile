@@ -39,21 +39,23 @@ export default class NoticeBar extends React.Component<INoticeWebProps, any> {
   }
 
   render() {
-    const { mode, icon, onClick, children, className, prefixCls, marqueeProps, ...restProps } = this.props;
+    const {
+      mode, icon, onClick, children, className, prefixCls, action, marqueeProps, ...restProps,
+    } = this.props;
 
     const extraProps: any = {};
     let operationDom: any = null;
     if (mode === 'closable') {
       operationDom = (
         <div className={`${prefixCls}-operation`} onClick={this.onClick} role="button" aria-label="close">
-          <Icon type="cross" size="md" />
+          {action ? action : <Icon type="cross" size="md" />}
         </div>
       );
     } else {
       if (mode === 'link') {
         operationDom = (
           <div className={`${prefixCls}-operation`} role="button" aria-label="go to detail">
-            <Icon type="right" size="md" />
+            {action ? action : <Icon type="right" size="md" />}
           </div>
         );
       }
@@ -64,7 +66,7 @@ export default class NoticeBar extends React.Component<INoticeWebProps, any> {
 
     return this.state.show ? (
       <div className={wrapCls} {...restProps} {...extraProps} role="alert">
-        {icon && <div className={`${prefixCls}-icon`} aria-hidden="true"> {icon} </div>}
+        {icon && <div className={`${prefixCls}-icon`} aria-hidden="true">{icon}</div>}
         <div className={`${prefixCls}-content`}>
           <Marquee prefixCls={prefixCls} text={children as string} {...marqueeProps} />
         </div>

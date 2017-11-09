@@ -1,8 +1,18 @@
 import React from 'react';
 import Dialog from 'rmc-dialog';
 import classnames from 'classnames';
-import { ModalProps, ModalComponent } from './PropsType';
+import { ModalProps as BasePropsType, ModalComponent } from './PropsType';
 import TouchFeedback from 'rmc-feedback';
+
+export interface ModalProps extends BasePropsType {
+  prefixCls?: string;
+  transitionName?: string;
+  maskTransitionName?: string;
+  className?: string;
+  wrapClassName?: string;
+  wrapProps?: {};
+  platform?: string;
+}
 
 export default class Modal extends ModalComponent<ModalProps, any> {
   static defaultProps = {
@@ -12,32 +22,12 @@ export default class Modal extends ModalComponent<ModalProps, any> {
     animationType: 'slide-down',
     animated: true,
     style: {},
-    onShow() {},
+    onShow() { },
     footer: [],
     closable: false,
     operation: false,
     platform: 'ios',
   };
-
-  isInModal(e) {
-    if (!/\biPhone\b|\biPod\b/i.test(navigator.userAgent)) {
-      return;
-    }
-    // fix touch to scroll background page on iOS
-    const prefixCls = this.props.prefixCls;
-    const pNode = (node => {
-      while ( node.parentNode && node.parentNode !== document.body ) {
-        if ( node.classList.contains(prefixCls)) {
-          return node;
-        }
-        node = node.parentNode;
-      }
-    })(e.target);
-    if (!pNode) {
-      e.preventDefault();
-    }
-    return true;
-  }
 
   renderFooterButton(button, prefixCls, i) {
     let buttonStyle = {};
@@ -53,8 +43,13 @@ export default class Modal extends ModalComponent<ModalProps, any> {
       }
     }
 
-    const onClickFn = function(e) {
+    // prevent click event from being fired more than once for android
+    // https://github.com/ant-design/ant-design-mobile/issues/1975
+    let isFired = false;
+    const onClickFn = function (e) {
       e.preventDefault();
+      if (isFired) { return; }
+      isFired = true;
       if (button.onPress) {
         button.onPress();
       }
@@ -122,7 +117,6 @@ export default class Modal extends ModalComponent<ModalProps, any> {
         maskTransitionName={maskTransitionName || maskTransName}
         style={style}
         footer={footerDom}
-        wrapProps={{ onTouchStart: e => this.isInModal(e) }}
       />
     );
   }

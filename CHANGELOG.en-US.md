@@ -15,18 +15,53 @@ toc: false
 * Major version release is not included in this schedule for breadking change and new features.
 
 ---
+### 2.0.2
+
+`2017-11-04`
+
+- **Bug Fix**
+
+  - Fix：`onTouch` event cannot be trigged when components use `List.Item` with rmc-feedback；
+  - Fix: Tabs invalid z-index; ([#2014](https://github.com/ant-design/ant-design-mobile/issues/2014))
+  - Fix: Picker `onOk` cannot be triggerd correctly; ([#2042](https://github.com/ant-design/ant-design-mobile/issues/2042))
+
+- **Enhancement**
+
+  - RN stepper numberic keyboard type by default；
+
+### 2.0.1
+
+`2017-10-28`
+
+- **Bug Fix**
+
+  - Fix `Modal` button event is triggered more than once in android. ([#1975](https://github.com/ant-design/ant-design-mobile/issues/1975)).
+  - Fix: `Accordion` crashed under react-native@0.49.  ([#1969](https://github.com/ant-design/ant-design-mobile/pull/1969))
+  - Fix: `Toast` show in componentDidMount and compatibility with react@16. ([#1980](https://github.com/ant-design/ant-design-mobile/issues/1980))
+  - Fix: `Modal.alert/prompt` buttons cannot close Modal in iOS.([#1976](https://github.com/ant-design/ant-design-mobile/issues/1976))
+  - Fix: `Modal` RN button promise.
+  - Fix: `Picker/DatePicker`,the `okText/dismissText/extra` cannot be set； ([#1984](https://github.com/ant-design/ant-design-mobile/issues/1984))
+  - Fix: `Picker` RN i18n；([#2001](https://github.com/ant-design/ant-design-mobile/issues/2001))
+  - Fix: `SearchBar` input content is covered by clear icon；([#2010](https://github.com/ant-design/ant-design-mobile/issues/2010))
+  - Fix: `SearchBar` input cannot be focused when clicked clear icon；
+  - Fix: `TextareaItem` autoHeight crashed under RN@49; ([#1970](https://github.com/ant-design/ant-design-mobile/issues/1970))
+
 ### 2.0.0
 
-`2017-xx-xx`
+`2017-10-20`
 
 - **Feature**
 
-  - [Web] `DatePicker` Add `use12Hours`, support 12-hour am/pm format  ([#1578](https://github.com/ant-design/ant-design-mobile/issues/1578))
+  - [Web] `DatePicker` Add `use12Hours`, support 12-hour am/pm format ([#1578](https://github.com/ant-design/ant-design-mobile/issues/1578))
   - [Web] `Button` Support `disabled` style for diffrent `type`.
+  - [Web] `Grid` add `square` api, support both square mode and auto height mode.
+  - [Web] `Grid` add `activeClassName`, `activeStyle` api, support custom touch feedback style.
   - [Web] `Modal.alert / Modal.prompt / Modal.opeartion` add optional `platform` api, support switch between android and ios design.
+  - [Web] `ListView`(beta.3) add pull-up feature.
   - Add `DatePickerView` ([#1232](https://github.com/ant-design/ant-design-mobile/issues/1232))
   - Add `Calendar` ([#1610](https://github.com/ant-design/ant-design-mobile/issues/1610))
-  - `Grid` add `square` api, support both square mode and auto height mode.
+  - [Web] locale support for `Picker` `SearchBar`
+  - [Web/RN] `NoticeBar` can use `action` prop to customize action text. ([#1959](https://github.com/ant-design/ant-design-mobile/issues/1959))
 
 - **Break Change**
 
@@ -36,7 +71,7 @@ toc: false
   - [Web/RN] all component's `ref` switch from `string` to `function` ([#1354](https://github.com/ant-design/ant-design-mobile/issues/1354))
   - [Web/RN] Rewrite `Tabs`，**Redesigned all api**
   - [Web/RN] Remove `Popup`，Add `popup` api for `Modal`,  Modal `animationType` support web, to custom popup animation style [#1125](https://github.com/ant-design/ant-design-mobile/issues/1125)
-  - [Web/RN] `InputItem` / `TextareaItem`
+  - [Web/RN] `InputItem` / `TextareaItem` / `SearchBar`
       - pass `style` to input(web) / TextInput(rn)
       - remove `focused` / `autoFocus`  (use `focus()` instance method)
   - [Web/RN] `DatePicker` remove moment.js
@@ -51,9 +86,23 @@ toc: false
   - [Web] remove `createTooltip`，which can use  [react-component/slider/createSliderWithTooltip](https://github.com/react-component/slider/blob/master/src/createSliderWithTooltip.jsx) replace
   - [Web] `Switch` api `style` change to applied with inner element
   - [Web] `Slider` remove default margin & padding style
+  - [Web] `Carousel`'s `easing` prop type changed from string to Function
   - [Web] `Flex` remove redundancy `align` value `top / middle / bottom`
+  - [Web] `ListView`(beta.3) Remove `stickyHeader` prop and [react-sticky](https://github.com/captivationsoftware/react-sticky) dependency, but you can also use react-sticky and `useBodyScroll` in listview by your self. (see demo)
+      > Because this feature is not commonly used and does not contain UI, so it is not suitable for integration.
+  - [Web] `RefreshControl`(beta.3) Change inner dom className
+      - from `${prefixCls}-ptr` to `${prefixCls}-indicator`
+      - from `${prefixCls}-ptr-icon` to `${prefixCls}-indicator-icon-wrapper`
+      - from `${prefixCls}-ptr-loading` to `${prefixCls}-indicator-loading-wrapper`
+  - [Web] `ListView`(beta.6) add `pullToRefresh` prop and remove `useZscroller` `scrollerOptions` `refreshControl` `pullUpEnabled` `pullUpRefreshing` `pullUpOnRefresh` `pullUpDistanceToRefresh` `pullUpRenderer` props.
+  - [Web] `RefreshControl` (beta.6) has been removed, please use the new `PullToRefresh` component instead
+  - [RN] `RefreshControl` (beta.6) has been removed, please use react-native RefreshControl directly
   - [RN] `ActionSheet.showShareActionSheetWithOptions` rewrite with react native `Share`
   - [RN] `Button` api `style` attribute `disabledRaw` / `disabledRawText` rename to `defaultDisabledRaw` / `defaultDisabledRawText`
+  - [Web] `NavBar`(rc.1) modify the prop `iconName` to `icon`, you need to use `Icon` component or your custom icon
+  - [Web] `ActionSheet`(rc.1) delete `iconName` prop, use `icon` instead
+  - [RN] `ListView`(rc.3) has been removed, please use react-native ListView directly
+  - [Web/RN] `ImagePicker`(rc.3) add `onFail` prop and remove `Toast.fail` infomation within component
 
 - **Theme**
 
@@ -64,6 +113,53 @@ toc: false
   - no need of `webpack.resolve`
   - `rmc-picker` upgrade，dom structure simplify ([#1593](https://github.com/ant-design/ant-design-mobile/issues/1593)）
   - remove global `user-select: none`。[#1793](https://github.com/ant-design/ant-design-mobile/issues/1793)
+
+## 1.7.1
+`2017-10-20`
+
+- Fix `InputItem`/`TextareaItem` clear button is not displayed. ([#1955](https://github.com/ant-design/ant-design-mobile/issues/1955))
+
+## 1.7.0
+`2017-10-13`
+
+- **Feature**
+
+  - `Menu` add mulit-choose feature.
+
+- **Bug Fix**
+
+  - Fix `Icon` spell error.
+  - Fix `Popover` styles.
+  - Fix `Steps` styles.
+
+## 1.6.10/1.6.11
+`2017-09-25`
+
+- **Bug Fix**
+
+  - Fix `InputItem` can't be focused when click clear icon.
+
+## 1.6.9
+`2017-09-25`
+
+- **Bug Fix**
+
+  - Fix `Modal.prompt` focus delay. ([#1857](https://github.com/ant-design/ant-design-mobile/issues/1857))
+  - Fix `TextareaItem` with `autoHeight` and much texts causing page scrolling. ([#1858](https://github.com/ant-design/ant-design-mobile/issues/1858))
+  - Fix `Popvoer` ts definition.
+
+- **Improve && Enhancement**
+
+  - Add `indicatorStyle` and `itemStyle` for `Picker/PickerView`. ([#1856](https://github.com/ant-design/ant-design-mobile/issues/1856))
+
+## 1.6.8
+`2017-09-18`
+
+- **Bug Fix**
+
+  - Fix `segmented-control`  without active style. ([#1832](https://github.com/ant-design/ant-design-mobile/issues/1832))
+  - Fix `InputItem` `TextareaItem` [onClick tsd](https://github.com/ant-design/ant-design-mobile/commit/5fd21d1539f19fe80fd415716d349d82c1a77408).
+  - Fix `swipe-action` [button height overflow](https://github.com/ant-design/ant-design-mobile/commit/ab2297c64fcde0766b502b96349bc8824cbd8bff).
 
 ## 1.6.7
 `2017-09-11`

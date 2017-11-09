@@ -1,9 +1,34 @@
 /* tslint:disable:jsx-no-multiline-js */
 import React from 'react';
 import { Image, View, TouchableHighlight, Text, StyleSheet } from 'react-native';
-import { ListItemProps, BriefProps } from './PropsType';
+import { ListItemProps as ListItemBasePropsType, BriefProps as BriefBasePropsType } from './PropsType';
 import listItemStyle from './style/index.native';
 import listStyle from './style/index.native';
+
+export interface ListItemProps extends ListItemBasePropsType {
+  styles?: {
+    underlayColor: {},
+    Content: {},
+    column: {},
+    Extra: {},
+    Arrow: {},
+    ArrowV: {},
+    Item: {},
+    Thumb: {},
+    multipleThumb: {},
+    Line: {},
+    multipleLine: {},
+  };
+  onPressIn?: () => void;
+  onPressOut?: () => void;
+}
+
+export interface BriefProps extends BriefBasePropsType {
+  styles?: {
+    Brief: {},
+    BriefText: {},
+  };
+}
 
 const listStyles = StyleSheet.create<any>(listStyle);
 const listItemStyles = StyleSheet.create<any>(listItemStyle);
@@ -41,7 +66,7 @@ export default class Item extends React.Component<ListItemProps, any> {
   render() {
     const {
       styles, children, multipleLine, thumb, extra, arrow, style, onClick,
-      onPressIn, onPressOut, onLongPress, wrap, disabled, align, ...restProps,
+      onPressIn, onPressOut, wrap, disabled, align, ...restProps,
     } = this.props;
     const itemStyles = styles!; // assert none-null none-undefined
 
@@ -167,7 +192,6 @@ export default class Item extends React.Component<ListItemProps, any> {
         onPress={onClick ? onClick : undefined}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
-        onLongPress={onLongPress}
       >
         {itemView}
       </TouchableHighlight>

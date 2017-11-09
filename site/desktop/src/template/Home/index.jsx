@@ -13,7 +13,7 @@ class Home extends React.Component {
 
   constructor(props) {
     super(props);
-    const pathname = props.location.pathname;
+    const { pathname } = props.location;
     const isZhCN = utils.isZhCN(pathname);
     this.state = {
       isZhCN,
@@ -22,9 +22,9 @@ class Home extends React.Component {
     };
   }
   componentWillMount() {
-    if (location.hash) {
-      const pathname = location.hash.replace(/^#/, '').replace('?scrollTo=', '#');
-      location.href = pathname;
+    if (window.location.hash) {
+      const pathname = window.location.hash.replace(/^#/, '').replace('?scrollTo=', '#');
+      window.location.href = pathname;
     }
 
     const receiveMessage = (event) => {
@@ -76,7 +76,7 @@ class Home extends React.Component {
   render() {
     const { isZhCN, welcome, loading } = this.state;
 
-    let iframeUrl = location.port ? 'http://localhost:8002/' : `${location.origin}/kitchen-sink/`;
+    let iframeUrl = window.location.port ? 'http://localhost:8002/' : `${window.location.origin}/kitchen-sink/`;
     if (isZhCN) {
       iframeUrl = `${iframeUrl}?lang=zh-CN`;
     } else {
@@ -134,13 +134,13 @@ class Home extends React.Component {
                       style={{ width: '424Px', height: '662Px' }}
                     >
                       <div className="title">Ant Design Mobile</div>
-                      <div className="title">2.0 <span style={{ fontSize: 20 }}>Beta</span></div>
+                      <div className="title">2.0</div>
                       <div className="prg">loading</div>
                       <div className="prg">[{prg}]</div>
                       <div className="prg">{this.state.loading}%</div>
-                      <div className="feat">{'/* Faster */'}</div>
-                      <div className="feat">{'/* easy to use */'}</div>
-                      <div className="feat">{'/* lightweight */'}</div>
+                      <div className="feat">/* Faster */</div>
+                      <div className="feat">/* easy to use */</div>
+                      <div className="feat">/* lightweight */</div>
                     </div>
                   }
                 </section>

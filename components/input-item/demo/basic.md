@@ -54,7 +54,7 @@ class BasicInputExample extends React.Component {
         <List renderHeader={() => 'Whether is controlled'}>
           <InputItem
             {...getFieldProps('control')}
-            placeholder="Hello World"
+            placeholder="controled input"
           >受控组件</InputItem>
           <InputItem
             placeholder="please input content"
@@ -64,18 +64,18 @@ class BasicInputExample extends React.Component {
 
         <WhiteSpace />
 
-        <List renderHeader={() => 'click label to focus input'}>
+        <List renderHeader={() => 'Click label to focus input'}>
           <InputItem
             placeholder="click label to focus input"
             ref={el => this.labelFocusInst = el}
           ><div onClick={() => this.labelFocusInst.focus()}>标题</div></InputItem>
         </List>
 
-        <List renderHeader={() => 'Show clear icon'}>
+        <List renderHeader={() => 'Show clear'}>
           <InputItem
             {...getFieldProps('inputclear')}
             clear
-            placeholder="displayed clear icon while typing"
+            placeholder="displayed clear while typing"
           >标题</InputItem>
         </List>
 
@@ -143,7 +143,7 @@ class BasicInputExample extends React.Component {
 
         <List renderHeader={() => 'Not editable / Disabled'}>
           <InputItem
-            value="Not editable"
+            value="not editable"
             editable={false}
           >姓名</InputItem>
           <InputItem

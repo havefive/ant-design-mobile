@@ -1,13 +1,15 @@
 /* tslint:disable:no-bitwise */
 import React from 'react';
 import classnames from 'classnames';
-import WingBlank from '../wing-blank';
-import Flex from '../flex';
-import Toast from '../toast';
-import { ImagePickerPropTypes } from './PropsType';
 import TouchFeedback from 'rmc-feedback';
+import Flex from '../flex';
+import { ImagePickerPropTypes as BasePropsType } from './PropsType';
 
-const Item = Flex.Item;
+export interface ImagePickerPropTypes extends BasePropsType {
+  prefixCls?: string;
+  className?: string;
+}
+
 function noop() { }
 
 export default class ImagePicker extends React.Component<ImagePickerPropTypes, any> {
@@ -17,6 +19,7 @@ export default class ImagePicker extends React.Component<ImagePickerPropTypes, a
     onChange: noop,
     onImageClick: noop,
     onAddImageClick: noop,
+    onFail: noop,
     selectable: true,
   };
 
@@ -112,7 +115,9 @@ export default class ImagePicker extends React.Component<ImagePickerPropTypes, a
       reader.onload = (e) => {
         const dataURL = (e.target as any).result;
         if (!dataURL) {
-          Toast.fail('图片获取失败');
+          if (this.props.onFail) {
+            this.props.onFail('Fail to get image');
+          }
           return;
         }
 
@@ -136,8 +141,10 @@ export default class ImagePicker extends React.Component<ImagePickerPropTypes, a
   }
 
   render() {
-    const { prefixCls, style, className, files = [],
-       selectable, onAddImageClick } = this.props;
+    const {
+      prefixCls, style, className, files = [], selectable, onAddImageClick,
+    } = this.props;
+
     const imgItemList: any[] = [];
 
     const wrapCls = classnames(`${prefixCls}`, className);
@@ -148,7 +155,7 @@ export default class ImagePicker extends React.Component<ImagePickerPropTypes, a
         transform: `rotate(${this.getRotation(image.orientation)}deg)`,
       };
       imgItemList.push(
-        <Item key={`item-${index}`}>
+        <Flex.Item key={`item-${index}`}>
           <div key={index} className={`${prefixCls}-item`} >
             <div
               className={`${prefixCls}-item-remove`}
@@ -164,12 +171,12 @@ export default class ImagePicker extends React.Component<ImagePickerPropTypes, a
               style={imgStyle}
             />
           </div>
-        </Item>,
+        </Flex.Item>,
       );
     });
 
     const selectEl = (
-      <Item key="select">
+      <Flex.Item key="select">
         <TouchFeedback activeClassName={`${prefixCls}-upload-btn-active`}>
           <div
             className={`${prefixCls}-item ${prefixCls}-upload-btn`}
@@ -185,7 +192,7 @@ export default class ImagePicker extends React.Component<ImagePickerPropTypes, a
             />
           </div>
         </TouchFeedback>
-      </Item>
+      </Flex.Item>
     );
 
     let allEl = selectable ? imgItemList.concat([selectEl]) : imgItemList;
@@ -194,7 +201,7 @@ export default class ImagePicker extends React.Component<ImagePickerPropTypes, a
       const blankCount = 4 - length % 4;
       let fillBlankEl: Array<any> = [];
       for (let i = 0; i < blankCount; i++) {
-        fillBlankEl.push(<Item key={`blank-${i}`}/>);
+        fillBlankEl.push(<Flex.Item key={`blank-${i}`} />);
       }
       allEl = allEl.concat(fillBlankEl);
     }
@@ -208,12 +215,11 @@ export default class ImagePicker extends React.Component<ImagePickerPropTypes, a
         {item}
       </Flex>
     ));
+
     return (
       <div className={wrapCls} style={style}>
         <div className={`${prefixCls}-list`} role="group">
-          <WingBlank size="md">
-            {renderEl}
-          </WingBlank>
+          {renderEl}
         </div>
       </div>
     );

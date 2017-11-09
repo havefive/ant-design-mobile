@@ -66,12 +66,8 @@ export default class MainContent extends React.Component {
       text = item.title || item.chinese || item.english;
     } else {
       text = [
-        (<span key="english">
-          {item.title || item.english}
-        </span>),
-        (<span className="chinese" key="chinese">
-          {item.subtitle || item.chinese}
-        </span>),
+        <span key="english">{item.title || item.english}</span>,
+        <span className="chinese" key="chinese">{item.subtitle || item.chinese}</span>,
       ];
     }
     const disabled = item.disabled;
@@ -79,13 +75,15 @@ export default class MainContent extends React.Component {
     if (item.filename.includes('zh-CN')) {
       url = `${url}-cn`;
     }
-    const child = !item.link ?
-      (<Link to={/^components/.test(url) ? `${url}/` : url} disabled={disabled}>
+    const child = !item.link ? (
+      <Link to={/^components/.test(url) ? `${url}/` : url} disabled={disabled}>
         {text}
-      </Link>) :
-      (<a href={item.link} target="_blank" rel="noopener noreferrer" disabled={disabled}>
+      </Link>
+    ) : (
+      <a href={item.link} target="_blank" rel="noopener noreferrer" disabled={disabled}>
         {text}
-      </a>);
+      </a>
+    );
 
     return (
       <Menu.Item key={key.toLowerCase()} disabled={disabled}>
@@ -99,11 +97,10 @@ export default class MainContent extends React.Component {
   }
 
   generateSubMenuItems(obj) {
-    const { themeConfig } = this.props;
-    const { categoryOrder } = themeConfig;
     const topLevel = (obj.topLevel || []).map(this.generateMenuItem.bind(this, true));
     const itemGroups = Object.keys(obj).filter(this.isNotTopLevel)
-      .sort((a, b) => categoryOrder[a] - categoryOrder[b])
+      .sort((a, b) =>
+        this.props.themeConfig.categoryOrder.indexOf(a) - this.props.themeConfig.categoryOrder.indexOf(b))
       .map((type, index) => {
         const groupItems = obj[type].sort((a, b) => (
           (a.title || a.english).charCodeAt(0) - (b.title || b.english).charCodeAt(0)
@@ -134,7 +131,8 @@ export default class MainContent extends React.Component {
     const menuItems = utils.getMenuItems(moduleData);
     const topLevel = this.generateSubMenuItems(menuItems.topLevel);
     const subMenu = Object.keys(menuItems).filter(this.isNotTopLevel)
-      .sort((a, b) => this.props.themeConfig.categoryOrder[a] - this.props.themeConfig.categoryOrder[b])
+      .sort((a, b) =>
+        this.props.themeConfig.categoryOrder.indexOf(a) - this.props.themeConfig.categoryOrder.indexOf(b))
       .map((category) => {
         const subMenuItems = this.generateSubMenuItems(menuItems[category]);
         return (

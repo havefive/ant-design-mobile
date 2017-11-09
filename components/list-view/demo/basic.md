@@ -2,15 +2,14 @@
 order: 0
 title:
   zh-CN: 自定义容器
-  en-US: 'Custom container'
+  en-US: 'custom container'
 ---
 
-> Note: you need set `height`/`overflow` style.
+> Note: you need to set `height`/`overflow` style.
 
 ````jsx
 /* eslint no-dupe-keys: 0, no-mixed-operators: 0 */
 import { ListView } from 'antd-mobile';
-
 
 function MyBody(props) {
   return (
@@ -38,8 +37,6 @@ const data = [
     des: '不是所有的兼职汪都需要风吹日晒',
   },
 ];
-let index = data.length - 1;
-
 const NUM_SECTIONS = 5;
 const NUM_ROWS_PER_SECTION = 5;
 let pageIndex = 0;
@@ -81,6 +78,7 @@ class Demo extends React.Component {
     this.state = {
       dataSource,
       isLoading: true,
+      height: document.documentElement.clientHeight * 3 / 4,
     };
   }
 
@@ -88,12 +86,14 @@ class Demo extends React.Component {
     // you can scroll to the specified position
     // setTimeout(() => this.lv.scrollTo(0, 120), 800);
 
+    const hei = document.documentElement.clientHeight - ReactDOM.findDOMNode(this.lv).parentNode.offsetTop;
     // simulate initial Ajax
     setTimeout(() => {
       genData();
       this.setState({
         dataSource: this.state.dataSource.cloneWithRowsAndSections(dataBlobs, sectionIDs, rowIDs),
         isLoading: false,
+        height: hei,
       });
     }, 600);
   }
@@ -126,7 +126,8 @@ class Demo extends React.Component {
 
   render() {
     const separator = (sectionID, rowID) => (
-      <div key={`${sectionID}-${rowID}`}
+      <div
+        key={`${sectionID}-${rowID}`}
         style={{
           backgroundColor: '#F5F5F9',
           height: 8,
@@ -135,17 +136,25 @@ class Demo extends React.Component {
         }}
       />
     );
+    let index = data.length - 1;
     const row = (rowData, sectionID, rowID) => {
       if (index < 0) {
         index = data.length - 1;
       }
       const obj = data[index--];
       return (
-        <div key={rowID} className="row">
-          <div className="row-title">{obj.title}</div>
+        <div key={rowID} style={{ padding: '0 15px' }}>
+          <div
+            style={{
+              lineHeight: '50px',
+              color: '#888',
+              fontSize: 18,
+              borderBottom: '1px solid #F6F6F6',
+            }}
+          >{obj.title}</div>
           <div style={{ display: '-webkit-box', display: 'flex', padding: '15px 0' }}>
-            <img style={{ height: '64px', marginRight: '15px' }} src={obj.img} alt="icon" />
-            <div className="row-text">
+            <img style={{ height: '64px', marginRight: '15px' }} src={obj.img} alt="" />
+            <div style={{ lineHeight: 1 }}>
               <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>{obj.des}</div>
               <div><span style={{ fontSize: '30px', color: '#FF6E27' }}>35</span>¥ {rowID}</div>
             </div>
@@ -154,7 +163,7 @@ class Demo extends React.Component {
       );
     };
 
-    return (<div style={{ margin: '0 auto', width: '96%' }}>
+    return (
       <ListView
         ref={el => this.lv = el}
         dataSource={this.state.dataSource}
@@ -168,41 +177,19 @@ class Demo extends React.Component {
         renderBodyComponent={() => <MyBody />}
         renderRow={row}
         renderSeparator={separator}
-        className="fortest"
         style={{
-          height: document.documentElement.clientHeight * 3 / 4,
+          height: this.state.height,
           overflow: 'auto',
-          border: '1px solid #ddd',
-          margin: '5px 0',
         }}
         pageSize={4}
         onScroll={() => { console.log('scroll'); }}
         scrollRenderAheadDistance={500}
-        scrollEventThrottle={200}
         onEndReached={this.onEndReached}
         onEndReachedThreshold={10}
       />
-    </div>);
+    );
   }
 }
 
 ReactDOM.render(<Demo />, mountNode);
-````
-````css
-.row {
-  padding: 0 15px;
-  background-color: white;
-}
-.row-title {
-  height: 50px;
-  line-height: 50px;
-  color: #888;
-  font-size: 18px;
-  border-bottom: 1px solid #F6F6F6;
-}
-.row-text {
-  display: inline-block;
-  font-size: 16px;
-  line-height: 1;
-}
 ````

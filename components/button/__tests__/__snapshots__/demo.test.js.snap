@@ -83,10 +83,10 @@ exports[`renders ./components/button/demo/basic.md correctly 1`] = `
   >
     <svg
       aria-hidden="true"
-      class="am-icon am-icon-loading am-icon-md am-button-icon"
+      class="am-button-icon am-icon am-icon-loading am-icon-md"
     >
       <use
-        xlink:href="#loading"
+        href="#loading"
       />
     </svg>
     <span>
@@ -103,10 +103,10 @@ exports[`renders ./components/button/demo/basic.md correctly 1`] = `
   >
     <svg
       aria-hidden="true"
-      class="am-icon am-icon-check-circle-o am-icon-md am-button-icon"
+      class="am-button-icon am-icon am-icon-check-circle-o am-icon-md"
     >
       <use
-        xlink:href="#check-circle-o"
+        href="#check-circle-o"
       />
     </svg>
     <span>
@@ -122,7 +122,7 @@ exports[`renders ./components/button/demo/basic.md correctly 1`] = `
     role="button"
   >
     <img
-      alt="icon"
+      alt=""
       class="am-icon am-button-icon am-icon-md"
       src="https://gw.alipayobjects.com/zos/rmsportal/jBfVSpDwPbitsABtDDlB.svg"
     />
@@ -140,7 +140,7 @@ exports[`renders ./components/button/demo/basic.md correctly 1`] = `
     aria-disabled="false"
     class="am-button am-button-primary am-button-inline"
     role="button"
-    style="margin-right:4px;"
+    style="margin-right:4px"
   >
     <span>
       inline primary
@@ -148,9 +148,9 @@ exports[`renders ./components/button/demo/basic.md correctly 1`] = `
   </a>
   <a
     aria-disabled="false"
-    class="am-button am-button-ghost am-button-inline"
+    class="am-button am-button-borderfix am-button-ghost am-button-inline"
     role="button"
-    style="margin-right:4px;"
+    style="margin-right:4px"
   >
     <span>
       inline ghost
@@ -163,7 +163,7 @@ exports[`renders ./components/button/demo/basic.md correctly 1`] = `
     aria-disabled="false"
     class="am-button am-button-primary am-button-small am-button-inline"
     role="button"
-    style="margin-right:4px;"
+    style="margin-right:4px"
   >
     <span>
       primary
@@ -185,7 +185,7 @@ exports[`renders ./components/button/demo/basic.md correctly 1`] = `
     aria-disabled="false"
     class="am-button am-button-ghost am-button-small am-button-inline"
     role="button"
-    style="margin-right:4px;"
+    style="margin-right:4px"
   >
     <span>
       ghost
@@ -193,7 +193,7 @@ exports[`renders ./components/button/demo/basic.md correctly 1`] = `
   </a>
   <a
     aria-disabled="true"
-    class="am-button am-button-ghost am-button-small am-button-inline am-button-disabled"
+    class="am-button am-button-borderfix am-button-ghost am-button-small am-button-inline am-button-disabled"
     role="button"
   >
     <span>
@@ -206,7 +206,7 @@ exports[`renders ./components/button/demo/basic.md correctly 1`] = `
 exports[`renders ./components/button/demo/complex.md correctly 1`] = `
 <div
   class="am-list"
-  style="margin:5px 0;background-color:white;"
+  style="margin:5px 0;background-color:white"
 >
   <div
     class="am-list-body"
@@ -220,7 +220,7 @@ exports[`renders ./components/button/demo/complex.md correctly 1`] = `
         <div
           class="am-list-content"
         >
-          regional manager
+          Regional manager
           <div
             class="am-list-brief"
           >
@@ -243,7 +243,7 @@ exports[`renders ./components/button/demo/complex.md correctly 1`] = `
       </div>
       <div
         class="am-list-ripple"
-        style="display:none;"
+        style="display:none"
       />
     </div>
     <div
@@ -255,7 +255,7 @@ exports[`renders ./components/button/demo/complex.md correctly 1`] = `
         <div
           class="am-list-content"
         >
-          regional manager
+          Regional manager
           <div
             class="am-list-brief"
           >
@@ -278,7 +278,7 @@ exports[`renders ./components/button/demo/complex.md correctly 1`] = `
       </div>
       <div
         class="am-list-ripple"
-        style="display:none;"
+        style="display:none"
       />
     </div>
   </div>

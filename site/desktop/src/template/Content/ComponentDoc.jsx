@@ -1,4 +1,5 @@
 import React from 'react';
+import { StickyContainer, Sticky } from 'react-sticky';
 import PropTypes from 'prop-types';
 import DocumentTitle from 'react-document-title';
 import { FormattedMessage } from 'react-intl';
@@ -9,20 +10,6 @@ import classnames from 'classnames';
 import { getChildren } from 'jsonml.js/lib/utils';
 import throttleByAnimationFrame from 'antd/lib/_util/throttleByAnimationFrame';
 import Demo from './Demo';
-
-function getFixedMode(demoEl, inFixedDemoMode) {
-  const { top: demoTop, bottom: demoBottom } = demoEl.getBoundingClientRect();
-  if (inFixedDemoMode) {
-    if (demoTop > 0 || demoBottom < 600) {
-      return false;
-    }
-    return true;
-  }
-  if (demoTop < 0 && demoBottom > 600) {
-    return true;
-  }
-  return false;
-}
 
 function getDemos(props) {
   return Object.keys(props.demos)
@@ -39,7 +26,6 @@ export default class ComponentDoc extends React.Component {
 
     this.state = {
       currentIndex: this.getIndex(props),
-      toggle: false,
       inMultiDemoMode: getDemos(props).length >= 2,
       inFixedDemoMode: false,
     };
@@ -65,32 +51,22 @@ export default class ComponentDoc extends React.Component {
 
   componentWillReceiveProps = (nextProps) => {
     const inMultiDemoMode = getDemos(nextProps).length >= 2;
-    if (!inMultiDemoMode && this.state.inMultiDemoMode) {
-      this.cleanScroll();
+    if (this.props.demos !== nextProps.demos) {
+      this.setState({
+        currentIndex: 0,
+        inMultiDemoMode,
+        inFixedDemoMode: false,
+      });
     }
-    if (inMultiDemoMode && !this.state.inFixedDemoMode) {
-      this.bindScroll();
-    }
-    this.setState({
-      currentIndex: 0,
-      toggle: false,
-      inMultiDemoMode,
-      inFixedDemoMode: false,
-    });
   }
 
   togglePreview = (e) => {
     this.setState({
       currentIndex: e.index,
-      toggle: true,
     });
   }
 
   componentDidMount() {
-    if (this.state.inMultiDemoMode) {
-      this.bindScroll();
-    }
-
     setTimeout(() => {
       const linkTo = this.props.location.hash.replace('#', '');
       if (linkTo) {
@@ -98,27 +74,8 @@ export default class ComponentDoc extends React.Component {
       }
     }, 500);
   }
-  componentWillUnmount() {
-    this.cleanScroll();
-  }
-  doScroll = () => {
-    const demoEl = document.getElementById('demo-code');
-
-    const inFixedDemoMode = getFixedMode(demoEl, this.state.inFixedDemoMode);
-
-    if (this.state.inFixedDemoMode !== inFixedDemoMode) {
-      this.setState({ inFixedDemoMode });
-    }
-  }
-  bindScroll = () => {
-    document.addEventListener('scroll', this.handleScroll, false);
-    setTimeout(this.handleScroll, 0);
-  }
-  cleanScroll = () => {
-    document.removeEventListener('scroll', this.handleScroll, false);
-  }
   render() {
-    const props = this.props;
+    const { props } = this;
     const { doc, location } = props;
     const { content, meta } = doc;
 
@@ -128,36 +85,40 @@ export default class ComponentDoc extends React.Component {
 
     const leftChildren = [];
 
-    const currentIndex = this.state.currentIndex;
+    const { currentIndex } = this.state;
 
     demos.sort((a, b) => a.meta.order - b.meta.order)
       .forEach((demoData, index) => {
-        leftChildren.push(
-          <Demo
-            togglePreview={this.togglePreview}
-            {...demoData}
-            className={currentIndex === index ? 'code-box-target' : ''}
-            key={index}
-            index={index}
-            currentIndex={currentIndex}
-            utils={props.utils}
-            pathname={location.pathname}
-          />,
-        );
+        leftChildren.push(<Demo
+          togglePreview={this.togglePreview}
+          {...demoData}
+          className={currentIndex === index ? 'code-box-target' : ''}
+          key={index}
+          index={index}
+          currentIndex={currentIndex}
+          utils={props.utils}
+          pathname={location.pathname}
+        />);
       });
 
-    const protocol = window.location.protocol;
+    const { protocol } = window.location;
     const path = doc.meta.filename.split('/')[1];
     const isLocalMode = window.location.port;
     const host = isLocalMode ? 'localhost:8002' : window.location.host;
     const demoUrl = `${protocol}//${host}/kitchen-sink/components/${path}`;
 
-    const PopoverContent = (<div>
-      <h4 style={{ margin: '8Px 0 12Px', textAlign: 'center' }}><FormattedMessage id="app.ComponentDoc.codeQrcode" /></h4>
-      <QRCode size={144} value={demoUrl} />
-    </div>);
+    const PopoverContent = (
+      <div>
+        <h4 style={{ margin: '8Px 0 12Px', textAlign: 'center' }}>
+          <FormattedMessage id="app.ComponentDoc.codeQrcode" />
+        </h4>
+        <QRCode size={144} value={demoUrl} />
+      </div>
+    );
 
-    const { title, subtitle, chinese, english } = meta;
+    const {
+      title, subtitle, chinese, english,
+    } = meta;
     const hash = `#${path}-demo-${currentIndex}`;
     const mainPath = isLocalMode ? 'components' : 'kitchen-sink/components';
     const search = this.context.intl.locale === 'zh-CN' ? '?lang=zh-CN' : '?lang=en-US';
@@ -180,8 +141,7 @@ export default class ComponentDoc extends React.Component {
             </h1>
             {
               props.utils.toReactComponent(['section', { className: 'markdown' }]
-                .concat(getChildren(content)),
-              )
+                .concat(getChildren(content)))
             }
 
             <section id="demoTitle" className="demo-title-wrapper">
@@ -191,49 +151,56 @@ export default class ComponentDoc extends React.Component {
             </section>
           </section>
 
-          <div id="demo-code" className={codeContainerCls}>
-            <div style={{ width: '100%', float: 'left' }}>
-              {leftChildren}
-            </div>
-            <div className="mobile-wrapper">
-              <div id="aside-demo" className="aside-demo">
-                <div style={{ width: '377Px', height: '620Px' }}>
-                  <div className="demo-preview-wrapper">
-                    <div className="demo-preview-header">
-                      <div className="demo-preview-statbar">
-                        <img width="350Px" alt="presentation" style={{ margin: '0 2Px' }} src="https://os.alipayobjects.com/rmsportal/VfVHYcSUxreetec.png" />
-                      </div>
-                      <div style={{ height: '40Px' }}>
-                        <div className="url-box">{iframeUrl}</div>
+          <StickyContainer>
+            <div id="demo-code" className={codeContainerCls} style={{ minHeight: 620 }}>
+              <div style={{ width: '100%', float: 'left' }}>
+                {leftChildren}
+              </div>
+              <Sticky>
+                {
+                  ({ style }) => (
+                    <div style={{ ...style, pointerEvents: 'none' }}>
+                      <div className="mobile-wrapper" style={{ pointerEvents: 'auto' }}>
+                        <div id="aside-demo" className="aside-demo">
+                          <div style={{ width: '377Px', height: '620Px' }}>
+                            <div className="demo-preview-wrapper">
+                              <div className="demo-preview-header">
+                                <div className="demo-preview-statbar">
+                                  <img width="350Px" alt="presentation" style={{ margin: '0 2Px' }} src="https://os.alipayobjects.com/rmsportal/VfVHYcSUxreetec.png" />
+                                </div>
+                                <div style={{ height: '40Px' }}>
+                                  <div className="url-box">{iframeUrl}</div>
+                                </div>
+                              </div>
+                              <section className="code-box-demo code-box-demo-preview">
+                                <iframe id="demoFrame"
+                                  name="demoFrame"
+                                  title="antd-mobile"
+                                  style={{
+                                    width: '377Px',
+                                    height: '548Px',
+                                    border: '1Px solid #F7F7F7',
+                                    borderTop: 'none',
+                                    boxShadow: '0 2Px 4Px #ebebeb',
+                                  }}
+                                  src={iframeUrl}
+                                />
+                              </section>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <section className="code-box-demo code-box-demo-preview">
-                      <iframe id="demoFrame"
-                        name="demoFrame"
-                        title="antd-mobile"
-                        style={{
-                          width: '377Px',
-                          height: '548Px',
-                          border: '1Px solid #F7F7F7',
-                          borderTop: 'none',
-                          boxShadow: '0 2Px 4Px #ebebeb',
-                        }}
-                        src={iframeUrl}
-                      />
-                    </section>
-                  </div>
-                </div>
-              </div>
+                  )
+                }
+              </Sticky>
             </div>
-          </div>
-
+          </StickyContainer>
           {
-            props.utils.toReactComponent(
-              ['section', {
-                id: 'api',
-                className: 'markdown api-container',
-              }].concat(getChildren(doc.api || ['placeholder'])),
-            )
+            props.utils.toReactComponent(['section', {
+              id: 'api',
+              className: 'markdown api-container',
+            }].concat(getChildren(doc.api || ['placeholder'])))
           }
         </article>
       </DocumentTitle>

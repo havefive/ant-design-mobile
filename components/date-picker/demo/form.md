@@ -69,8 +69,6 @@ class Test extends React.Component {
     return (<form>
       <List
         className="date-picker-list"
-        style={{ backgroundColor: 'white' }}
-        renderHeader={() => `Form Validation, ${getFieldError('idp') ? getFieldError('idp').join(',') : ''}`}
         renderFooter={() => getFieldError('dp') && getFieldError('dp').join(',')}
       >
         <InputItem
@@ -82,7 +80,7 @@ class Test extends React.Component {
               { validator: this.validateIdp },
             ],
           })}
-        >Input Date</InputItem>
+        >Input date</InputItem>
         <DatePicker
           {...getFieldProps('dp', {
             initialValue: this.state.dpValue,

@@ -29,7 +29,7 @@ exports[`renders ./components/search-bar/demo/basic.md correctly 1`] = `
           />
           <span
             class="am-search-synthetic-ph-placeholder"
-            style="visibility:visible;"
+            style="visibility:visible"
           >
             Search
           </span>
@@ -61,7 +61,7 @@ exports[`renders ./components/search-bar/demo/basic.md correctly 1`] = `
     <div
       class="sub-title"
     >
-      AutoFocus in Alipay client
+      AutoFocus when enter page
     </div>
   </div>
   <form
@@ -82,15 +82,15 @@ exports[`renders ./components/search-bar/demo/basic.md correctly 1`] = `
           />
           <span
             class="am-search-synthetic-ph-placeholder"
-            style="visibility:visible;"
+            style="visibility:visible"
           >
-            自动获取光标，支付宝客户端有效
+            自动获取光标
           </span>
         </span>
       </div>
       <input
         class="am-search-value"
-        placeholder="自动获取光标，支付宝客户端有效"
+        placeholder="自动获取光标"
         type="search"
         value=""
       />
@@ -134,7 +134,7 @@ exports[`renders ./components/search-bar/demo/basic.md correctly 1`] = `
           />
           <span
             class="am-search-synthetic-ph-placeholder"
-            style="visibility:visible;"
+            style="visibility:visible"
           >
             手动获取获取光标
           </span>
@@ -168,7 +168,7 @@ exports[`renders ./components/search-bar/demo/basic.md correctly 1`] = `
       role="button"
     >
       <span>
-        Click to Focus
+        click to focus
       </span>
     </a>
   </div>
@@ -181,7 +181,7 @@ exports[`renders ./components/search-bar/demo/basic.md correctly 1`] = `
     <div
       class="sub-title"
     >
-      Show Cancel Button
+      Show cancel button
     </div>
   </div>
   <form
@@ -202,7 +202,7 @@ exports[`renders ./components/search-bar/demo/basic.md correctly 1`] = `
           />
           <span
             class="am-search-synthetic-ph-placeholder"
-            style="visibility:hidden;"
+            style="visibility:hidden"
           >
             Search
           </span>

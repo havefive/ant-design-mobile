@@ -25,17 +25,25 @@ export interface IPickerView {
   data?: any;
   styles?: any;
   onChange?: (value?) => void;
+  onScrollChange?: (value?) => void;
   indicatorStyle?: any;
+  itemStyle?: any;
 }
 
 export default class PickerView extends React.Component<IPickerView, any> {
   static defaultProps = getDefaultProps();
 
   getCol = () => {
-    const { data, pickerPrefixCls } = this.props;
+    const { data, pickerPrefixCls, indicatorStyle, itemStyle } = this.props;
     return data.map((col, index) => {
       return (
-        <RMCPicker key={index} prefixCls={pickerPrefixCls} style={{ flex: 1 }}>
+        <RMCPicker
+          key={index}
+          prefixCls={pickerPrefixCls}
+          style={{ flex: 1 }}
+          indicatorStyle={indicatorStyle}
+          itemStyle={itemStyle}
+        >
           {col.map(item => {
             return (
               <RMCPicker.Item key={item.value} value={item.value}>
@@ -58,8 +66,10 @@ export default class PickerView extends React.Component<IPickerView, any> {
           data={props.data}
           value={props.value}
           onChange={props.onChange}
+          onScrollChange={props.onScrollChange}
           cols={props.cols}
           indicatorStyle={props.indicatorStyle}
+          pickerItemStyle={props.itemStyle}
         />
       );
     } else {
@@ -68,7 +78,7 @@ export default class PickerView extends React.Component<IPickerView, any> {
           prefixCls={props.prefixCls}
           selectedValue={props.value}
           onValueChange={props.onChange}
-          indicatorStyle={props.indicatorStyle}
+          onScrollChange={props.onScrollChange}
           style={{ flexDirection: 'row' }}
         >
           {this.getCol()}

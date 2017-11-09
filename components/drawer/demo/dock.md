@@ -15,7 +15,7 @@ Docked in document
 
 
 ````jsx
-import { Drawer, List, NavBar } from 'antd-mobile';
+import { Drawer, List, NavBar, Icon } from 'antd-mobile';
 
 class App extends React.Component {
   state = {
@@ -28,7 +28,7 @@ class App extends React.Component {
   }
   render() {
     const sidebar = (<List>
-      {[...Array(20).keys()].map((i, index) => {
+      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((i, index) => {
         if (index === 0) {
           return (<List.Item key={index}
             thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
@@ -42,7 +42,9 @@ class App extends React.Component {
     </List>);
 
     return (<div style={{ height: '100%' }}>
-      <NavBar iconName="ellipsis" onLeftClick={() => this.onDock('docked')}>Docked in document</NavBar>
+      <NavBar icon={<Icon type="ellipsis" />} onLeftClick={() => this.onDock('docked')}>
+        Docked in document
+      </NavBar>
       <Drawer
         className="my-drawer"
         style={{ minHeight: document.documentElement.clientHeight }}
@@ -51,7 +53,7 @@ class App extends React.Component {
         sidebar={sidebar}
         docked={this.state.docked}
       >
-        Click upper-left corner icon
+        Click upper-left corner
       </Drawer>
     </div>);
   }

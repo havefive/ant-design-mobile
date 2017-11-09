@@ -13,11 +13,11 @@ exports[`renders ./components/progress/demo/basic.md correctly 1`] = `
   >
     <div
       class="am-progress-bar"
-      style="width:30%;height:0;"
+      style="width:30%;height:0"
     />
   </div>
   <div
-    style="height:36px;"
+    style="height:18px"
   />
   <div
     aria-valuemax="100"
@@ -28,7 +28,7 @@ exports[`renders ./components/progress/demo/basic.md correctly 1`] = `
   >
     <div
       class="am-progress-bar"
-      style="width:0;height:0;"
+      style="width:0;height:0"
     />
   </div>
   <div
@@ -46,7 +46,7 @@ exports[`renders ./components/progress/demo/basic.md correctly 1`] = `
       >
         <div
           class="am-progress-bar"
-          style="width:50%;height:0;"
+          style="width:50%;height:0"
         />
       </div>
     </div>
@@ -56,15 +56,21 @@ exports[`renders ./components/progress/demo/basic.md correctly 1`] = `
       50%
     </div>
   </div>
-  <a
-    aria-disabled="false"
-    class="am-button am-button-inline"
-    role="button"
-    style="margin-top:20px;margin-left:30px;"
+  <div
+    class="am-whitespace am-whitespace-xl"
+  />
+  <div
+    class="am-wingblank am-wingblank-lg"
   >
-    <span>
-      (+-)10
-    </span>
-  </a>
+    <a
+      aria-disabled="false"
+      class="am-button"
+      role="button"
+    >
+      <span>
+        (+-)10
+      </span>
+    </a>
+  </div>
 </div>
 `;

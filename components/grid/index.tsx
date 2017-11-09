@@ -3,8 +3,16 @@ import React from 'react';
 import classnames from 'classnames';
 import Flex from '../flex';
 import Carousel from '../carousel';
-import { DataItem, GridProps } from './PropsType';
+import { DataItem, GridProps as BasePropsType } from './PropsType';
 import TouchFeedback from 'rmc-feedback';
+
+export interface GridProps extends BasePropsType {
+  prefixCls?: string;
+  className?: string;
+  square?: boolean;
+  activeClassName?: string;
+  activeStyle?: object;
+}
 
 export default class Grid extends React.Component<GridProps, any> {
   static defaultProps = {
@@ -15,6 +23,7 @@ export default class Grid extends React.Component<GridProps, any> {
     carouselMaxRow: 2,
     prefixCls: 'am-grid',
     square: true,
+    itemStyle: {},
   };
   state = {
     initialSlideWidth: 0, // only used in carousel model
@@ -55,7 +64,7 @@ export default class Grid extends React.Component<GridProps, any> {
           <div className={`${prefixCls}-item-inner-content column-num-${columnNum}`}>
             {
               React.isValidElement(icon) ? icon : (
-                <img className={`${prefixCls}-icon`} src={icon}/>
+                <img className={`${prefixCls}-icon`} src={icon} />
               )
             }
             <div className={`${prefixCls}-text`}>{text}</div>
@@ -72,7 +81,7 @@ export default class Grid extends React.Component<GridProps, any> {
     );
   }
   getRows = (rowCount, dataLength) => {
-    let { columnNum, data, renderItem, prefixCls, onClick } = this.props;
+    let { columnNum, data, renderItem, prefixCls, onClick, activeStyle, activeClassName, itemStyle } = this.props;
     const rowsArr: any[] = [];
 
     columnNum = columnNum!;
@@ -80,6 +89,7 @@ export default class Grid extends React.Component<GridProps, any> {
     const rowWidth = `${100 / columnNum}%`;
     const colStyle = {
       width: rowWidth,
+      ...itemStyle,
     };
 
     for (let i = 0; i < rowCount; i++) {
@@ -90,7 +100,11 @@ export default class Grid extends React.Component<GridProps, any> {
         if (dataIndex < dataLength) {
           const el = data && data[dataIndex];
           itemEl = (
-            <TouchFeedback key={`griditem-${dataIndex}`} activeClassName={`${prefixCls}-item-active`}>
+            <TouchFeedback
+              key={`griditem-${dataIndex}`}
+              activeClassName={activeClassName ? activeClassName : `${prefixCls}-item-active`}
+              activeStyle={activeStyle}
+            >
               <Flex.Item
                 className={`${prefixCls}-item`}
                 onClick={() => onClick && onClick(el, dataIndex)}
@@ -116,7 +130,9 @@ export default class Grid extends React.Component<GridProps, any> {
     return rowsArr;
   }
   render() {
-    const { prefixCls, className, data, hasLine, isCarousel, square, ...restProps } = this.props;
+    const { prefixCls, className, data, hasLine, isCarousel,
+      square, activeStyle, activeClassName, ...restProps,
+    } = this.props;
     let { columnNum, carouselMaxRow, onClick, renderItem, ...restPropsForCarousel } = restProps;
 
     const { initialSlideWidth } = this.state;

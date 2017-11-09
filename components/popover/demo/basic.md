@@ -7,12 +7,11 @@ title:
 
 
 ````jsx
-/* eslint global-require: 0 */
 import { Popover, NavBar, Icon } from 'antd-mobile';
 
 const Item = Popover.Item;
 
-const customIcon = src => <img src={src} className="am-icon am-icon-xs" alt="icon" />;
+const myImg = src => <img src={`https://gw.alipayobjects.com/zos/rmsportal/${src}.svg`} className="am-icon am-icon-xs" alt="" />;
 class App extends React.Component {
   state = {
     visible: true,
@@ -31,12 +30,8 @@ class App extends React.Component {
     });
   };
   render() {
-    let offsetX = -10; // just for pc demo
-    if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {
-      offsetX = -26;
-    }
     return (<div>
-      <NavBar iconName={false}
+      <NavBar
         mode="light"
         rightContent={
           <Popover mask
@@ -44,15 +39,15 @@ class App extends React.Component {
             overlayStyle={{ color: 'currentColor' }}
             visible={this.state.visible}
             overlay={[
-              (<Item key="4" value="scan" icon={customIcon('https://gw.alipayobjects.com/zos/rmsportal/tOtXhkIWzwotgGSeptou.svg')} data-seed="logId">Scan</Item>),
-              (<Item key="5" value="special" icon={customIcon('https://gw.alipayobjects.com/zos/rmsportal/PKAgAqZWJVNwKsAJSmXd.svg')} style={{ whiteSpace: 'nowrap' }}>My Qrcode</Item>),
-              (<Item key="6" value="button ct" icon={customIcon('https://gw.alipayobjects.com/zos/rmsportal/uQIYTFeRrjPELImDRrPt.svg')}>
+              (<Item key="4" value="scan" icon={myImg('tOtXhkIWzwotgGSeptou')} data-seed="logId">Scan</Item>),
+              (<Item key="5" value="special" icon={myImg('PKAgAqZWJVNwKsAJSmXd')} style={{ whiteSpace: 'nowrap' }}>My Qrcode</Item>),
+              (<Item key="6" value="button ct" icon={myImg('uQIYTFeRrjPELImDRrPt')}>
                 <span style={{ marginRight: 5 }}>Help</span>
               </Item>),
             ]}
             align={{
               overflow: { adjustY: 0, adjustX: 0 },
-              offset: [offsetX, 15],
+              offset: [-10, 0],
             }}
             onVisibleChange={this.handleVisibleChange}
             onSelect={this.onSelect}

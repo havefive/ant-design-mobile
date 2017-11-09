@@ -20,7 +20,7 @@ const CustomChildren = props => (
     onClick={props.onClick}
     style={{ backgroundColor: '#fff', paddingLeft: 15 }}
   >
-    <div style={{ display: 'flex', height: '45px', lineHeight: '45px', borderBottom: '1PX solid #ddd' }}>
+    <div className="test" style={{ display: 'flex', height: '45px', lineHeight: '45px' }}>
       <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.children}</div>
       <div style={{ textAlign: 'right', color: '#888', marginRight: 15 }}>{props.extra}</div>
     </div>
@@ -134,7 +134,7 @@ class Test extends React.Component {
           onOk={e => console.log('ok', e)}
           onDismiss={e => console.log('dismiss', e)}
         >
-          <List.Item arrow="horizontal">Multiple & Cascader</List.Item>
+          <List.Item arrow="horizontal">Multiple & cascader</List.Item>
         </Picker>
         <Picker
           data={seasons}
@@ -143,6 +143,7 @@ class Test extends React.Component {
           extra="请选择(可选)"
           value={this.state.sValue}
           onChange={v => this.setState({ sValue: v })}
+          onOk={v => this.setState({ sValue: v })}
         >
           <List.Item arrow="horizontal">Multiple</List.Item>
         </Picker>
@@ -154,8 +155,9 @@ class Test extends React.Component {
           cols={this.state.cols}
           value={this.state.asyncValue}
           onPickerChange={this.onPickerChange}
+          onOk={v => console.log(v)}
         >
-          <List.Item arrow="horizontal" onClick={this.onClick}>Multiple & Async</List.Item>
+          <List.Item arrow="horizontal" onClick={this.onClick}>Multiple & async</List.Item>
         </Picker>
         <Picker
           title="选择地区"
@@ -163,8 +165,9 @@ class Test extends React.Component {
           data={district}
           value={this.state.pickerValue}
           onChange={v => this.setState({ pickerValue: v })}
+          onOk={v => this.setState({ pickerValue: v })}
         >
-          <CustomChildren>Customized Children</CustomChildren>
+          <CustomChildren>Customized children</CustomChildren>
         </Picker>
         <Picker
           visible={this.state.visible}
@@ -172,9 +175,10 @@ class Test extends React.Component {
           value={this.state.pickerValue}
           onChange={v => this.setState({ pickerValue: v })}
           onOk={() => this.setState({ visible: false })}
+          onDismiss={() => this.setState({ visible: false })}
         >
-          <List.Item extra={this.getSel()}>
-            <div onClick={() => this.setState({ visible: true })}>Visible state</div>
+          <List.Item extra={this.getSel()} onClick={() => this.setState({ visible: true })}>
+            Visible state
           </List.Item>
         </Picker>
       </List>
@@ -190,4 +194,30 @@ ReactDOM.render(<TestWrapper />, mountNode);
 .picker-list .am-list-item .am-list-line .am-list-extra {
   flex-basis: initial;
 }
+
+.test {
+  position: relative;
+  border-bottom: 0;
+}
+
+.test:after {
+  content: '';
+  position: absolute;
+  background-color: #ddd;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+
 ````

@@ -4,13 +4,13 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
 <div>
   <div
     class="am-list calendar-list"
-    style="background-color:white;"
+    style="background-color:white"
   >
     <div
       class="am-list-body"
     >
       <div
-        class="am-list-item am-list-item-middle"
+        class="am-list-item item am-list-item-middle"
       >
         <div
           class="am-list-line"
@@ -18,7 +18,11 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
           <div
             class="am-list-content"
           >
-            中文 
+            中文
+          </div>
+          <div
+            class="am-list-extra"
+          >
             <label
               class="am-switch right"
             >
@@ -37,7 +41,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
         </div>
         <div
           class="am-list-ripple"
-          style="display:none;"
+          style="display:none"
         />
       </div>
       <div
@@ -58,7 +62,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
         </div>
         <div
           class="am-list-ripple"
-          style="display:none;"
+          style="display:none"
         />
       </div>
       <div
@@ -79,7 +83,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
         </div>
         <div
           class="am-list-ripple"
-          style="display:none;"
+          style="display:none"
         />
       </div>
       <div
@@ -100,7 +104,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
         </div>
         <div
           class="am-list-ripple"
-          style="display:none;"
+          style="display:none"
         />
       </div>
       <div
@@ -121,7 +125,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
         </div>
         <div
           class="am-list-ripple"
-          style="display:none;"
+          style="display:none"
         />
       </div>
       <div
@@ -142,7 +146,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
         </div>
         <div
           class="am-list-ripple"
-          style="display:none;"
+          style="display:none"
         />
       </div>
       <div
@@ -163,7 +167,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
         </div>
         <div
           class="am-list-ripple"
-          style="display:none;"
+          style="display:none"
         />
       </div>
       <div
@@ -184,7 +188,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
         </div>
         <div
           class="am-list-ripple"
-          style="display:none;"
+          style="display:none"
         />
       </div>
       <div
@@ -196,7 +200,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
           <div
             class="am-list-content"
           >
-            不使用ZScroller(无法向前滚动)
+            不无限滚动
           </div>
           <div
             aria-hidden="true"
@@ -205,7 +209,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
         </div>
         <div
           class="am-list-ripple"
-          style="display:none;"
+          style="display:none"
         />
       </div>
       <div
@@ -226,7 +230,49 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
         </div>
         <div
           class="am-list-ripple"
-          style="display:none;"
+          style="display:none"
+        />
+      </div>
+      <div
+        class="am-list-item am-list-item-middle"
+      >
+        <div
+          class="am-list-line"
+        >
+          <div
+            class="am-list-content"
+          >
+            默认选择范围
+          </div>
+          <div
+            aria-hidden="true"
+            class="am-list-arrow am-list-arrow-horizontal"
+          />
+        </div>
+        <div
+          class="am-list-ripple"
+          style="display:none"
+        />
+      </div>
+      <div
+        class="am-list-item am-list-item-middle"
+      >
+        <div
+          class="am-list-line"
+        >
+          <div
+            class="am-list-content"
+          >
+            onSelect API
+          </div>
+          <div
+            aria-hidden="true"
+            class="am-list-arrow am-list-arrow-horizontal"
+          />
+        </div>
+        <div
+          class="am-list-ripple"
+          style="display:none"
         />
       </div>
     </div>
@@ -237,13 +283,13 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
     <span>
       <div
         class="mask animate"
-        style="display:none;"
+        style="display:none"
       />
     </span>
     <span>
       <div
         class="content animate"
-        style="display:none;"
+        style="display:none"
       />
     </span>
   </div>

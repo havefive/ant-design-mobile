@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { FormattedMessage } from 'react-intl';
 import { Button, Modal, Radio, Tooltip, Icon } from 'antd';
-import { ping, head } from '../../../../utils';
+import { ping } from '../../../../utils';
 
 export default class Demo extends React.Component {
   static contextTypes = {
@@ -26,7 +26,7 @@ export default class Demo extends React.Component {
 
   componentDidMount() {
     const { meta } = this.props;
-    if (meta.id === location.hash.slice(1)) {
+    if (meta.id === window.location.hash.slice(1)) {
       this.anchor.click();
     }
     this.componentWillReceiveProps(this.props);
@@ -41,7 +41,9 @@ export default class Demo extends React.Component {
   }
 
   handleClick = (e) => {
-    const { togglePreview, index, currentIndex, meta } = this.props;
+    const {
+      togglePreview, index, currentIndex, meta,
+    } = this.props;
 
     if (index !== currentIndex && e.target.className !== 'collapse anticon anticon-circle-o-right' &&
       e.target.className !== 'fullscreen anticon anticon-arrow-salt') {
@@ -50,7 +52,7 @@ export default class Demo extends React.Component {
       });
     }
 
-    location.hash = meta.id;
+    window.location.hash = meta.id;
   }
 
   viewFullscreen = (e) => {
@@ -93,9 +95,13 @@ export default class Demo extends React.Component {
       style,
     } = this.props;
     const { lang, sourceCode } = this.state;
-    const locale = this.context.intl.locale;
+    const { locale } = this.context.intl;
     const localizedTitle = meta.title[locale] || meta.title;
-    const prefillStyle = `@import 'antd-mobile@next/dist/antd-mobile.min.css';\n\n${style || ''}`.replace(new RegExp(`#${meta.id}\\s*`, 'g'), '');
+    const prefillStyle = `@import 'antd-mobile@2/dist/antd-mobile.min.css';\n\n${style || ''}`.replace(new RegExp(`#${meta.id}\\s*`, 'g'), '');
+
+    const js = sourceCode
+      .replace(/import\s+\{\s+(.*)\s+\}\s+from\s+'rc-form';/, 'const { $1 } = window["rc-form"];')
+      .replace(/import\s+\{\s+(.*)\s+\}\s+from\s+'antd-mobile';/, 'const { $1 } = window["antd-mobile"];');
 
     const codepenPrefillConfig = {
       title: `${localizedTitle} - Ant Design Mobile Demo`,
@@ -103,26 +109,25 @@ export default class Demo extends React.Component {
               <script>
                 var mountNode = document.getElementById('container');
               </script>`,
-      js: sourceCode.replace(/import\s+\{\s+(.*)\s+\}\s+from\s+'antd-mobile';/, 'const { $1 } = window["antd-mobile"];'),
+      js,
       css: prefillStyle,
       editors: '001',
-      css_external: 'https://unpkg.com/antd-mobile@next/dist/antd-mobile.min.css',
+      css_external: 'https://unpkg.com/antd-mobile@2/dist/antd-mobile.min.css',
       js_external: [
-        'react/dist/react.js',
-        'react-dom/dist/react-dom.js',
-        'moment/min/moment-with-locales.js',
-        'antd-mobile@next/dist/antd-mobile.min.js',
+        'react@16/umd/react.production.min.js',
+        'react-dom@16/umd/react-dom.production.min.js',
+        'rc-form@1/dist/rc-form.min.js',
+        'antd-mobile@2/dist/antd-mobile.min.js',
       ]
         .map(url => `https://unpkg.com/${url}`)
         .concat(['https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js'])
         .join(';'),
       js_pre_processor: 'typescript',
-      head,
     };
     const riddlePrefillConfig = {
       title: `${localizedTitle} - Ant Design Mobile Demo`,
-      js: sourceCode.replace('from \'antd-mobile\'', 'from \'antd-mobile@next\''),
-      css: prefillStyle.replace('\'antd-mobile/', '\'antd-mobile@next/'),
+      js: sourceCode.replace('from \'antd-mobile\'', 'from \'antd-mobile\''),
+      css: prefillStyle.replace('\'antd-mobile/', '\'antd-mobile/'),
     };
     return Array.isArray(highlightedCode) ? (
       <div className="highlight">

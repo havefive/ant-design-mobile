@@ -4,14 +4,20 @@ export interface TabBarProps {
   barTintColor?: string;
   tintColor?: string;
   unselectedTintColor?: string;
-  children: any;
+  children?: any;
   /*web only*/
   prefixCls?: string;
   className?: string;
   hidden?: boolean;
   placeholder?: React.ReactNode;
+  /** default: false */
+  animated?: boolean;
+  /** default: false */
+  swipeable?: boolean;
   /** rn android only**/
   styles?: any;
+  /*web only*/
+  noRenderContent?: boolean;
 }
 
 export interface TabBarItemProps {
@@ -23,4 +29,8 @@ export interface TabBarItemProps {
   title: string;
   /*web only*/
   dot?: boolean;
+  /*web only*/
+  prefixCls?: string;
+  /*web only*/
+  style?: any;
 }

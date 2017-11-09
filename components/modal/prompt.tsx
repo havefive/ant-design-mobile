@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from './Modal';
+import closest from '../_util/closest';
 
 export default function prompt(
   title, message, callbackOrActions,
@@ -40,23 +41,27 @@ export default function prompt(
       inputDom = (
         <div className={`${prefixCls}-input-container`}>
           <div className={`${prefixCls}-input`}>
-            <input
-              type="text"
-              value={data.text}
-              defaultValue={defaultValue}
-              ref={input => focusFn(input)}
-              onChange={onChange}
-              placeholder={placeholders[0]}
-            />
+            <label>
+              <input
+                type="text"
+                value={data.text}
+                defaultValue={defaultValue}
+                ref={input => focusFn(input)}
+                onChange={onChange}
+                placeholder={placeholders[0]}
+              />
+            </label>
           </div>
           <div className={`${prefixCls}-input`}>
-            <input
-              type="password"
-              value={data.password}
-              defaultValue=""
-              onChange={onChange}
-              placeholder={placeholders[1]}
-            />
+            <label>
+              <input
+                type="password"
+                value={data.password}
+                defaultValue=""
+                onChange={onChange}
+                placeholder={placeholders[1]}
+              />
+            </label>
           </div>
         </div>
       );
@@ -65,14 +70,16 @@ export default function prompt(
       inputDom = (
         <div className={`${prefixCls}-input-container`}>
           <div className={`${prefixCls}-input`}>
-            <input
-              type="password"
-              value={data.password}
-              defaultValue=""
-              ref={input => focusFn(input)}
-              onChange={onChange}
-              placeholder={placeholders[0]}
-            />
+            <label>
+              <input
+                type="password"
+                value={data.password}
+                defaultValue=""
+                ref={input => focusFn(input)}
+                onChange={onChange}
+                placeholder={placeholders[0]}
+              />
+            </label>
           </div>
         </div>
       );
@@ -83,14 +90,16 @@ export default function prompt(
       inputDom = (
         <div className={`${prefixCls}-input-container`}>
           <div className={`${prefixCls}-input`}>
-            <input
-              type="text"
-              value={data.text}
-              defaultValue={defaultValue}
-              ref={input => focusFn(input)}
-              onChange={onChange}
-              placeholder={placeholders[0]}
-            />
+            <label>
+              <input
+                type="text"
+                value={data.text}
+                defaultValue={defaultValue}
+                ref={input => focusFn(input)}
+                onChange={onChange}
+                placeholder={placeholders[0]}
+              />
+            </label>
           </div>
         </div>
       );
@@ -99,10 +108,8 @@ export default function prompt(
 
   let content = (
     <div>
-      <label>
-        <span>{message}</span>
-        {inputDom}
-      </label>
+      {message}
+      {inputDom}
     </div>
   );
 
@@ -161,6 +168,17 @@ export default function prompt(
     return button;
   });
 
+  function onWrapTouchStart(e) {
+    // exclude input element for focus
+    if (!/iPhone|iPod|iPad/i.test(navigator.userAgent)) {
+      return;
+    }
+    const pNode = closest(e.target, `.${prefixCls}-content`);
+    if (!pNode) {
+      e.preventDefault();
+    }
+  }
+
   ReactDOM.render(
     <Modal
       visible
@@ -173,8 +191,9 @@ export default function prompt(
       footer={footer}
       maskTransitionName="am-fade"
       platform={platform}
+      wrapProps={{ onTouchStart: onWrapTouchStart }}
     >
-      <div style={{ zoom: 1, overflow: 'hidden' }}>{content}</div>
+      <div className={`${prefixCls}-propmt-content`}>{content}</div>
     </Modal>, div,
   );
 

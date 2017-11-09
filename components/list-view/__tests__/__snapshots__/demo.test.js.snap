@@ -2,40 +2,36 @@
 
 exports[`renders ./components/list-view/demo/basic.md correctly 1`] = `
 <div
-  style="margin:0 auto;width:96%;"
+  class="am-list-view-scrollview"
+  style="position:relative;overflow:auto;-webkit-overflow-scrolling:touch;flex:1;height:0"
 >
   <div
-    class="fortest am-list-view-scrollview"
-    style="position:relative;overflow:auto;-webkit-overflow-scrolling:touch;flex:1;height:0;border:1px solid #ddd;margin:5px 0;"
+    class="am-list-view-scrollview-content am-list"
+    style="position:absolute;min-width:100%"
   >
     <div
-      class="am-list-view-scrollview-content am-list"
-      style="position:absolute;min-width:100%;"
+      class="am-list-header"
+    >
+      <span>
+        header
+      </span>
+    </div>
+    <div
+      class="am-list-body my-body"
+    >
+      <span
+        style="display:none"
+      >
+        you can custom body wrap element
+      </span>
+    </div>
+    <div
+      class="am-list-footer"
     >
       <div
-        class="am-list-header"
+        style="padding:30px;text-align:center"
       >
-        <span>
-          header
-        </span>
-      </div>
-      <div
-        class="am-list-body my-body"
-      >
-        <span
-          style="display:none;"
-        >
-          you can custom body wrap element
-        </span>
-      </div>
-      <div
-        class="am-list-footer"
-      >
-        <div
-          style="padding:30px;text-align:center;"
-        >
-          Loading...
-        </div>
+        Loading...
       </div>
     </div>
   </div>
@@ -60,7 +56,7 @@ exports[`renders ./components/list-view/demo/basic-body.md correctly 1`] = `
     class="am-list-footer"
   >
     <div
-      style="padding:30px;text-align:center;"
+      style="padding:30px;text-align:center"
     >
       Loading...
     </div>
@@ -70,7 +66,7 @@ exports[`renders ./components/list-view/demo/basic-body.md correctly 1`] = `
 
 exports[`renders ./components/list-view/demo/basic-sticky.md correctly 1`] = `
 <div
-  class="am-list am-list-view-scrollview"
+  class="am-list sticky-list am-list-view-scrollview"
 >
   <div
     class="am-list-header"
@@ -80,17 +76,13 @@ exports[`renders ./components/list-view/demo/basic-sticky.md correctly 1`] = `
     </span>
   </div>
   <div
-    class="for-stickyContainer-demo"
-  >
-    <div
-      class="am-list-body"
-    />
-  </div>
+    class="am-list-body"
+  />
   <div
     class="am-list-footer"
   >
     <div
-      style="padding:30px;text-align:center;"
+      style="padding:30px;text-align:center"
     >
       Loading...
     </div>
@@ -100,54 +92,10 @@ exports[`renders ./components/list-view/demo/basic-sticky.md correctly 1`] = `
 
 exports[`renders ./components/list-view/demo/idxed.md correctly 1`] = `
 <div
-  class="am-indexed-list-container"
+  style="padding-top:44px;position:relative"
 >
   <div
-    class="am-indexed-list fortest am-list-view-scrollview"
-    style="position:relative;overflow:auto;-webkit-overflow-scrolling:touch;flex:1;height:0;"
-  >
-    <div
-      class="am-list-view-scrollview-content am-list"
-      style="position:absolute;min-width:100%;"
-    >
-      <div
-        class="am-list-header"
-      >
-        <span>
-          custom header
-        </span>
-      </div>
-      <div
-        class="am-list-body"
-      />
-      <div
-        class="am-list-footer"
-      >
-        <span>
-          custom footer
-        </span>
-      </div>
-    </div>
-  </div>
-  <ul
-    class="am-indexed-list-quick-search-bar"
-    style="position:absolute;top:20px;"
-  >
-    <li
-      data-qf-target="#"
-    >
-      #
-    </li>
-  </ul>
-</div>
-`;
-
-exports[`renders ./components/list-view/demo/idxed-sticky.md correctly 1`] = `
-<div
-  style="padding-top:44px;position:relative;"
->
-  <div
-    style="position:absolute;top:0;left:0;right:0;"
+    style="position:absolute;top:0;left:0;right:0"
   >
     <form
       action="#"
@@ -167,7 +115,7 @@ exports[`renders ./components/list-view/demo/idxed-sticky.md correctly 1`] = `
             />
             <span
               class="am-search-synthetic-ph-placeholder"
-              style="visibility:visible;"
+              style="visibility:visible"
             >
               Search
             </span>
@@ -194,7 +142,7 @@ exports[`renders ./components/list-view/demo/idxed-sticky.md correctly 1`] = `
     class="am-indexed-list-container"
   >
     <div
-      class="am-indexed-list am-list am-list-view-scrollview"
+      class="am-indexed-list am-list sticky-list am-list-view-scrollview"
     >
       <div
         class="am-list-header"
@@ -203,11 +151,9 @@ exports[`renders ./components/list-view/demo/idxed-sticky.md correctly 1`] = `
           custom header
         </span>
       </div>
-      <div>
-        <div
-          class="am-list-body"
-        />
-      </div>
+      <div
+        class="am-list-body"
+      />
       <div
         class="am-list-footer"
       >
@@ -218,7 +164,7 @@ exports[`renders ./components/list-view/demo/idxed-sticky.md correctly 1`] = `
     </div>
     <ul
       class="am-indexed-list-quick-search-bar"
-      style="top:85px;"
+      style="top:85px"
     >
       <li
         data-qf-target="#"

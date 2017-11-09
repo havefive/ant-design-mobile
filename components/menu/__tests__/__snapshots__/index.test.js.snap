@@ -2,21 +2,19 @@
 
 exports[`Menu level 1 renders correctly 1`] = `
 <div
-  class="am-menu"
-  style="height:0px;"
+  class="am-flexbox am-menu am-flexbox-dir-column am-flexbox-align-stretch"
 >
   <div
-    class="am-flexbox am-flexbox-align-start"
+    class="am-flexbox am-menu-select-container am-flexbox-align-start"
   >
     <div
       aria-hidden="false"
-      class="am-flexbox-item"
+      class="am-flexbox-item am-menu-select-container-submenu"
       role="tabpanel"
-      style="height:0px;"
     >
       <div
         class="am-list am-sub-menu"
-        style="padding-top:0;"
+        style="padding-top:0"
       >
         <div
           class="am-list-body"
@@ -54,7 +52,7 @@ exports[`Menu level 1 renders correctly 1`] = `
             </div>
             <div
               class="am-list-ripple"
-              style="display:none;"
+              style="display:none"
             />
           </div>
           <div
@@ -90,7 +88,7 @@ exports[`Menu level 1 renders correctly 1`] = `
             </div>
             <div
               class="am-list-ripple"
-              style="display:none;"
+              style="display:none"
             />
           </div>
         </div>
@@ -102,15 +100,13 @@ exports[`Menu level 1 renders correctly 1`] = `
 
 exports[`Menu renders correctly 1`] = `
 <div
-  class="am-menu"
-  style="height:0px;"
+  class="am-flexbox am-menu am-flexbox-dir-column am-flexbox-align-stretch"
 >
   <div
-    class="am-flexbox am-flexbox-align-start"
+    class="am-flexbox am-menu-select-container am-flexbox-align-start"
   >
     <div
       class="am-flexbox-item"
-      style="height:0px;"
     >
       <div
         class="am-list"
@@ -135,7 +131,7 @@ exports[`Menu renders correctly 1`] = `
             </div>
             <div
               class="am-list-ripple"
-              style="display:none;"
+              style="display:none"
             />
           </div>
           <div
@@ -154,7 +150,7 @@ exports[`Menu renders correctly 1`] = `
             </div>
             <div
               class="am-list-ripple"
-              style="display:none;"
+              style="display:none"
             />
           </div>
         </div>
@@ -162,13 +158,12 @@ exports[`Menu renders correctly 1`] = `
     </div>
     <div
       aria-hidden="false"
-      class="am-flexbox-item"
+      class="am-flexbox-item am-menu-select-container-submenu"
       role="tabpanel"
-      style="height:0px;"
     >
       <div
         class="am-list am-sub-menu"
-        style="padding-top:0;"
+        style="padding-top:0"
       >
         <div
           class="am-list-body"

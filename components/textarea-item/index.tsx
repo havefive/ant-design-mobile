@@ -1,10 +1,17 @@
 /* tslint:disable:jsx-no-multiline-js */
 import React from 'react';
 import classnames from 'classnames';
-import TextareaItemProps from './PropsType';
+import BasePropsType from './PropsType';
 import TouchFeedback from 'rmc-feedback';
 
-function noop() {}
+export interface TextareaItemProps extends BasePropsType {
+  prefixCls?: string;
+  prefixListCls?: string;
+  className?: string;
+  onClick?: Function;
+}
+
+function noop() { }
 
 function fixControlledValue(value) {
   if (typeof value === 'undefined' || value === null) {
@@ -53,8 +60,9 @@ export default class TextareaItem extends React.Component<TextareaItemProps, Tex
   focus = () => {
     this.textareaRef.focus();
   }
+
   componentDidUpdate() {
-    if (this.props.autoHeight) {
+    if (this.props.autoHeight && this.state.focus) {
       const textareaDom = this.textareaRef;
       textareaDom.style.height = ''; // 字数减少时能自动减小高度
       textareaDom.style.height = `${textareaDom.scrollHeight}px`;
@@ -85,9 +93,11 @@ export default class TextareaItem extends React.Component<TextareaItemProps, Tex
 
   onBlur = (e) => {
     this.debounceTimeout = setTimeout(() => {
-      this.setState({
-        focus: false,
-      });
+      if (document.activeElement !== this.textareaRef) {
+        this.setState({
+          focus: false,
+        });
+      }
     }, 100);
     this.setState({
       focus: false,

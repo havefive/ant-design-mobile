@@ -26,7 +26,7 @@ class Demo extends React.Component {
   }
   render() {
     return (
-      <List renderHeader={() => 'Demos'}>
+      <List>
         <List.Item
           wrap
           extra={
@@ -39,22 +39,7 @@ class Demo extends React.Component {
               onChange={this.onChange}
             />}
         >
-        Show number value(Use TouchEvent for mobile by default)
-        </List.Item>
-        <List.Item
-          wrap
-          extra={
-            <Stepper
-              style={{ width: '100%', minWidth: '100px' }}
-              showNumber
-              max={10}
-              min={1}
-              value={this.state.val1}
-              onChange={this.onChange1}
-              useTouch={false}
-            />}
-        >
-        Show number value(Use MouseEvent for PC)
+        Show number value
         </List.Item>
         <List.Item extra={
           <Stepper

@@ -12,12 +12,7 @@ export interface GridProps {
   columnNum?: number;
   isCarousel?: boolean;
   carouselMaxRow?: number;
+  itemStyle?: any;
   onClick?: (dataItem: DataItem | undefined, itemIndex: number) => void;
-  /** web only */
   renderItem?: (dataItem: DataItem | undefined, itemIndex: number) => React.ReactElement<any>;
-  prefixCls?: string;
-  className?: string;
-  square?: boolean;
-  /** rn only **/
-  styles?: any;
 }

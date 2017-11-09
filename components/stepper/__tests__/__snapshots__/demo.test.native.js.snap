@@ -28,6 +28,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
         hasTVPreferredFocus={undefined}
         hitSlop={undefined}
         isTVSelectable={true}
+        nativeID={undefined}
         onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -70,9 +71,8 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                   "flex": 1,
                   "flexDirection": "row",
                   "minHeight": 44,
-                  "paddingBottom": 6,
                   "paddingRight": 15,
-                  "paddingTop": 6,
+                  "paddingVertical": 6,
                 },
                 false,
                 false,
@@ -92,6 +92,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
               <Text
                 accessible={true}
                 allowFontScaling={true}
+                disabled={false}
                 ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
@@ -99,7 +100,6 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                     Object {
                       "color": "#000000",
                       "fontSize": 17,
-                      "lineHeight": 19,
                       "textAlignVertical": "center",
                     },
                   ]
@@ -127,6 +127,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 accessibilityTraits="button"
                 accessible={true}
                 hitSlop={undefined}
+                nativeID={undefined}
                 onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -153,6 +154,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 <Text
                   accessible={true}
                   allowFontScaling={true}
+                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [
@@ -172,7 +174,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
               <TextInput
                 autoFocus={undefined}
                 editable={true}
-                keyboardType={undefined}
+                keyboardType="numbers-and-punctuation"
                 onChange={[Function]}
                 onEndEditing={[Function]}
                 onFocus={[Function]}
@@ -198,6 +200,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 accessibilityTraits="button"
                 accessible={true}
                 hitSlop={undefined}
+                nativeID={undefined}
                 onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -224,6 +227,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 <Text
                   accessible={true}
                   allowFontScaling={true}
+                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [
@@ -252,6 +256,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
         hasTVPreferredFocus={undefined}
         hitSlop={undefined}
         isTVSelectable={true}
+        nativeID={undefined}
         onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -294,9 +299,8 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                   "flex": 1,
                   "flexDirection": "row",
                   "minHeight": 44,
-                  "paddingBottom": 6,
                   "paddingRight": 15,
-                  "paddingTop": 6,
+                  "paddingVertical": 6,
                 },
                 false,
                 false,
@@ -316,6 +320,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
               <Text
                 accessible={true}
                 allowFontScaling={true}
+                disabled={false}
                 ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
@@ -323,7 +328,6 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                     Object {
                       "color": "#000000",
                       "fontSize": 17,
-                      "lineHeight": 19,
                       "textAlignVertical": "center",
                     },
                   ]
@@ -351,6 +355,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 accessibilityTraits="disabled"
                 accessible={true}
                 hitSlop={undefined}
+                nativeID={undefined}
                 onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -380,6 +385,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 <Text
                   accessible={true}
                   allowFontScaling={true}
+                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [
@@ -401,7 +407,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
               <TextInput
                 autoFocus={undefined}
                 editable={true}
-                keyboardType={undefined}
+                keyboardType="numbers-and-punctuation"
                 onChange={[Function]}
                 onEndEditing={[Function]}
                 onFocus={[Function]}
@@ -427,6 +433,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 accessibilityTraits="button"
                 accessible={true}
                 hitSlop={undefined}
+                nativeID={undefined}
                 onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -453,6 +460,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 <Text
                   accessible={true}
                   allowFontScaling={true}
+                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [
@@ -481,6 +489,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
         hasTVPreferredFocus={undefined}
         hitSlop={undefined}
         isTVSelectable={true}
+        nativeID={undefined}
         onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -523,9 +532,8 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                   "flex": 1,
                   "flexDirection": "row",
                   "minHeight": 44,
-                  "paddingBottom": 6,
                   "paddingRight": 15,
-                  "paddingTop": 6,
+                  "paddingVertical": 6,
                 },
                 false,
                 false,
@@ -545,6 +553,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
               <Text
                 accessible={true}
                 allowFontScaling={true}
+                disabled={false}
                 ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
@@ -552,7 +561,6 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                     Object {
                       "color": "#000000",
                       "fontSize": 17,
-                      "lineHeight": 19,
                       "textAlignVertical": "center",
                     },
                   ]
@@ -580,6 +588,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 accessibilityTraits="disabled"
                 accessible={true}
                 hitSlop={undefined}
+                nativeID={undefined}
                 onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -609,6 +618,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 <Text
                   accessible={true}
                   allowFontScaling={true}
+                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [
@@ -630,7 +640,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
               <TextInput
                 autoFocus={undefined}
                 editable={false}
-                keyboardType={undefined}
+                keyboardType="numbers-and-punctuation"
                 onChange={[Function]}
                 onEndEditing={[Function]}
                 onFocus={[Function]}
@@ -658,6 +668,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 accessibilityTraits="disabled"
                 accessible={true}
                 hitSlop={undefined}
+                nativeID={undefined}
                 onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -687,6 +698,7 @@ exports[`renders ./components/stepper/demo/basic.native.tsx correctly 1`] = `
                 <Text
                   accessible={true}
                   allowFontScaling={true}
+                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [

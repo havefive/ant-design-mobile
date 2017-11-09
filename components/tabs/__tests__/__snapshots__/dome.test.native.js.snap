@@ -29,7 +29,6 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
         style={
           Object {
             "backgroundColor": "#fff",
-            "height": 43.5,
           }
         }
       >
@@ -62,8 +61,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                 accessibilityLabel={undefined}
                 accessibilityTraits="button"
                 accessible={true}
+                collapsable={undefined}
                 hitSlop={undefined}
                 isTVSelectable={true}
+                nativeID={undefined}
                 onLayout={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -94,6 +95,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                     style={
                       Object {
@@ -111,8 +113,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                 accessibilityLabel={undefined}
                 accessibilityTraits="button"
                 accessible={true}
+                collapsable={undefined}
                 hitSlop={undefined}
                 isTVSelectable={true}
+                nativeID={undefined}
                 onLayout={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -143,6 +147,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                     style={
                       Object {
@@ -160,8 +165,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                 accessibilityLabel={undefined}
                 accessibilityTraits="button"
                 accessible={true}
+                collapsable={undefined}
                 hitSlop={undefined}
                 isTVSelectable={true}
+                nativeID={undefined}
                 onLayout={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -192,6 +199,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                     style={
                       Object {
@@ -205,6 +213,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                 </View>
               </View>
               <View
+                collapsable={undefined}
                 style={
                   Object {
                     "backgroundColor": "#108ee9",
@@ -224,6 +233,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
     <RCTScrollView
       alwaysBounceVertical={false}
       automaticallyAdjustContentInsets={false}
+      collapsable={undefined}
       directionalLockEnabled={true}
       horizontal={true}
       keyboardDismissMode="on-drag"
@@ -256,6 +266,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
             <Text
               accessible={true}
               allowFontScaling={true}
+              disabled={false}
               ellipsizeMode="tail"
             >
               Content of First Tab
@@ -282,6 +293,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
             <Text
               accessible={true}
               allowFontScaling={true}
+              disabled={false}
               ellipsizeMode="tail"
             >
               Content of Second Tab
@@ -308,6 +320,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
             <Text
               accessible={true}
               allowFontScaling={true}
+              disabled={false}
               ellipsizeMode="tail"
             >
               Content of Third Tab
@@ -345,7 +358,6 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
           style={
             Object {
               "backgroundColor": "#fff",
-              "height": 43.5,
             }
           }
         >
@@ -378,8 +390,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   accessibilityLabel={undefined}
                   accessibilityTraits="button"
                   accessible={true}
+                  collapsable={undefined}
                   hitSlop={undefined}
                   isTVSelectable={true}
+                  nativeID={undefined}
                   onLayout={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -410,6 +424,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                     <Text
                       accessible={true}
                       allowFontScaling={true}
+                      disabled={false}
                       ellipsizeMode="tail"
                       style={
                         Object {
@@ -427,8 +442,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   accessibilityLabel={undefined}
                   accessibilityTraits="button"
                   accessible={true}
+                  collapsable={undefined}
                   hitSlop={undefined}
                   isTVSelectable={true}
+                  nativeID={undefined}
                   onLayout={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -459,6 +476,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                     <Text
                       accessible={true}
                       allowFontScaling={true}
+                      disabled={false}
                       ellipsizeMode="tail"
                       style={
                         Object {
@@ -476,8 +494,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   accessibilityLabel={undefined}
                   accessibilityTraits="button"
                   accessible={true}
+                  collapsable={undefined}
                   hitSlop={undefined}
                   isTVSelectable={true}
+                  nativeID={undefined}
                   onLayout={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -508,6 +528,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                     <Text
                       accessible={true}
                       allowFontScaling={true}
+                      disabled={false}
                       ellipsizeMode="tail"
                       style={
                         Object {
@@ -525,8 +546,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   accessibilityLabel={undefined}
                   accessibilityTraits="button"
                   accessible={true}
+                  collapsable={undefined}
                   hitSlop={undefined}
                   isTVSelectable={true}
+                  nativeID={undefined}
                   onLayout={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -557,6 +580,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                     <Text
                       accessible={true}
                       allowFontScaling={true}
+                      disabled={false}
                       ellipsizeMode="tail"
                       style={
                         Object {
@@ -574,8 +598,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   accessibilityLabel={undefined}
                   accessibilityTraits="button"
                   accessible={true}
+                  collapsable={undefined}
                   hitSlop={undefined}
                   isTVSelectable={true}
+                  nativeID={undefined}
                   onLayout={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -606,6 +632,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                     <Text
                       accessible={true}
                       allowFontScaling={true}
+                      disabled={false}
                       ellipsizeMode="tail"
                       style={
                         Object {
@@ -623,8 +650,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   accessibilityLabel={undefined}
                   accessibilityTraits="button"
                   accessible={true}
+                  collapsable={undefined}
                   hitSlop={undefined}
                   isTVSelectable={true}
+                  nativeID={undefined}
                   onLayout={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -655,6 +684,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                     <Text
                       accessible={true}
                       allowFontScaling={true}
+                      disabled={false}
                       ellipsizeMode="tail"
                       style={
                         Object {
@@ -672,8 +702,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   accessibilityLabel={undefined}
                   accessibilityTraits="button"
                   accessible={true}
+                  collapsable={undefined}
                   hitSlop={undefined}
                   isTVSelectable={true}
+                  nativeID={undefined}
                   onLayout={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -704,6 +736,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                     <Text
                       accessible={true}
                       allowFontScaling={true}
+                      disabled={false}
                       ellipsizeMode="tail"
                       style={
                         Object {
@@ -721,8 +754,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   accessibilityLabel={undefined}
                   accessibilityTraits="button"
                   accessible={true}
+                  collapsable={undefined}
                   hitSlop={undefined}
                   isTVSelectable={true}
+                  nativeID={undefined}
                   onLayout={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -753,6 +788,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                     <Text
                       accessible={true}
                       allowFontScaling={true}
+                      disabled={false}
                       ellipsizeMode="tail"
                       style={
                         Object {
@@ -770,8 +806,10 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   accessibilityLabel={undefined}
                   accessibilityTraits="button"
                   accessible={true}
+                  collapsable={undefined}
                   hitSlop={undefined}
                   isTVSelectable={true}
+                  nativeID={undefined}
                   onLayout={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -802,6 +840,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                     <Text
                       accessible={true}
                       allowFontScaling={true}
+                      disabled={false}
                       ellipsizeMode="tail"
                       style={
                         Object {
@@ -815,6 +854,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   </View>
                 </View>
                 <View
+                  collapsable={undefined}
                   style={
                     Object {
                       "backgroundColor": "#108ee9",
@@ -834,6 +874,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
       <RCTScrollView
         alwaysBounceVertical={false}
         automaticallyAdjustContentInsets={false}
+        collapsable={undefined}
         directionalLockEnabled={true}
         horizontal={true}
         keyboardDismissMode="on-drag"
@@ -875,6 +916,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     1st Tab
@@ -896,6 +938,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     1st Tab
@@ -917,6 +960,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     1st Tab
@@ -938,6 +982,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     1st Tab
@@ -959,6 +1004,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     1st Tab
@@ -980,6 +1026,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     1st Tab
@@ -1001,6 +1048,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     1st Tab
@@ -1022,6 +1070,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     1st Tab
@@ -1061,6 +1110,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     2nd Tab
@@ -1082,6 +1132,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     2nd Tab
@@ -1103,6 +1154,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     2nd Tab
@@ -1124,6 +1176,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     2nd Tab
@@ -1145,6 +1198,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     2nd Tab
@@ -1166,6 +1220,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     2nd Tab
@@ -1187,6 +1242,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     2nd Tab
@@ -1208,6 +1264,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     2nd Tab
@@ -1247,6 +1304,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     3rd Tab
@@ -1268,6 +1326,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     3rd Tab
@@ -1289,6 +1348,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     3rd Tab
@@ -1310,6 +1370,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     3rd Tab
@@ -1331,6 +1392,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     3rd Tab
@@ -1352,6 +1414,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     3rd Tab
@@ -1373,6 +1436,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     3rd Tab
@@ -1394,6 +1458,7 @@ exports[`renders ./components/tabs/demo/basic.native.tsx correctly 1`] = `
                   <Text
                     accessible={true}
                     allowFontScaling={true}
+                    disabled={false}
                     ellipsizeMode="tail"
                   >
                     3rd Tab

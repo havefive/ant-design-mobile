@@ -19,9 +19,8 @@ Support WEB.
 
 Properties | Descrition | Type | Default
 -----------|------------|------|--------
-| children   | children content   | any |   -  |
 | mode   | style mode  | string |  'dark' enum{'dark', 'light'} |
-| iconName   | Left icon name (set to false / null does not render this icon)  | string/false/null |  'left' |
+| icon   | appears on the leftmost icon placeholder  | ReactNode |  - |
 | leftContent   | left content    | any |  - |
 | rightContent  | right content   | any |  - |
 | onLeftClick   | click the callback on the left  | (e: Object): void |  - |

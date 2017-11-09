@@ -18,11 +18,11 @@ import { List, Badge } from 'antd-mobile';
 
 const BadgeDemo = () => (
   <List>
-    <List.Item extra="Extra content" arrow="horizontal">
+    <List.Item extra="extra content" arrow="horizontal">
       <Badge dot>
         <span style={{ width: '26px', height: '26px', background: '#ddd', display: 'inline-block' }} />
       </Badge>
-      <span style={{ marginLeft: 12 }}>Dot Badge</span>
+      <span style={{ marginLeft: 12 }}>Dot badge</span>
     </List.Item>
     <List.Item
       thumb="https://zos.alipayobjects.com/rmsportal/faMhXAxhCzLvveJ.png"
@@ -37,8 +37,8 @@ const BadgeDemo = () => (
     <List.Item className="special-badge" extra={<Badge text={'促'} />}>
       Custom corner
     </List.Item>
-    <List.Item extra="Extra" arrow="horizontal">
-      <Badge text={0} style={{ marginLeft: 12 }}>text number 0</Badge>
+    <List.Item extra="extra" arrow="horizontal">
+      <Badge text={0} style={{ marginLeft: 12 }}>Text number 0</Badge>
       <Badge text={'new'} style={{ marginLeft: 12 }} />
     </List.Item>
     <List.Item>

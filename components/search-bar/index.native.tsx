@@ -1,8 +1,10 @@
 /* tslint:disable:jsx-no-multiline-js */
 import React from 'react';
 import { View, TextInput, Text, Image, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import { SearchBarProps, SearchBarState, defaultProps } from './PropsType';
 import SearchBarStyle, { ISearchBarStyle } from './style/index.native';
+import { getComponentLocale } from '../_util/getLocale';
 
 export interface ISearchBarNativeProps extends SearchBarProps {
   styles: ISearchBarStyle;
@@ -16,6 +18,10 @@ export default class SearchBar extends React.Component<ISearchBarNativeProps, Se
   static defaultProps = {
     ...defaultProps,
     styles: SearchBarStyles,
+  };
+
+  static contextTypes = {
+    antLocale: PropTypes.object,
   };
 
   inputRef: any;
@@ -85,10 +91,13 @@ export default class SearchBar extends React.Component<ISearchBarNativeProps, Se
   }
   render() {
     const {
-      showCancelButton, cancelText, styles, value: propsValue,
+      showCancelButton, styles, value: propsValue, cancelText,
       onChangeText, onChange, onSubmitEditing, disabled,
       ...restProps,
     } = this.props;
+
+    const _locale = getComponentLocale(this.props, this.context, 'SearchBar', () => require('./locale/zh_CN'));
+
     const { style } = restProps;
     const { value, focus } = this.state;
     const _showCancelButton = showCancelButton || focus;
@@ -119,7 +128,7 @@ export default class SearchBar extends React.Component<ISearchBarNativeProps, Se
           _showCancelButton &&
             <View style={styles.cancelTextContainer}>
               <Text style={styles.cancelText} onPress={this.onCancel}>
-                {cancelText}
+              {cancelText || _locale.cancelText}
               </Text>
             </View>
         }

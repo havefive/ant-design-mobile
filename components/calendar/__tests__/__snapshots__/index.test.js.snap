@@ -7,13 +7,13 @@ exports[`Calendar renders correctly 1`] = `
   <span>
     <div
       class="mask animate"
-      style="display:flex;"
+      style="display:flex"
     />
   </span>
   <span>
     <div
       class="content animate"
-      style="display:flex;"
+      style="display:flex"
     >
       <div
         class="header"
@@ -21,7 +21,13 @@ exports[`Calendar renders correctly 1`] = `
         <span
           class="left"
         >
-          X
+          <svg
+            class="am-icon am-icon-cross am-icon-md"
+          >
+            <use
+              href="#cross"
+            />
+          </svg>
         </span>
         <span
           class="title"
@@ -73,9 +79,11 @@ exports[`Calendar renders correctly 1`] = `
         </div>
         <div
           class="wrapper"
-          style="overflow-x:hidden;overflow-y:hidden;"
+          style="overflow-x:hidden;overflow-y:visible"
         >
-          <div>
+          <div
+            style="transform:"
+          >
             <div
               class="load-tip"
             >

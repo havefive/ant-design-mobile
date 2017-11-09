@@ -4,7 +4,15 @@ import tsPropsType from './PropsType';
 import handleProps from './handleProps';
 import IndexedList from './Indexed';
 
-export default class ListView extends React.Component<tsPropsType, any> {
+export interface ListViewPropsType extends tsPropsType {
+  onQuickSearch?: Function;
+  quickSearchBarStyle?: React.CSSProperties;
+  quickSearchBarTop?: Object;
+  delayTime?: number;
+  delayActivityIndicator?: any;
+}
+
+export default class ListView extends React.Component<ListViewPropsType, any> {
   static defaultProps = {
     prefixCls: 'am-list-view',
     listPrefixCls: 'am-list',
@@ -19,10 +27,6 @@ export default class ListView extends React.Component<tsPropsType, any> {
 
   render() {
     const { restProps, extraProps } = handleProps(this.props, false);
-    let { useZscroller, refreshControl } = this.props;
-    if (refreshControl) {
-      useZscroller = true;
-    }
-    return <MListView ref={el => this.listviewRef = el} {...restProps} {...extraProps} useZscroller={useZscroller} />;
+    return <MListView ref={el => this.listviewRef = el} {...restProps} {...extraProps} />;
   }
 }

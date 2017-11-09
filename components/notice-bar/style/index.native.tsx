@@ -7,6 +7,7 @@ export interface INoticeBarStyle {
   content: TextStyle;
   left6: ViewStyle;
   left15: ViewStyle;
+  actionWrap: ViewStyle;
   close: TextStyle;
   link: TextStyle;
 }
@@ -23,6 +24,7 @@ export default {
     flex: 1,
     marginRight: variables.h_spacing_lg,
     overflow: 'hidden',
+    width: 0, // ios bug: width size is wrong (usecase: with react-navigation).
   },
   content: {
     fontSize: variables.font_size_subhead,
@@ -34,10 +36,12 @@ export default {
   left15: {
     marginLeft: variables.h_spacing_lg,
   },
+  actionWrap: {
+    marginRight: variables.h_spacing_lg,
+  },
   close: {
     color: variables.brand_warning,
     fontSize: 18,
-    marginRight: variables.h_spacing_lg,
     fontWeight: '200',
     textAlign: 'left',
   },
@@ -46,7 +50,6 @@ export default {
     color: variables.brand_warning,
     fontSize: variables.font_size_icontext,
     fontWeight: '500',
-    marginRight: variables.h_spacing_lg,
     textAlign: 'left',
   },
 };

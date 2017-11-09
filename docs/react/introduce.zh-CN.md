@@ -1,6 +1,6 @@
 ---
 order: 0
-english: Ant Design Mobile of React
+title: Ant Design Mobile of React
 ---
 
 `antd-mobile` 是 [Ant Design](http://ant.design) 的移动规范的 React 实现，服务于蚂蚁及口碑无线业务。
@@ -32,7 +32,7 @@ english: Ant Design Mobile of React
 - 基于 React Native 的 iOS / Android / Web 多平台支持，组件丰富、能全面覆盖各类场景
 - 提供 "组件按需加载" / "Web 页面高清显示" / "SVG Icon" 等优化方案，一体式开发
 - 使用 TypeScript 开发，提供类型定义文件，支持类型及属性智能提示，方便业务开发
-- 全面兼容 react / preact；
+- 全面兼容 react / preact
 
 ## 适用场景
 
@@ -56,7 +56,7 @@ english: Ant Design Mobile of React
 ### 2. 安装
 
 ```bash
-$ npm install antd-mobile@next --save
+$ npm install antd-mobile --save
 ```
 
 ### 3. 使用
@@ -106,7 +106,9 @@ import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.
 
 #### 按需加载
 
-下面两种方式都可以只加载用到的组件。
+**注意：强烈推荐使用。**
+
+下面两种方式都可以**只加载**用到的组件，选择其中一种方式即可。
 
 - 使用 [babel-plugin-import](https://github.com/ant-design/babel-plugin-import)（推荐）。
 
@@ -119,7 +121,7 @@ import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.
    }
    ```
 
-   然后只需从 antd-mobile 引入模块即可，无需单独引入样式。等同于下面手动引入的方式。
+   然后只需从 antd-mobile 引入模块即可，无需单独引入样式。
 
    ```jsx
    // babel-plugin-import 会帮助你加载 JS 和 CSS
@@ -136,20 +138,20 @@ import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.
 
 #### 更多增强 (非必须):
 
-> 如何自定义主题？[见此文档](https://github.com/ant-design/antd-init/blob/master/examples/customize-antd-theme/README.zh-CN.md)，
+> 如何自定义主题？[见此文档](https://github.com/ant-design/ant-design-mobile/blob/master/docs/react/theme-config.zh-CN.md)，
 > 基于 antd-mobile 的自定义 UI 库：[web-custom-ui](https://github.com/ant-design/antd-mobile-samples/tree/master/web-custom-ui) / [web-custom-ui-pro](https://github.com/ant-design/antd-mobile-samples/tree/master/web-custom-ui-pro)
 
 
 ### React-Native 使用方式
 
-> 注：`Menu`/`NavBar` 组件暂无 React Native 版本
+> 注：`Menu`/`NavBar`/`Range` 组件暂无 React Native 版本
 
 组件使用实例：
 
 ```jsx
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
-import { Button } from 'antd-mobile';
+import Button from 'antd-mobile/lib/button';
 
 class HelloWorldApp extends Component {
   render() {
@@ -162,7 +164,7 @@ AppRegistry.registerComponent('HelloWorldApp', () => HelloWorldApp);
 
 #### 按需加载
 
-下面两种方式都可以只加载用到的组件。
+下面两种方式都可以**只加载**用到的组件，选择其中一种方式即可。
 
 - 使用 [babel-plugin-import](https://github.com/ant-design/babel-plugin-import)（推荐）。
 
@@ -175,16 +177,16 @@ AppRegistry.registerComponent('HelloWorldApp', () => HelloWorldApp);
    }
    ```
 
-   然后只需从 antd-mobile 引入模块即可，无需单独引入样式。等同于下面手动引入的方式。
+   然后改变从 antd-mobile 引入模块方式即可。
 
    ```jsx
-   import { DatePicker } from 'antd-mobile';
+   import { Button } from 'antd-mobile';
    ```
 
 - 手动引入
 
    ```jsx
-   import DatePicker from 'antd-mobile/lib/date-picker';  // 加载 JS
+   import Button from 'antd-mobile/lib/button';
    ```
 
 #### 更多增强 (非必须):
@@ -195,7 +197,7 @@ AppRegistry.registerComponent('HelloWorldApp', () => HelloWorldApp);
 ## 版本
 
 - 稳定版：[![npm package](http://img.shields.io/npm/v/antd-mobile.svg?style=flat-square)](http://npmjs.com/package/antd-mobile)
-- 开发版：[![npm package](https://cnpmjs.org/badge/v/antd-mobile.svg?&tag=next&subject=npm)](http://npmjs.com/package/antd-mobile)
+- 开发版：[![npm package](https://img.shields.io/npm/v/antd-mobile/next.svg)](http://npmjs.com/package/antd-mobile)
 
 ## 体积
 

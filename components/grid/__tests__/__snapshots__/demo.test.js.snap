@@ -5,7 +5,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
   <div
     class="sub-title"
   >
-     always square grid item 
+    Always square grid item 
   </div>
   <div
     class="am-grid am-grid-square am-grid-line"
@@ -15,7 +15,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -37,7 +37,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -59,7 +59,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -81,7 +81,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -107,7 +107,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -129,7 +129,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -151,7 +151,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -173,7 +173,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -199,7 +199,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -221,22 +221,22 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item am-grid-null-item"
-        style="width:25%;"
+        style="width:25%"
       />
       <div
         class="am-flexbox-item am-grid-item am-grid-null-item"
-        style="width:25%;"
+        style="width:25%"
       />
       <div
         class="am-flexbox-item am-grid-item am-grid-null-item"
-        style="width:25%;"
+        style="width:25%"
       />
     </div>
   </div>
   <div
     class="sub-title"
   >
-     grid item adjust accroiding to img size 
+    Grid item adjust accroiding to img size 
   </div>
   <div
     class="am-grid not-square-grid am-grid-line"
@@ -246,7 +246,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -268,7 +268,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -290,7 +290,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -312,7 +312,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -338,7 +338,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -360,7 +360,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -382,7 +382,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -404,7 +404,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -430,7 +430,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -452,22 +452,22 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item am-grid-null-item"
-        style="width:25%;"
+        style="width:25%"
       />
       <div
         class="am-flexbox-item am-grid-item am-grid-null-item"
-        style="width:25%;"
+        style="width:25%"
       />
       <div
         class="am-flexbox-item am-grid-item am-grid-null-item"
-        style="width:25%;"
+        style="width:25%"
       />
     </div>
   </div>
   <div
     class="sub-title"
   >
-    columnNum=3 
+    ColumnNum=3 
   </div>
   <div
     class="am-grid am-grid-square am-grid-line"
@@ -477,7 +477,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
@@ -499,7 +499,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
@@ -521,7 +521,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
@@ -547,7 +547,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
@@ -569,7 +569,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
@@ -591,7 +591,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
@@ -617,7 +617,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
@@ -639,7 +639,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
@@ -661,7 +661,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
@@ -686,7 +686,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
   <div
     class="sub-title"
   >
-    no border
+    No border
   </div>
   <div
     class="am-grid am-grid-square"
@@ -696,7 +696,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -718,7 +718,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -740,7 +740,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -762,7 +762,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -788,7 +788,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -810,7 +810,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -832,7 +832,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -854,7 +854,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -880,7 +880,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:25%;"
+        style="width:25%"
       >
         <div
           class="am-grid-item-content"
@@ -902,41 +902,41 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item am-grid-null-item"
-        style="width:25%;"
+        style="width:25%"
       />
       <div
         class="am-flexbox-item am-grid-item am-grid-null-item"
-        style="width:25%;"
+        style="width:25%"
       />
       <div
         class="am-flexbox-item am-grid-item am-grid-null-item"
-        style="width:25%;"
+        style="width:25%"
       />
     </div>
   </div>
   <div
     class="sub-title"
   >
-    carousel
+    Carousel
   </div>
   <div
     class="am-grid am-grid-square am-grid-line am-grid-carousel"
   >
     <div
       class="slider am-carousel"
-      style="position:relative;display:block;width:100%;height:auto;box-sizing:border-box;-moz-box-sizing:border-box;visibility:hidden;"
+      style="position:relative;display:block;width:100%;height:auto;box-sizing:border-box;-moz-box-sizing:border-box;visibility:hidden"
     >
       <div
         class="slider-frame"
-        style="position:relative;display:block;overflow:hidden;height:auto;margin:0px;padding:0;transform:translate3d(0, 0, 0);-webkit-transform:translate3d(0, 0, 0);-ms-transform:translate(0, 0);box-sizing:border-box;-moz-box-sizing:border-box;"
+        style="position:relative;display:block;overflow:hidden;height:auto;margin:0px;padding:0;transform:translate3d(0, 0, 0);-webkit-transform:translate3d(0, 0, 0);-ms-transform:translate(0, 0);box-sizing:border-box;-moz-box-sizing:border-box"
       >
         <ul
           class="slider-list"
-          style="transform:translate3d(0px, 0px, 0);-webkit-transform:translate3d(0px, 0px, 0);-ms-transform:translate(0px, 0px);position:relative;display:block;margin:0px 0px;padding:0;height:0;width:0;cursor:inherit;box-sizing:border-box;-moz-box-sizing:border-box;"
+          style="transform:translate3d(0px, 0px, 0);-webkit-transform:translate3d(0px, 0px, 0);-ms-transform:translate(0px, 0px);position:relative;display:block;margin:0px 0px;padding:0;height:0;width:0;cursor:inherit;box-sizing:border-box;-moz-box-sizing:border-box"
         >
           <li
             class="slider-slide"
-            style="position:absolute;left:0;top:0;display:inline-block;list-style-type:none;vertical-align:top;width:0;height:auto;box-sizing:border-box;-moz-box-sizing:border-box;margin-left:0;margin-right:0;margin-top:auto;margin-bottom:auto;"
+            style="position:absolute;left:0;top:0;display:inline-block;list-style-type:none;vertical-align:top;width:0;height:auto;box-sizing:border-box;-moz-box-sizing:border-box;margin-left:0;margin-right:0;margin-top:auto;margin-bottom:auto"
           >
             <div
               class="am-grid-carousel-page"
@@ -946,7 +946,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
               >
                 <div
                   class="am-flexbox-item am-grid-item"
-                  style="width:25%;"
+                  style="width:25%"
                 >
                   <div
                     class="am-grid-item-content"
@@ -968,7 +968,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
                 </div>
                 <div
                   class="am-flexbox-item am-grid-item"
-                  style="width:25%;"
+                  style="width:25%"
                 >
                   <div
                     class="am-grid-item-content"
@@ -990,7 +990,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
                 </div>
                 <div
                   class="am-flexbox-item am-grid-item"
-                  style="width:25%;"
+                  style="width:25%"
                 >
                   <div
                     class="am-grid-item-content"
@@ -1012,7 +1012,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
                 </div>
                 <div
                   class="am-flexbox-item am-grid-item"
-                  style="width:25%;"
+                  style="width:25%"
                 >
                   <div
                     class="am-grid-item-content"
@@ -1038,7 +1038,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
               >
                 <div
                   class="am-flexbox-item am-grid-item"
-                  style="width:25%;"
+                  style="width:25%"
                 >
                   <div
                     class="am-grid-item-content"
@@ -1060,7 +1060,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
                 </div>
                 <div
                   class="am-flexbox-item am-grid-item"
-                  style="width:25%;"
+                  style="width:25%"
                 >
                   <div
                     class="am-grid-item-content"
@@ -1082,7 +1082,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
                 </div>
                 <div
                   class="am-flexbox-item am-grid-item"
-                  style="width:25%;"
+                  style="width:25%"
                 >
                   <div
                     class="am-grid-item-content"
@@ -1104,7 +1104,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
                 </div>
                 <div
                   class="am-flexbox-item am-grid-item"
-                  style="width:25%;"
+                  style="width:25%"
                 >
                   <div
                     class="am-grid-item-content"
@@ -1129,7 +1129,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
           </li>
           <li
             class="slider-slide"
-            style="position:absolute;left:0;top:0;display:inline-block;list-style-type:none;vertical-align:top;width:0;height:auto;box-sizing:border-box;-moz-box-sizing:border-box;margin-left:0;margin-right:0;margin-top:auto;margin-bottom:auto;"
+            style="position:absolute;left:0;top:0;display:inline-block;list-style-type:none;vertical-align:top;width:0;height:auto;box-sizing:border-box;-moz-box-sizing:border-box;margin-left:0;margin-right:0;margin-top:auto;margin-bottom:auto"
           >
             <div
               class="am-grid-carousel-page"
@@ -1139,7 +1139,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
               >
                 <div
                   class="am-flexbox-item am-grid-item"
-                  style="width:25%;"
+                  style="width:25%"
                 >
                   <div
                     class="am-grid-item-content"
@@ -1161,15 +1161,15 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
                 </div>
                 <div
                   class="am-flexbox-item am-grid-item am-grid-null-item"
-                  style="width:25%;"
+                  style="width:25%"
                 />
                 <div
                   class="am-flexbox-item am-grid-item am-grid-null-item"
-                  style="width:25%;"
+                  style="width:25%"
                 />
                 <div
                   class="am-flexbox-item am-grid-item am-grid-null-item"
-                  style="width:25%;"
+                  style="width:25%"
                 />
               </div>
               <div
@@ -1177,19 +1177,19 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
               >
                 <div
                   class="am-flexbox-item am-grid-item am-grid-null-item"
-                  style="width:25%;"
+                  style="width:25%"
                 />
                 <div
                   class="am-flexbox-item am-grid-item am-grid-null-item"
-                  style="width:25%;"
+                  style="width:25%"
                 />
                 <div
                   class="am-flexbox-item am-grid-item am-grid-null-item"
-                  style="width:25%;"
+                  style="width:25%"
                 />
                 <div
                   class="am-flexbox-item am-grid-item am-grid-null-item"
-                  style="width:25%;"
+                  style="width:25%"
                 />
               </div>
             </div>
@@ -1198,7 +1198,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="slider-decorator-0"
-        style="position:absolute;bottom:0;width:100%;text-align:center;"
+        style="position:absolute;bottom:0;width:100%;text-align:center"
       >
         <div
           class="am-carousel-wrap"
@@ -1220,7 +1220,7 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
   <div
     class="sub-title"
   >
-    custom content
+    Custom content
   </div>
   <div
     class="am-grid am-grid-square am-grid-line"
@@ -1230,21 +1230,21 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
         >
           <div
-            style="padding:12.5px;"
+            style="padding:12.5px"
           >
             <img
-              alt="icon"
+              alt=""
               src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
-              style="width:75px;height:75px;"
+              style="width:75px;height:75px"
             />
             <div
-              style="color:#888;font-size:14px;margin-top:12px;"
+              style="color:#888;font-size:14px;margin-top:12px"
             >
               <span>
                 I am title..
@@ -1255,21 +1255,21 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
         >
           <div
-            style="padding:12.5px;"
+            style="padding:12.5px"
           >
             <img
-              alt="icon"
+              alt=""
               src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
-              style="width:75px;height:75px;"
+              style="width:75px;height:75px"
             />
             <div
-              style="color:#888;font-size:14px;margin-top:12px;"
+              style="color:#888;font-size:14px;margin-top:12px"
             >
               <span>
                 I am title..
@@ -1280,100 +1280,21 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
         >
           <div
-            style="padding:12.5px;"
+            style="padding:12.5px"
           >
             <img
-              alt="icon"
+              alt=""
               src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
-              style="width:75px;height:75px;"
+              style="width:75px;height:75px"
             />
             <div
-              style="color:#888;font-size:14px;margin-top:12px;"
-            >
-              <span>
-                I am title..
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="am-flexbox am-flexbox-justify-center am-flexbox-align-stretch"
-    >
-      <div
-        class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
-      >
-        <div
-          class="am-grid-item-content"
-        >
-          <div
-            style="padding:12.5px;"
-          >
-            <img
-              alt="icon"
-              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
-              style="width:75px;height:75px;"
-            />
-            <div
-              style="color:#888;font-size:14px;margin-top:12px;"
-            >
-              <span>
-                I am title..
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
-      >
-        <div
-          class="am-grid-item-content"
-        >
-          <div
-            style="padding:12.5px;"
-          >
-            <img
-              alt="icon"
-              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
-              style="width:75px;height:75px;"
-            />
-            <div
-              style="color:#888;font-size:14px;margin-top:12px;"
-            >
-              <span>
-                I am title..
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
-      >
-        <div
-          class="am-grid-item-content"
-        >
-          <div
-            style="padding:12.5px;"
-          >
-            <img
-              alt="icon"
-              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
-              style="width:75px;height:75px;"
-            />
-            <div
-              style="color:#888;font-size:14px;margin-top:12px;"
+              style="color:#888;font-size:14px;margin-top:12px"
             >
               <span>
                 I am title..
@@ -1388,21 +1309,21 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
     >
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
         >
           <div
-            style="padding:12.5px;"
+            style="padding:12.5px"
           >
             <img
-              alt="icon"
+              alt=""
               src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
-              style="width:75px;height:75px;"
+              style="width:75px;height:75px"
             />
             <div
-              style="color:#888;font-size:14px;margin-top:12px;"
+              style="color:#888;font-size:14px;margin-top:12px"
             >
               <span>
                 I am title..
@@ -1413,21 +1334,21 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
         >
           <div
-            style="padding:12.5px;"
+            style="padding:12.5px"
           >
             <img
-              alt="icon"
+              alt=""
               src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
-              style="width:75px;height:75px;"
+              style="width:75px;height:75px"
             />
             <div
-              style="color:#888;font-size:14px;margin-top:12px;"
+              style="color:#888;font-size:14px;margin-top:12px"
             >
               <span>
                 I am title..
@@ -1438,26 +1359,306 @@ exports[`renders ./components/grid/demo/basic.md correctly 1`] = `
       </div>
       <div
         class="am-flexbox-item am-grid-item"
-        style="width:33.333333333333336%;"
+        style="width:33.333333333333336%"
       >
         <div
           class="am-grid-item-content"
         >
           <div
-            style="padding:12.5px;"
+            style="padding:12.5px"
           >
             <img
-              alt="icon"
+              alt=""
               src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
-              style="width:75px;height:75px;"
+              style="width:75px;height:75px"
             />
             <div
-              style="color:#888;font-size:14px;margin-top:12px;"
+              style="color:#888;font-size:14px;margin-top:12px"
             >
               <span>
                 I am title..
               </span>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="am-flexbox am-flexbox-justify-center am-flexbox-align-stretch"
+    >
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            style="padding:12.5px"
+          >
+            <img
+              alt=""
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+              style="width:75px;height:75px"
+            />
+            <div
+              style="color:#888;font-size:14px;margin-top:12px"
+            >
+              <span>
+                I am title..
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            style="padding:12.5px"
+          >
+            <img
+              alt=""
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+              style="width:75px;height:75px"
+            />
+            <div
+              style="color:#888;font-size:14px;margin-top:12px"
+            >
+              <span>
+                I am title..
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            style="padding:12.5px"
+          >
+            <img
+              alt=""
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+              style="width:75px;height:75px"
+            />
+            <div
+              style="color:#888;font-size:14px;margin-top:12px"
+            >
+              <span>
+                I am title..
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="sub-title"
+  >
+    Custom GridCell Style
+  </div>
+  <div
+    class="am-grid am-grid-square am-grid-line"
+  >
+    <div
+      class="am-flexbox am-flexbox-justify-center am-flexbox-align-stretch"
+    >
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%;height:150px;background-color:#ffff00"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            class="am-grid-item-inner-content column-num-3"
+          >
+            <img
+              class="am-grid-icon"
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+            />
+            <div
+              class="am-grid-text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%;height:150px;background-color:#ffff00"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            class="am-grid-item-inner-content column-num-3"
+          >
+            <img
+              class="am-grid-icon"
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+            />
+            <div
+              class="am-grid-text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%;height:150px;background-color:#ffff00"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            class="am-grid-item-inner-content column-num-3"
+          >
+            <img
+              class="am-grid-icon"
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+            />
+            <div
+              class="am-grid-text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="am-flexbox am-flexbox-justify-center am-flexbox-align-stretch"
+    >
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%;height:150px;background-color:#ffff00"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            class="am-grid-item-inner-content column-num-3"
+          >
+            <img
+              class="am-grid-icon"
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+            />
+            <div
+              class="am-grid-text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%;height:150px;background-color:#ffff00"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            class="am-grid-item-inner-content column-num-3"
+          >
+            <img
+              class="am-grid-icon"
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+            />
+            <div
+              class="am-grid-text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%;height:150px;background-color:#ffff00"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            class="am-grid-item-inner-content column-num-3"
+          >
+            <img
+              class="am-grid-icon"
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+            />
+            <div
+              class="am-grid-text"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="am-flexbox am-flexbox-justify-center am-flexbox-align-stretch"
+    >
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%;height:150px;background-color:#ffff00"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            class="am-grid-item-inner-content column-num-3"
+          >
+            <img
+              class="am-grid-icon"
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+            />
+            <div
+              class="am-grid-text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%;height:150px;background-color:#ffff00"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            class="am-grid-item-inner-content column-num-3"
+          >
+            <img
+              class="am-grid-icon"
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+            />
+            <div
+              class="am-grid-text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="am-flexbox-item am-grid-item"
+        style="width:33.333333333333336%;height:150px;background-color:#ffff00"
+      >
+        <div
+          class="am-grid-item-content"
+        >
+          <div
+            class="am-grid-item-inner-content column-num-3"
+          >
+            <img
+              class="am-grid-icon"
+              src="https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png"
+            />
+            <div
+              class="am-grid-text"
+            />
           </div>
         </div>
       </div>

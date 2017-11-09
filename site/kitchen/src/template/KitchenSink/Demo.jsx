@@ -6,7 +6,7 @@ import collect from 'bisheng/collect';
 import { getQuery } from '../../../../utils';
 
 @collect(async (nextProps) => {
-  const pathname = nextProps.location.pathname;
+  const { pathname } = nextProps.location;
   const pageDataPath = pathname.replace('-cn', '').split('/');
   const pageData = nextProps.utils.get(nextProps.data, pageDataPath);
   if (!pageData) {
@@ -27,7 +27,7 @@ import { getQuery } from '../../../../utils';
 
 export default class Demo extends React.Component {
   goToPage = (name, index) => () => {
-    location.hash = `${name}-demo-${index}`;
+    window.location.hash = `${name}-demo-${index}`;
   }
   update = () => {
     this.forceUpdate();
@@ -35,15 +35,17 @@ export default class Demo extends React.Component {
   componentDidMount() {
     window.addEventListener('hashchange', this.update, false);
   }
-  componentWillUnMount() {
+  componentWillUnmount() {
     window.removeEventListener('hashChange', this.update, false);
   }
   render() {
-    const { demos, location, picked, themeConfig: config, locale } = this.props;
+    const {
+      demos, location, picked, themeConfig: config, locale,
+    } = this.props;
     let demoMeta;
     const name = this.props.params.component;
     picked.components.forEach((i) => {
-      const meta = i.meta;
+      const { meta } = i;
       if (meta.filename.split('/')[1] === name) {
         demoMeta = meta;
       }
@@ -67,7 +69,7 @@ export default class Demo extends React.Component {
     if (!location.hash && config.subListDemos.indexOf(name) > -1) {
       // 处理 config.subListDemos 的 demo，使其展示一个二级菜单
       demoContent = demoSort.map((item, index) => (
-        <div>
+        <div key={`sub${index}`}>
           <WhiteSpace />
           <WingBlank>
             <Button onClick={this.goToPage(name, index)}>{item.meta.title[locale === 'en-US' ? 'en-US' : 'zh-CN']}</Button>
@@ -89,7 +91,7 @@ export default class Demo extends React.Component {
     let touchNoticeText = '';
     if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {
       style.minHeight = document.documentElement.clientHeight;
-    } else if (/(tabs|swipe-action)/i.test(window.location.hash.toLowerCase())) {
+    } else if (/(tabs|swipe-action|pull-to-refresh)/i.test(window.location.hash.toLowerCase())) {
       touchNoticeText = locale === 'en-US' ? 'This component only support Touch Events, USE mobile mode open this page please.' : '该组件只支持Touch事件，请使用移动模式/设备打开此页。';
     }
 

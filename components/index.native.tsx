@@ -13,7 +13,6 @@ export { default as Grid } from './grid';
 export { default as ImagePicker } from './image-picker/index.native';
 export { default as InputItem } from './input-item/index.native';
 export { default as List } from './list/index.native';
-export { default as ListView } from './list-view/index.native';
 export { default as Modal } from './modal/index.native';
 
 export { default as NoticeBar } from './notice-bar/index.native';
@@ -23,7 +22,6 @@ export { default as PickerView } from './picker-view/index.native';
 export { default as Popover } from './popover/index.native';
 export { default as Progress } from './progress/index.native';
 export { default as Radio } from './radio/index.native';
-export { default as RefreshControl } from './refresh-control/index.native';
 export { default as Result } from './result/index.native';
 export { default as SearchBar } from './search-bar/index.native';
 export { default as SegmentedControl } from './segmented-control/index.native';

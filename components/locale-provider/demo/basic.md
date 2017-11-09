@@ -8,11 +8,37 @@ title:
 Wrap your app with `LocaleProvider`, and apply the corresponding language package.
 
 ````jsx
-import { Pagination, LocaleProvider, List, DatePicker, WhiteSpace, Button, InputItem, WingBlank } from 'antd-mobile';
+import {
+  Pagination, LocaleProvider, List, DatePicker, WhiteSpace, InputItem, WingBlank,
+  SegmentedControl, Picker, SearchBar,
+} from 'antd-mobile';
 import enUS from 'antd-mobile/lib/locale-provider/en_US';
 
 const maxDate = new Date(2018, 11, 3, 22, 0);
 const minDate = new Date(2015, 7, 6, 8, 30);
+
+const seasons = [
+  [
+    {
+      label: '2013',
+      value: '2013',
+    },
+    {
+      label: '2014',
+      value: '2014',
+    },
+  ],
+  [
+    {
+      label: '春',
+      value: '春',
+    },
+    {
+      label: '夏',
+      value: '夏',
+    },
+  ],
+];
 
 const Page = () => (
   <div>
@@ -25,15 +51,22 @@ const Page = () => (
       <DatePicker
         mode="date"
         title="Select date"
-        extra="Click to see i18n text"
         minDate={minDate}
         maxDate={maxDate}
       >
-        <List.Item arrow="horizontal">date</List.Item>
+        <List.Item arrow="horizontal">datePicker</List.Item>
       </DatePicker>
+      <Picker
+        data={seasons}
+        cascade={false}
+      >
+        <List.Item arrow="horizontal">picker</List.Item>
+      </Picker>
     </List>
     <WhiteSpace />
     <InputItem type="money" placeholder="money input" />
+    <WhiteSpace />
+    <SearchBar placeholder="Search" showCancelButton />
   </div>
 );
 
@@ -44,17 +77,23 @@ class App extends React.Component {
       isEnglish: true,
     };
   }
-  handleClick = (e) => {
-    e.preventDefault();
+
+  onChange = (e) => {
+    const index = e.nativeEvent.selectedSegmentIndex;
     this.setState({
-      isEnglish: !this.state.isEnglish,
+      isEnglish: index === 0,
     });
   }
+
   render() {
     const locale = this.state.isEnglish ? enUS : undefined;
     return (
       <WingBlank>
-        <Button type="primary" onClick={this.handleClick}>{this.state.isEnglish ? 'change to chinese' : '切换到英文'}</Button>
+        <SegmentedControl
+          values={['切换到英文', 'Change to Chinese']}
+          selectedIndex={this.state.isEnglish ? 0 : 1}
+          onChange={this.onChange}
+        />
         <WhiteSpace />
         <LocaleProvider locale={locale}>
           <Page />
