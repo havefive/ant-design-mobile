@@ -1,12 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Modal from './Modal';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import closest from '../_util/closest';
+import Modal from './Modal';
 import { Action } from './PropsType';
 
 export default function alert(
-  title, message, actions = [{ text: '确定' }], platform = 'ios',
+  title: React.ReactNode,
+  message: React.ReactNode,
+  actions = [{ text: '确定' }],
+  platform = 'ios',
 ) {
+  let closed = false;
+
   if (!title && !message) {
     // console.log('Must specify either an alert title, or message, or both');
     return {
@@ -14,7 +19,7 @@ export default function alert(
     };
   }
 
-  let div: any = document.createElement('div');
+  const div: any = document.createElement('div');
   document.body.appendChild(div);
 
   function close() {
@@ -24,15 +29,24 @@ export default function alert(
     }
   }
 
-  const footer = actions.map((button: Action) => {
-    const orginPress = button.onPress || function () {};
+  const footer = actions.map((button: Action<React.CSSProperties>) => {
+    // tslint:disable-next-line:only-arrow-functions
+    const orginPress = button.onPress || function() {};
     button.onPress = () => {
+      if (closed) {
+        return;
+      }
+
       const res = orginPress();
       if (res && res.then) {
-        res.then(() => {
-          close();
-        });
+        res
+          .then(() => {
+            closed = true;
+            close();
+          })
+          .catch(() => {});
       } else {
+        closed = true;
         close();
       }
     };
@@ -41,11 +55,11 @@ export default function alert(
 
   const prefixCls = 'am-modal';
 
-  function onWrapTouchStart(e) {
+  function onWrapTouchStart(e: React.TouchEvent<HTMLDivElement>) {
     if (!/iPhone|iPod|iPad/i.test(navigator.userAgent)) {
       return;
     }
-    const pNode = closest(e.target, `.${prefixCls}-footer`);
+    const pNode = closest(e.target as Element, `.${prefixCls}-footer`);
     if (!pNode) {
       e.preventDefault();
     }
@@ -65,7 +79,8 @@ export default function alert(
       wrapProps={{ onTouchStart: onWrapTouchStart }}
     >
       <div className={`${prefixCls}-alert-content`}>{message}</div>
-    </Modal>, div,
+    </Modal>,
+    div,
   );
 
   return {

@@ -1,29 +1,53 @@
-/* tslint:disable:jsx-no-multiline-js */
-import React from 'react';
-import ReactDOM from 'react-dom';
 import classnames from 'classnames';
-import CustomKeyboard from './CustomKeyboard';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { addClass, removeClass } from '../_util/class';
+import CustomKeyboard from './CustomKeyboard';
+import Portal from './Portal';
+import { InputEventHandler } from './PropsType';
+import { canUseDOM } from '../_util/exenv';
 
-const IS_REACT_16 = !!(ReactDOM as any).createPortal;
+let instanceArr: any = [];
+let customNumberKeyboard: CustomKeyboard | null = null;
+const IS_REACT_16 = !!ReactDOM.createPortal;
 
-class NumberInput extends React.Component<any, any> {
-
+export interface NumberInputProps {
+  placeholder?: string;
+  disabled?: boolean;
+  editable?: boolean;
+  moneyKeyboardAlign?: 'left' | 'right' | string;
+  moneyKeyboardWrapProps?: object;
+  moneyKeyboardHeader?: React.ReactNode,
+  value?: string;
+  prefixCls?: string;
+  keyboardPrefixCls?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: InputEventHandler;
+  onBlur?: InputEventHandler;
+  onVirtualKeyboardConfirm?: InputEventHandler;
+  confirmLabel: any;
+  backspaceLabel: any;
+  cancelKeyboardLabel: any;
+  maxLength?: number;
+  type?: string;
+  style?: React.CSSProperties;
+}
+class NumberInput extends React.Component<NumberInputProps, any> {
   static defaultProps = {
-    onChange: () => { },
-    onFocus: () => { },
-    onBlur: () => { },
+    onChange: () => {},
+    onFocus: () => {},
+    onBlur: () => {},
+    onVirtualKeyboardConfirm: () => {},
     placeholder: '',
     disabled: false,
     editable: true,
     prefixCls: 'am-input',
     keyboardPrefixCls: 'am-number-keyboard',
   };
+  container: Element;
+  inputRef: HTMLDivElement | null;
 
-  private container: any;
-  private inputRef: any;
-
-  constructor(props) {
+  constructor(props: NumberInputProps) {
     super(props);
     this.state = {
       focus: false,
@@ -31,14 +55,18 @@ class NumberInput extends React.Component<any, any> {
     };
   }
 
-  onChange = (value) => {
+  onChange = (value: any) => {
     if (!('value' in this.props)) {
       this.setState({ value: value.target.value });
     }
-    this.props.onChange(value);
+    this.props.onChange!(value);
   }
 
-  componentWillReceiveProps(nextProps) {
+  onConfirm = (value: any) => {
+    this.props.onVirtualKeyboardConfirm!(value);
+  }
+
+  componentWillReceiveProps(nextProps: NumberInputProps) {
     if ('value' in nextProps) {
       this.setState({
         value: nextProps.value,
@@ -46,10 +74,8 @@ class NumberInput extends React.Component<any, any> {
     }
   }
 
-  componentDidMount() {
-    if (!IS_REACT_16 && !(window as any).antmCustomKeyboard) {
-      this.renderCustomKeyboard();
-    }
+  componentDidUpdate() {
+    this.renderCustomKeyboard();
   }
 
   addBlurListener = () => {
@@ -63,73 +89,122 @@ class NumberInput extends React.Component<any, any> {
   componentWillUnmount() {
     // focus:true unmount 不能触发 blur
     if (this.state.focus) {
-      this.props.onBlur(this.state.value);
+      this.props.onBlur!(this.state.value);
     }
     this.unLinkInput();
   }
 
-  saveRef = (el) => {
-    if (IS_REACT_16) {
-      (window as any).antmCustomKeyboard = el;
+  saveRef = (el: CustomKeyboard | null) => {
+    if (IS_REACT_16 && el) {
+      customNumberKeyboard = el;
+      instanceArr.push({ el, container: this.container });
     }
   }
 
   getComponent() {
-    const { keyboardPrefixCls, confirmLabel } = this.props;
+    const {
+      confirmLabel,
+      backspaceLabel,
+      cancelKeyboardLabel,
+      keyboardPrefixCls,
+      moneyKeyboardWrapProps,
+      moneyKeyboardHeader,
+    } = this.props;
 
-    return (<CustomKeyboard
-      ref={this.saveRef}
-      onClick={this.onKeyboardClick}
-      preixCls={keyboardPrefixCls}
-      confirmLabel={confirmLabel}
-    />);
+    return (
+      <CustomKeyboard
+        ref={this.saveRef}
+        onClick={this.onKeyboardClick}
+        prefixCls={keyboardPrefixCls}
+        confirmLabel={confirmLabel}
+        backspaceLabel={backspaceLabel}
+        cancelKeyboardLabel={cancelKeyboardLabel}
+        wrapProps={moneyKeyboardWrapProps}
+        header={moneyKeyboardHeader}
+      />
+    );
   }
 
   getContainer() {
-    let container = document.querySelector(`#${this.props.keyboardPrefixCls}-container`);
-    if (!container) {
-      container = document.createElement('div');
-      container.setAttribute('id', `${this.props.keyboardPrefixCls}-container`);
-      document.body.appendChild(container);
+    const { keyboardPrefixCls } = this.props;
+
+    if (IS_REACT_16) {
+      if (!this.container) {
+        const container = document.createElement('div');
+        container.setAttribute('id', `${keyboardPrefixCls}-container-${(new Date().getTime())}`);
+        document.body.appendChild(container);
+        this.container = container;
+      }
+    } else {
+      let container = document.querySelector(
+        `#${keyboardPrefixCls}-container`,
+      );
+      if (!container) {
+        container = document.createElement('div');
+        container.setAttribute('id', `${keyboardPrefixCls}-container`);
+        document.body.appendChild(container);
+      }
+      this.container = container;
     }
-    this.container = container;
-    return container;
+    return this.container;
   }
 
   renderCustomKeyboard() {
-    if (!this.container) {
-      (window as any).antmCustomKeyboard = ReactDOM.unstable_renderSubtreeIntoContainer(
-        this,
-        this.getComponent(),
-        this.getContainer(),
-      );
+    if (IS_REACT_16) {
+      return;
     }
+    customNumberKeyboard = ReactDOM.unstable_renderSubtreeIntoContainer(
+      this,
+      this.getComponent(),
+      this.getContainer(),
+    ) as CustomKeyboard;
   }
 
-  doBlur = (ev) => {
+  doBlur = (ev: MouseEvent) => {
     const { value } = this.state;
     if (ev.target !== this.inputRef) {
       this.onInputBlur(value);
     }
   }
 
+  removeCurrentExtraKeyboard = () => {
+    instanceArr = instanceArr.filter((item: any) => {
+      const { el, container } = item;
+      if (el && container && el !== customNumberKeyboard) {
+        (container as any).parentNode.removeChild(container);
+      }
+      return el === customNumberKeyboard;
+    });
+  }
+
   unLinkInput = () => {
-    const antmCustomKeyboard = (window as any).antmCustomKeyboard;
-    if (antmCustomKeyboard && antmCustomKeyboard.linkedInput && antmCustomKeyboard.linkedInput === this) {
-      antmCustomKeyboard.linkedInput = null;
-      addClass(antmCustomKeyboard.antmKeyboard, `${this.props.keyboardPrefixCls}-wrapper-hide`);
+    if (
+      customNumberKeyboard &&
+      customNumberKeyboard.antmKeyboard &&
+      customNumberKeyboard.linkedInput &&
+      customNumberKeyboard.linkedInput === this
+    ) {
+      customNumberKeyboard.linkedInput = null;
+      addClass(
+        customNumberKeyboard.antmKeyboard,
+        `${this.props.keyboardPrefixCls}-wrapper-hide`,
+      );
     }
     // for unmount
     this.removeBlurListener();
+
+    if (IS_REACT_16) {
+      this.removeCurrentExtraKeyboard();
+    }
   }
 
-  onInputBlur = (value) => {
+  onInputBlur = (value: string) => {
     const { focus } = this.state;
     if (focus) {
       this.setState({
         focus: false,
       });
-      this.props.onBlur(value);
+      this.props.onBlur!(value);
       setTimeout(() => {
         this.unLinkInput();
       }, 50);
@@ -138,25 +213,43 @@ class NumberInput extends React.Component<any, any> {
 
   onInputFocus = () => {
     const { value } = this.state;
-    this.props.onFocus(value);
-    this.setState({
-      focus: true,
-    }, () => {
-      const antmCustomKeyboard = (window as any).antmCustomKeyboard;
-      antmCustomKeyboard.linkedInput = this;
-      removeClass(antmCustomKeyboard.antmKeyboard, `${this.props.keyboardPrefixCls}-wrapper-hide`);
-      antmCustomKeyboard.confirmDisabled = (value === '');
-      if (value === '') {
-        addClass(antmCustomKeyboard.confirmKeyboardItem, `${this.props.keyboardPrefixCls}-item-disabled`);
-      } else {
-        removeClass(antmCustomKeyboard.confirmKeyboardItem, `${this.props.keyboardPrefixCls}-item-disabled`);
-      }
-    });
+    this.props.onFocus!(value);
+    this.setState(
+      {
+        focus: true,
+      },
+      () => {
+        if (customNumberKeyboard) {
+          customNumberKeyboard.linkedInput = this;
+          if (customNumberKeyboard.antmKeyboard) {
+            removeClass(
+              customNumberKeyboard.antmKeyboard,
+              `${this.props.keyboardPrefixCls}-wrapper-hide`,
+            );
+          }
+          customNumberKeyboard.confirmDisabled = value === '';
+          if (customNumberKeyboard.confirmKeyboardItem) {
+            if (value === '') {
+              addClass(
+                customNumberKeyboard.confirmKeyboardItem,
+                `${this.props.keyboardPrefixCls}-item-disabled`,
+              );
+            } else {
+              removeClass(
+                customNumberKeyboard.confirmKeyboardItem,
+                `${this.props.keyboardPrefixCls}-item-disabled`,
+              );
+            }
+          }
+        }
+      },
+    );
   }
 
-  onKeyboardClick = (KeyboardItemValue) => {
+  onKeyboardClick = (KeyboardItemValue: string) => {
     const { maxLength } = this.props;
     const { value } = this.state;
+    // tslint:disable-next-line:no-this-assignment
     const { onChange } = this;
 
     let valueAfterChange;
@@ -169,26 +262,39 @@ class NumberInput extends React.Component<any, any> {
       valueAfterChange = value;
       onChange({ target: { value: valueAfterChange } });
       this.onInputBlur(value);
+      this.onConfirm(value);
       // 收起键
     } else if (KeyboardItemValue === 'hide') {
       valueAfterChange = value;
       this.onInputBlur(valueAfterChange);
     } else {
-      if (maxLength !== undefined && +maxLength >= 0 && (value + KeyboardItemValue).length > maxLength) {
+      if (
+        maxLength !== undefined &&
+        +maxLength >= 0 &&
+        (value + KeyboardItemValue).length > maxLength
+      ) {
         valueAfterChange = (value + KeyboardItemValue).substr(0, maxLength);
         onChange({ target: { value: valueAfterChange } });
       } else {
-        valueAfterChange = (value + KeyboardItemValue);
+        valueAfterChange = value + KeyboardItemValue;
         onChange({ target: { value: valueAfterChange } });
       }
     }
-
-    const antmCustomKeyboard = (window as any).antmCustomKeyboard;
-    antmCustomKeyboard.confirmDisabled = (valueAfterChange === '');
-    if (valueAfterChange === '') {
-      addClass(antmCustomKeyboard.confirmKeyboardItem, `${this.props.keyboardPrefixCls}-item-disabled`);
-    } else {
-      removeClass(antmCustomKeyboard.confirmKeyboardItem, `${this.props.keyboardPrefixCls}-item-disabled`);
+    if (customNumberKeyboard) {
+      customNumberKeyboard.confirmDisabled = valueAfterChange === '';
+      if (customNumberKeyboard.confirmKeyboardItem) {
+        if (valueAfterChange === '') {
+          addClass(
+            customNumberKeyboard.confirmKeyboardItem,
+            `${this.props.keyboardPrefixCls}-item-disabled`,
+          );
+        } else {
+          removeClass(
+            customNumberKeyboard.confirmKeyboardItem,
+            `${this.props.keyboardPrefixCls}-item-disabled`,
+          );
+        }
+      }
     }
   }
 
@@ -208,6 +314,18 @@ class NumberInput extends React.Component<any, any> {
     }, 50);
   }
 
+  renderPortal() {
+    if (!IS_REACT_16 || !canUseDOM) {
+      return null;
+    }
+
+    return (
+      <Portal getContainer={() => this.getContainer()}>
+        {this.getComponent()}
+      </Portal>
+    );
+  }
+
   render() {
     const { placeholder, disabled, editable, moneyKeyboardAlign } = this.props;
     const { focus, value } = this.state;
@@ -222,15 +340,20 @@ class NumberInput extends React.Component<any, any> {
 
     return (
       <div className={fakeInputContainerCls}>
-        {value === '' && <div className="fake-input-placeholder">{placeholder}</div>}
+        {value === '' && (
+        // tslint:disable-next-line:jsx-no-multiline-js
+          <div className="fake-input-placeholder">{placeholder}</div>
+        )}
         <div
+          role="textbox"
+          aria-label={value || placeholder}
           className={fakeInputCls}
-          ref={el => this.inputRef = el}
-          onClick={preventKeyboard ? () => { } : this.onFakeInputClick}
+          ref={el => (this.inputRef = el)}
+          onClick={preventKeyboard ? () => {} : this.onFakeInputClick}
         >
           {value}
         </div>
-        {IS_REACT_16 && (ReactDOM as any).createPortal(this.getComponent(), this.getContainer())}
+        {this.renderPortal()}
       </div>
     );
   }

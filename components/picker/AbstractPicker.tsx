@@ -1,20 +1,24 @@
 /* tslint:disable:jsx-no-multiline-js */
-import React from 'react';
-import RMCPopupCascader from 'rmc-cascader/lib/Popup';
+import treeFilter from 'array-tree-filter';
+import * as React from 'react';
 import RMCCascader from 'rmc-cascader/lib/Cascader';
+import RMCPopupCascader from 'rmc-cascader/lib/Popup';
 import RMCMultiPicker from 'rmc-picker/lib/MultiPicker';
 import RMCPicker from 'rmc-picker/lib/Picker';
-import treeFilter from 'array-tree-filter';
-import tsPropsType from './PropsType';
 import { getComponentLocale } from '../_util/getLocale';
+import { PickerData, PickerPropsType } from './PropsType';
 
-export interface PickerPropsType extends tsPropsType {
+export interface AbstractPickerProps extends PickerPropsType {
   pickerPrefixCls?: string;
   popupPrefixCls?: string;
 }
 
 export function getDefaultProps() {
-  const defaultFormat = (values) => {
+  const defaultFormat = (values: React.ReactNode[]) => {
+    // label is JSX.Element or other
+    if (values.length > 0 && typeof values[0] !== 'string') {
+      return values;
+    }
     return values.join(',');
   };
   return {
@@ -29,30 +33,39 @@ export function getDefaultProps() {
   };
 }
 
-export default abstract class AbstractPicker extends React.Component<PickerPropsType, any> {
+export default abstract class AbstractPicker extends React.Component<
+  AbstractPickerProps,
+  any
+> {
   protected abstract popupProps: {};
   private scrollValue: any;
 
   getSel = () => {
     const value = this.props.value || [];
-    let treeChildren;
+    let treeChildren: PickerData[];
+    const { data } = this.props;
     if (this.props.cascade) {
-      treeChildren = treeFilter(this.props.data, (c, level) => {
+      treeChildren = treeFilter(data as PickerData[], (c: any, level: any) => {
         return c.value === value[level];
       });
     } else {
       treeChildren = value.map((v, i) => {
-        return this.props.data[i].filter(d => d.value === v)[0];
+        return (data as PickerData[][])[i].filter(d => d.value === v)[0];
       });
     }
-    return this.props.format && this.props.format(treeChildren.map((v) => {
-      return v.label;
-    }));
+    return (
+      this.props.format &&
+      this.props.format(
+        treeChildren.map(v => {
+          return v.label;
+        }),
+      )
+    );
   }
 
   getPickerCol = () => {
     const { data, pickerPrefixCls, itemStyle, indicatorStyle } = this.props;
-    return data.map((col, index) => {
+    return (data as PickerData[][]).map((col, index) => {
       return (
         <RMCPicker
           key={index}
@@ -89,6 +102,20 @@ export default abstract class AbstractPicker extends React.Component<PickerProps
     this.scrollValue = v;
   }
 
+  setCasecadeScrollValue = (v: any) => {
+    // 级联情况下保证数据正确性，滚动过程中只有当最后一级变化时才变更数据
+    if (v && this.scrollValue) {
+      const length = this.scrollValue.length;
+      if (
+        length === v.length &&
+        this.scrollValue[length - 1] === v[length - 1]
+      ) {
+        return;
+      }
+    }
+    this.setScrollValue(v);
+  }
+
   fixOnOk = (cascader: any) => {
     if (cascader && cascader.onOk !== this.onOk) {
       cascader.onOk = this.onOk;
@@ -103,13 +130,36 @@ export default abstract class AbstractPicker extends React.Component<PickerProps
     }
   }
 
+  onVisibleChange = (visible: boolean) => {
+    this.setScrollValue(undefined);
+    if (this.props.onVisibleChange) {
+      this.props.onVisibleChange(visible);
+    }
+  }
+
   render() {
     const {
-      children, value = [], popupPrefixCls, itemStyle, indicatorStyle, okText, dismissText,
-      extra, cascade, prefixCls, pickerPrefixCls, data, cols, onOk, ...restProps,
+      children,
+      value = [],
+      popupPrefixCls,
+      itemStyle,
+      indicatorStyle,
+      okText,
+      dismissText,
+      extra,
+      cascade,
+      prefixCls,
+      pickerPrefixCls,
+      data,
+      cols,
+      onOk,
+      ...restProps
     } = this.props;
 
-    const _locale = getComponentLocale(this.props, this.context, 'Picker', () => require('./locale/zh_CN'));
+    // tslint:disable-next-line:variable-name
+    const _locale = getComponentLocale(this.props, this.context, 'Picker', () =>
+      require('./locale/zh_CN'),
+    );
 
     let cascader;
     let popupMoreProps = {};
@@ -118,10 +168,10 @@ export default abstract class AbstractPicker extends React.Component<PickerProps
         <RMCCascader
           prefixCls={prefixCls}
           pickerPrefixCls={pickerPrefixCls}
-          data={data}
+          data={data as PickerData[]}
           cols={cols}
           onChange={this.onPickerChange}
-          onScrollChange={this.setScrollValue}
+          onScrollChange={this.setCasecadeScrollValue}
           pickerItemStyle={itemStyle}
           indicatorStyle={indicatorStyle}
         />
@@ -152,8 +202,14 @@ export default abstract class AbstractPicker extends React.Component<PickerProps
         okText={okText || _locale.okText}
         {...popupMoreProps}
         ref={this.fixOnOk}
+        onVisibleChange={this.onVisibleChange}
       >
-        {children && React.cloneElement(children, { extra: this.getSel() || extra || _locale.extra })}
+        {children &&
+          typeof children !== 'string' &&
+          React.isValidElement(children) &&
+          React.cloneElement<{extra?: string}>(children, {
+            extra: this.getSel() || extra || _locale.extra,
+          })}
       </RMCPopupCascader>
     );
   }

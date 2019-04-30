@@ -2,6 +2,7 @@
 @import '../../style/themes/default';
 
 @pickerPopupPrefixCls: am-picker-popup;
+@pickerPrefixCls: am-picker-col;
 
 .@{pickerPopupPrefixCls} {
   left: 0;
@@ -9,6 +10,7 @@
   position: fixed;
   width: 100%;
   background-color: @fill-base;
+  padding-bottom: env(safe-area-inset-bottom);
 
   &-wrap {
     position: fixed;
@@ -20,6 +22,7 @@
     z-index: @picker-zindex;
     -webkit-overflow-scrolling: touch;
     outline: 0;
+    transform: translateZ(1px);
   }
 
   &-mask {
@@ -31,6 +34,7 @@
     background-color: @fill-mask;
     height: 100%;
     z-index: @picker-zindex;
+    transform: translateZ(1px);
 
     &-hidden {
       display: none;
@@ -79,4 +83,8 @@
   & &-close {
     display: none;
   }
+}
+
+.@{pickerPrefixCls} {
+  flex: 1;
 }

@@ -1,7 +1,14 @@
 /* eslint react/no-danger: 0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { WhiteSpace, Button, WingBlank, NoticeBar } from 'antd-mobile';
+import WhiteSpace from 'antd-mobile/lib/white-space';
+import 'antd-mobile/lib/white-space/style';
+import Button from 'antd-mobile/lib/button';
+import 'antd-mobile/lib/button/style';
+import WingBlank from 'antd-mobile/lib/wing-blank';
+import 'antd-mobile/lib/wing-blank/style';
+import NoticeBar from 'antd-mobile/lib/notice-bar';
+import 'antd-mobile/lib/notice-bar/style';
 import collect from 'bisheng/collect';
 import { getQuery } from '../../../../utils';
 

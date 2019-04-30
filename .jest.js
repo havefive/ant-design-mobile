@@ -7,6 +7,7 @@ const transformIgnorePatterns = [
 
 module.exports = {
   setupFiles: [
+    'raf/polyfill',
     './tests/setup.js'
   ],
   moduleFileExtensions: [
@@ -35,4 +36,9 @@ module.exports = {
   ],
   transformIgnorePatterns,
   testEnvironment: 'jsdom',
+  testURL: 'http://localhost',
+  reporters: [
+    'default',
+    'jest-spec-reporter'
+  ],
 };

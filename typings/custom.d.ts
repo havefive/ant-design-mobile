@@ -1,4 +1,4 @@
-declare module 'antd-mobile';
+declare module 'classnames';
 
 declare module 'antd-mobile-demo-data';
 
@@ -15,24 +15,21 @@ declare module 'rc-slider';
 declare module 'rn-topview';
 
 declare module 'rc-notification';
+declare module 'rmc-notification';
 
-declare module 'react-native-camera-roll-picker';
-
-declare module 'array-tree-filter';
-
-declare module 'react-native-drawer-layout';
-
-declare module 'rc-drawer';
+declare module 'rmc-drawer';
 
 declare module 'rmc-dialog';
+declare module 'rmc-nuka-carousel';
+declare module 'rmc-tooltip';
+declare module 'rmc-pull-to-refresh';
+declare module 'rc-slider/lib/Range';
+declare module 'rc-slider/lib/Slider';
+declare module 'rmc-steps';
 
-declare module 'react-native-menu';
-
-declare module 'react-native-collapsible/Accordion';
-
-declare var process: {
-  env: {
-    NODE_ENV: string,
-    DISABLE_ANTD_MOBILE_UPGRADE: string,
-  }
-};
+// declare var process: {
+//   env: {
+//     NODE_ENV: string;
+//     DISABLE_ANTD_MOBILE_UPGRADE: string;
+//   };
+// };

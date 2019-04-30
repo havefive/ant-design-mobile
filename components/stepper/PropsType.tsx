@@ -1,4 +1,4 @@
-interface StepProps {
+export interface StepPropsType {
   min?: number;
   max?: number;
   step?: number | string;
@@ -7,12 +7,9 @@ interface StepProps {
   autoFocus?: boolean;
   value?: number;
   defaultValue?: number;
-  onChange?: (value) => void;
-  style?: {};
+  onChange?: (value: any) => void;
   upStyle?: {};
   downStyle?: {};
   inputStyle?: {};
   name?: string;
 }
-
-export default StepProps;

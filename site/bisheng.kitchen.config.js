@@ -1,5 +1,7 @@
 const path = require('path');
-const pxtorem = require('postcss-pxtorem');
+const pxtoremPlugin = require('postcss-pxtorem');
+const rucksack = require('rucksack-css');
+const autoprefixer = require('autoprefixer');
 const commonConfig = require('./bisheng.common.config');
 
 const kitchenConfig = {
@@ -12,21 +14,20 @@ const kitchenConfig = {
   entryName: 'kitchen-sink',
   theme: './site/kitchen/src',
   htmlTemplate: path.join(__dirname, './kitchen/src/static/template.html'),
-  doraConfig: {
-    verbose: true,
-    plugins: ['dora-plugin-upload'],
-  },
 };
 
 if (process.env.HD_ENV === 'hd') {
-  kitchenConfig.webpackConfig = function (config) {
-    config = commonConfig.webpackConfig(config);
-    config.postcss.push(pxtorem({
-      rootValue: 100,
-      propWhiteList: [],
-      // selectorBlackList: [/^html$/, /^\.ant-/, /^\.github-/, /^\.gh-/], // does't exist these class now.
-    }));
-    return config;
+  kitchenConfig.postcssConfig = {
+    plugins: [
+      rucksack(),
+      autoprefixer({
+        browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
+      }),
+      pxtoremPlugin({
+        rootValue: 50,
+        propList: ['*'],
+      }),
+    ],
   };
 }
 

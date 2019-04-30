@@ -1,11 +1,18 @@
-import React from 'react';
+import * as React from 'react';
+export type InputEventHandler = (value?: string) => void;
 
-interface InputItemProps {
-  style?: any;
-  /** web only */
+export interface InputItemPropsType {
   moneyKeyboardAlign?: string;
-  onClick?: Function;
-  type?: 'text' | 'bankCard' | 'phone' | 'password' | 'number' | 'idcard' | 'digit' | 'money';
+  moneyKeyboardWrapProps?: object;
+  moneyKeyboardHeader?: React.ReactNode;
+  type?:
+    | 'text'
+    | 'bankCard'
+    | 'phone'
+    | 'password'
+    | 'number'
+    | 'digit'
+    | 'money';
   editable?: boolean;
   disabled?: boolean;
   name?: string;
@@ -14,22 +21,18 @@ interface InputItemProps {
   placeholder?: string;
   clear?: boolean;
   maxLength?: number;
-  onChange?: Function;
-  onBlur?: Function;
-  onFocus?: Function;
   extra?: React.ReactNode;
-  onExtraClick?: (e?) => void;
   error?: boolean;
-  onErrorClick?: (e?) => void;
-  onErrorPress?: Function;
-  size?: 'large' | 'small';
+  // can not find out where it used
+  // onErrorPress?: Function;
+  // size?: 'large' | 'small';
   labelNumber?: number;
   labelPosition?: 'left' | 'top';
   textAlign?: 'left' | 'center';
-  children?: any;
   updatePlaceholder?: boolean;
-  styles?: any;
   locale?: object;
+  onChange?: (value: string) => void;
+  onFocus?: InputEventHandler;
+  onBlur?: InputEventHandler;
+  onVirtualKeyboardConfirm?: InputEventHandler;
 }
-
-export default InputItemProps;

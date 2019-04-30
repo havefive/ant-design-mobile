@@ -1,36 +1,25 @@
-import React from 'react';
+import * as React from 'react';
 
 export interface TabBarProps {
   barTintColor?: string;
   tintColor?: string;
   unselectedTintColor?: string;
-  children?: any;
-  /*web only*/
-  prefixCls?: string;
-  className?: string;
-  hidden?: boolean;
-  placeholder?: React.ReactNode;
+  tabBarPosition?: 'top' | 'bottom';
+
   /** default: false */
   animated?: boolean;
   /** default: false */
   swipeable?: boolean;
-  /** rn android only**/
-  styles?: any;
-  /*web only*/
-  noRenderContent?: boolean;
 }
-
+export type TabIcon = React.ReactElement<any> | { uri: string };
 export interface TabBarItemProps {
   badge?: string | number;
   onPress?: () => void;
   selected?: boolean;
-  icon?: any;
-  selectedIcon?: any;
+  icon?: TabIcon;
+  selectedIcon?: TabIcon;
   title: string;
-  /*web only*/
   dot?: boolean;
-  /*web only*/
   prefixCls?: string;
-  /*web only*/
-  style?: any;
+  style?: React.CSSProperties;
 }

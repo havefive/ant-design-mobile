@@ -15,7 +15,17 @@ Basic Modal.
 
 ````jsx
 import { Modal, List, Button, WhiteSpace, WingBlank } from 'antd-mobile';
-import closest from '../../_util/closest';
+
+function closest(el, selector) {
+  const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+  while (el) {
+    if (matchesSelector.call(el, selector)) {
+      return el;
+    }
+    el = el.parentElement;
+  }
+  return null;
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -61,6 +71,7 @@ class App extends React.Component {
           title="Title"
           footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
           wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+          afterClose={() => { alert('afterClose'); }}
         >
           <div style={{ height: 100, overflow: 'scroll' }}>
             scoll content...<br />
@@ -77,8 +88,9 @@ class App extends React.Component {
         <Modal
           popup
           visible={this.state.modal2}
-          maskClosable={false}
+          onClose={this.onClose('modal2')}
           animationType="slide-up"
+          afterClose={() => { alert('afterClose'); }}
         >
           <List renderHeader={() => <div>委托买入</div>} className="popup-list">
             {['股票名称', '股票代码', '买入价格'].map((i, index) => (

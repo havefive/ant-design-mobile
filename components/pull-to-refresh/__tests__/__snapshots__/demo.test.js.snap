@@ -27,7 +27,9 @@ exports[`renders ./components/pull-to-refresh/demo/basic.md correctly 1`] = `
       >
         <div
           class="am-pull-to-refresh-indicator"
-        />
+        >
+          下拉可以刷新
+        </div>
         <div />
       </div>
     </div>
@@ -49,7 +51,7 @@ exports[`renders ./components/pull-to-refresh/demo/basic-listview.md correctly 1
   </a>
   <div
     class="am-list-view-scrollview"
-    style="position:relative;overflow:auto;-webkit-overflow-scrolling:touch;flex:1;height:0;border:1px solid #ddd;margin:5px 0"
+    style="position:relative;overflow:auto;-webkit-overflow-scrolling:touch;height:0;border:1px solid #ddd;margin:5px 0"
   >
     <div
       class="am-list-view-scrollview-content am-list"
@@ -66,7 +68,9 @@ exports[`renders ./components/pull-to-refresh/demo/basic-listview.md correctly 1
           >
             <div
               class="am-pull-to-refresh-indicator"
-            />
+            >
+              下拉可以刷新
+            </div>
             <div>
               <div
                 class="am-list-header"

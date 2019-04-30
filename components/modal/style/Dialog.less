@@ -34,8 +34,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    // fixed a layer issue with animated Tabs in the x5 kernel browser
+    transform: translateZ(1px);
     &-popup {
       display: block;
+    }
+  }
+
+  &-transparent {
+    width: 270 * @hd;
+    .@{modalPrefixClass}-content {
+      border-radius: @radius-lg;
+      padding-top: @v-spacing-lg;
+
+      .@{modalPrefixClass}-body {
+        padding: 0 @h-spacing-lg @v-spacing-lg;
+      }
     }
   }
 
@@ -51,18 +65,9 @@
     &-slide-up {
       bottom: 0;
     }
-  }
 
-  &&-transparent {
-    width: 270 * @hd;
     .@{modalPrefixClass}-content {
-      border-radius: @radius-lg;
-      height: auto;
-      padding-top: @v-spacing-lg;
-
-      .@{modalPrefixClass}-body {
-        padding: 0 @h-spacing-lg @v-spacing-lg;
-      }
+      padding-bottom: env(safe-area-inset-bottom);
     }
   }
 

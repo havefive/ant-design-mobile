@@ -7,7 +7,7 @@ title: 升级指南
 
 ## 1.x => 2.0
 
-### 2.0 不兼容改动
+2.0 不兼容改动，升级实例 [antd-mobile-samples / web-1.x-2.0](https://github.com/ant-design/antd-mobile-samples/tree/master/web-1.x-2.0)
 
 #### 高清方案
 
@@ -24,14 +24,13 @@ title: 升级指南
 
 如何升级，分如下两种情况？
 
-
 1. 对于 `<Icon type="loading" />` 此类使用 antd-mobile 内置 Icon 的场景，无需任何修改。
 
-2. 对于 `<Icon type={require('../foo.svg')} />` 此类使用本地 svg 文件的场景，建议用保留 svg-sprite-loader 相关配置不变，然后使用自定义的 `CustomIcon` 组件替换 antd-mobile `Icon`，示例如下：
+2. 对于 `<Icon type={require('../foo.svg')} />` 此类使用本地 svg 文件的场景，可以保留原 svg-sprite-loader 相关配置不变，然后使用自定义的 `CustomIcon` 组件替换 antd-mobile `Icon`，示例如下：
 
 ```diff
 - import { Icon } from 'antd-mobile';
-- <Icon type={require('./foo.svg)'} />
+- <Icon type={require('./foo.svg')} />
 
 + const CustomIcon = ({ type, className = '', size = 'md', ...restProps }) => (
 +     <svg
@@ -39,10 +38,10 @@ title: 升级指南
 +       {...restProps}
 +     >
 +       <use xlinkHref={type} /> {/* svg-sprite-loader@0.3.x */}
-+       {/* <use xlinkHref={#${type.default.id}} /> */} {/* svg-sprite-loader@lastest */}
++       {/* <use xlinkHref={#${type.default.id}} /> */} {/* svg-sprite-loader@latest */}
 +     </svg>
 + );
-+ <CustomIcon type={require('./foo.svg)'} />
++ <CustomIcon type={require('./foo.svg')} />
 ```
 
 #### DatePicker
@@ -139,7 +138,7 @@ const tabs = [
 
 #### ListView & RefreshControl
 
-**注意: 从 `beta.6` 版本开始，他们有很大的优化**，如果你之前有使用 ListView 的 `useZscroller` 属性、或者 `RefreshControl` 组件，你需要按新的用法来升级。
+**注意: 从 `2.0.0-beta.6` 版本开始，他们有很大的优化**，`RefreshControl` 被移除，需要使用新增的 `PullToRefresh` 组件代替。如果你之前有使用 ListView 的 `useZscroller` 属性、或者 `RefreshControl` 组件，你需要按新的用法来升级。
 
 现在 `useZscroller` `scrollerOptions` `refreshControl` 这些属性不再起作用。**使用 web 的原生 scroller 来代替 zscroller，使用 `PullToRefresh` 组件来代替 `RefreshControl` 组件**。
 

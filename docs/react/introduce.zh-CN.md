@@ -6,7 +6,7 @@ title: Ant Design Mobile of React
 `antd-mobile` 是 [Ant Design](http://ant.design) 的移动规范的 React 实现，服务于蚂蚁及口碑无线业务。
 
 <div class="pic-plus">
-  <img width="160" src="https://zos.alipayobjects.com/rmsportal/wIjMDnsrDoPPcIV.png">
+  <img width="160" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg">
   <span>+</span>
   <img width="160" src="https://t.alipayobjects.com/images/rmsweb/T16xRhXkxbXXXXXXXX.svg">
 </div>
@@ -29,7 +29,7 @@ title: Ant Design Mobile of React
 ## 特性和优势
 
 - UI 样式高度可配置，拓展性更强，轻松适应各类产品风格
-- 基于 React Native 的 iOS / Android / Web 多平台支持，组件丰富、能全面覆盖各类场景
+- 基于 React Native 的 iOS / Android / Web 多平台支持，组件丰富、能全面覆盖各类场景 (antd-mobile-rn)
 - 提供 "组件按需加载" / "Web 页面高清显示" / "SVG Icon" 等优化方案，一体式开发
 - 使用 TypeScript 开发，提供类型定义文件，支持类型及属性智能提示，方便业务开发
 - 全面兼容 react / preact
@@ -48,7 +48,7 @@ title: Ant Design Mobile of React
 
 ### 1. 创建一个项目
 
-可以是已有项目，或者是使用 [dva](https://github.com/dvajs/dva) / create-react(-native)-app 新创建的空项目，你也可以从 [官方示例](https://github.com/ant-design/antd-mobile-samples/tree/master/rn-web) 脚手架里拷贝并修改
+可以是已有项目，或者是使用 [dva](https://github.com/dvajs/dva) / create-react-app 新创建的空项目，你也可以从 [官方示例](https://github.com/ant-design/antd-mobile-samples/tree/master/rn-web) 脚手架里拷贝并修改
 
 > 参考更多[官方示例集](https://github.com/ant-design/antd-mobile-samples)
 > 或者你可以利用 React 生态圈中的 [各种脚手架](https://github.com/enaqx/awesome-react#boilerplates)
@@ -60,8 +60,6 @@ $ npm install antd-mobile --save
 ```
 
 ### 3. 使用
-
-### Web 使用方式
 
 入口页面 (html 或 模板) 相关设置：
 
@@ -104,7 +102,7 @@ ReactDOM.render(<Button>Start</Button>, mountNode);
 import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.less'
 ```
 
-#### 按需加载
+##### 按需加载
 
 **注意：强烈推荐使用。**
 
@@ -136,62 +134,9 @@ import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.
    // import 'antd-mobile/lib/date-picker/style';         // 加载 LESS
    ```
 
-#### 更多增强 (非必须):
+##### 更多增强 (非必须):
 
-> 如何自定义主题？[见此文档](https://github.com/ant-design/ant-design-mobile/blob/master/docs/react/theme-config.zh-CN.md)，
 > 基于 antd-mobile 的自定义 UI 库：[web-custom-ui](https://github.com/ant-design/antd-mobile-samples/tree/master/web-custom-ui) / [web-custom-ui-pro](https://github.com/ant-design/antd-mobile-samples/tree/master/web-custom-ui-pro)
-
-
-### React-Native 使用方式
-
-> 注：`Menu`/`NavBar`/`Range` 组件暂无 React Native 版本
-
-组件使用实例：
-
-```jsx
-import React, { Component } from 'react';
-import { AppRegistry } from 'react-native';
-import Button from 'antd-mobile/lib/button';
-
-class HelloWorldApp extends Component {
-  render() {
-    return <Button>Start</Button>;
-  }
-}
-
-AppRegistry.registerComponent('HelloWorldApp', () => HelloWorldApp);
-```
-
-#### 按需加载
-
-下面两种方式都可以**只加载**用到的组件，选择其中一种方式即可。
-
-- 使用 [babel-plugin-import](https://github.com/ant-design/babel-plugin-import)（推荐）。
-
-   ```js
-   // .babelrc or babel-loader option
-   {
-     "plugins": [
-       ["import", { libraryName: "antd-mobile" }] // 与 Web 平台的区别是不需要设置 style
-     ]
-   }
-   ```
-
-   然后改变从 antd-mobile 引入模块方式即可。
-
-   ```jsx
-   import { Button } from 'antd-mobile';
-   ```
-
-- 手动引入
-
-   ```jsx
-   import Button from 'antd-mobile/lib/button';
-   ```
-
-#### 更多增强 (非必须):
-
-> [自定义 RN 主题和单个组件样式](https://github.com/ant-design/antd-mobile-samples/tree/master/rn-custom-ui)
 
 
 ## 版本

@@ -1,14 +1,25 @@
-/* tslint:disable:no-switch-case-fall-through */
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Modal from './Modal';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import closest from '../_util/closest';
+import Modal from './Modal';
+import { CallbackOrActions } from './PropsType';
 
 export default function prompt(
-  title, message, callbackOrActions,
-  type = 'default', defaultValue = '', placeholders = ['', ''],
+  title: React.ReactNode,
+  message: React.ReactNode,
+  callbackOrActions: CallbackOrActions<React.CSSProperties>,
+  type = 'default',
+  defaultValue = '',
+  placeholders = ['', ''],
   platform = 'ios',
 ) {
+  let closed = false;
+
+  defaultValue =
+    typeof defaultValue === 'string'
+      ? defaultValue
+      : typeof defaultValue === 'number' ? `${defaultValue}` : '';
+
   if (!callbackOrActions) {
     // console.log('Must specify callbackOrActions');
     return {
@@ -18,17 +29,29 @@ export default function prompt(
 
   const prefixCls = 'am-modal';
 
-  let data: any = {};
+  const data: any = {
+    text: defaultValue,
+  };
 
-  function onChange(e) {
+  function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.target;
     const inputType = target.getAttribute('type');
-    data[inputType] =  target.value;
+    if (inputType !== null) {
+      data[inputType] = target.value;
+    }
+  }
+
+  // hotfix issue: https://github.com/ant-design/ant-design-mobile/issues/2177
+  function onClick(e: React.MouseEvent<HTMLInputElement>) {
+    const target = e.currentTarget || e.target;
+    if (target) {
+      target.focus();
+    }
   }
 
   let inputDom;
 
-  const focusFn = function(input) {
+  const focusFn = (input: HTMLInputElement | null) => {
     setTimeout(() => {
       if (input) {
         input.focus();
@@ -44,9 +67,9 @@ export default function prompt(
             <label>
               <input
                 type="text"
-                value={data.text}
-                defaultValue={defaultValue}
+                defaultValue={data.text}
                 ref={input => focusFn(input)}
+                onClick={onClick}
                 onChange={onChange}
                 placeholder={placeholders[0]}
               />
@@ -56,8 +79,8 @@ export default function prompt(
             <label>
               <input
                 type="password"
-                value={data.password}
-                defaultValue=""
+                defaultValue={data.password}
+                onClick={onClick}
                 onChange={onChange}
                 placeholder={placeholders[1]}
               />
@@ -73,9 +96,9 @@ export default function prompt(
             <label>
               <input
                 type="password"
-                value={data.password}
-                defaultValue=""
+                defaultValue={data.password}
                 ref={input => focusFn(input)}
+                onClick={onClick}
                 onChange={onChange}
                 placeholder={placeholders[0]}
               />
@@ -84,7 +107,6 @@ export default function prompt(
         </div>
       );
       break;
-    case 'plain-text':
     case 'default':
     default:
       inputDom = (
@@ -93,9 +115,9 @@ export default function prompt(
             <label>
               <input
                 type="text"
-                value={data.text}
-                defaultValue={defaultValue}
+                defaultValue={data.text}
                 ref={input => focusFn(input)}
+                onClick={onClick}
                 onChange={onChange}
                 placeholder={placeholders[0]}
               />
@@ -103,17 +125,16 @@ export default function prompt(
           </div>
         </div>
       );
-      break;
   }
 
-  let content = (
+  const content = (
     <div>
       {message}
       {inputDom}
     </div>
   );
 
-  let div: any = document.createElement('div');
+  const div = document.createElement('div');
   document.body.appendChild(div);
 
   function close() {
@@ -123,57 +144,74 @@ export default function prompt(
     }
   }
 
-  function getArgs(func) {
-    const text = data.text || defaultValue || '';
-    const password = data.password || '';
-    if (type === 'login-password') {
-      return func(text, password);
-    } else if (type === 'secure-text') {
-      return func(password || defaultValue);
+  function handleConfirm(callback?: (...args: any[]) => void) {
+    if (typeof callback !== 'function') {
+      return;
     }
-    return func(text);
+    const { text = '', password = '' } = data;
+    const callbackArgs =
+      type === 'login-password'
+        ? [text, password]
+        : type === 'secure-text' ? [password] : [text];
+
+    return callback(...callbackArgs);
   }
 
   let actions;
   if (typeof callbackOrActions === 'function') {
     actions = [
-      { text: '取消' },
-      { text: '确定', onPress: () => { getArgs(callbackOrActions); } },
+      {
+        text: '取消',
+        onPress: () => {},
+      },
+      {
+        text: '确定',
+        onPress: () => {
+          handleConfirm(callbackOrActions);
+        },
+      },
     ];
   } else {
     actions = callbackOrActions.map(item => {
       return {
         text: item.text,
         onPress: () => {
-          if (item.onPress) {
-            return getArgs(item.onPress);
-          }
+          return handleConfirm(item.onPress);
         },
       };
     });
   }
 
-  const footer = actions.map((button) => {
+  const footer = actions.map(button => {
+    // tslint:disable-next-line:only-arrow-functions
     const orginPress = button.onPress || function() {};
     button.onPress = () => {
-      const res = orginPress();
+      if (closed) {
+        return;
+      }
+
+      const res: any = orginPress();
       if (res && res.then) {
-        res.then(() => {
-          close();
-        });
+        res
+          .then(() => {
+            closed = true;
+            close();
+          })
+          .catch(() => {});
       } else {
+        closed = true;
         close();
       }
     };
     return button;
   });
 
-  function onWrapTouchStart(e) {
+  function onWrapTouchStart(e: React.TouchEvent<HTMLDivElement>) {
     // exclude input element for focus
     if (!/iPhone|iPod|iPad/i.test(navigator.userAgent)) {
       return;
     }
-    const pNode = closest(e.target, `.${prefixCls}-content`);
+    const pNode = closest(e.target as Element, `.${prefixCls}-content`);
     if (!pNode) {
       e.preventDefault();
     }
@@ -194,7 +232,8 @@ export default function prompt(
       wrapProps={{ onTouchStart: onWrapTouchStart }}
     >
       <div className={`${prefixCls}-propmt-content`}>{content}</div>
-    </Modal>, div,
+    </Modal>,
+    div,
   );
 
   return {

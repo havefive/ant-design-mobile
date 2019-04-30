@@ -1,54 +1,34 @@
 ---
-order: 3
-title: Use in create-react(-native)-app
+order: 1
+title: Use in create-react-app
 ---
 
-[create-react-app](https://github.com/facebookincubator/create-react-app) (Web project) / [create-react-native-app](https://github.com/react-community/create-react-native-app)(React Native project) is one of best React application development tool, we are going to use `antd-mobile` within it；
+[create-react-app](https://github.com/facebookincubator/create-react-app) is one of best React application development tool, we are going to use `antd-mobile` within it.
 
-## Install and Initialization
-
-We need to install the appropriate tools first, you may need install [yarn](https://github.com/yarnpkg/yarn/) too.
+### Install and Initialization
 
 ```bash
-$ npm install -g yarn
-$ npm install -g create-react-app  # web project
-$ npm install -g create-react-native-app  # react-native project
+$ npm install -g create-react-app
+
+# Note: The tool will create and initialize environment and dependencies automaticly, please try config your proxy setting or use other npm registry if any network errors happen during it.
+$ create-react-app my-app
+
+$ cd my-app
+$ npm start
 ```
 
-Then we create a new project named antm-demo.
+Then open http://localhost:3000/ to see your app.
+
+### Integrate antd-mobile
+
+First reference [entry html page settings](/docs/react/introduce#3.-Usage), configure your project's html page.
+
+#### Use modularized antd-mobile
+
+- Import [react-app-rewired](https://github.com/timarney/react-app-rewired) and modify the `scripts` field in package.json. Due to new [react-app-rewired@2.x](https://github.com/timarney/react-app-rewired#alternatives) issue, you shall need [customize-cra](https://github.com/arackaf/customize-cra) along with react-app-rewired.
 
 ```bash
-$ create-react-app antm-demo  # web project
-$ create-react-native-app antm-demo  # react-native project
-```
-
-The tool will create and initialize environment and dependencies automaticly, please try config your proxy setting or use other npm registry if any network errors happen during it.
-
-Then we go inside antm-demo and start it.
-
-```bash
-$ cd antm-demo
-$ yarn start
-```
-
-- `Web project`: Open browser at http://localhost:3000/, it renders a header saying "Welcome to React" on the page.
-- `React Native project`: Run `npm run ios` in terminal, it should be ok if you can see the page content in simulator.
-
-## Integrate antd-mobile
-
-
-#### **Basic run：**
-
-  Settings entry html page（`web only`），see [Entry html page settings](/docs/react/introduce#Web-usage)
-
-  > Note：you need to run `yarn run eject` before customzing configurations for, more ref  [antd-mobile-samples/create-react-app](https://github.com/ant-design/antd-mobile-samples/tree/1.x/create-react-app)
-
-#### **Use modularized antd-mobile：**
-
-- Import [react-app-rewired](https://github.com/timarney/react-app-rewired) and modify the `scripts` field in package.json.
-
-```bash
-$ yarn add react-app-rewired --dev
+$ npm install react-app-rewired customize-cra --save-dev
 ```
 
 ```diff
@@ -75,15 +55,22 @@ module.exports = function override(config, env) {
 - Use babel-plugin-import, [babel-plugin-import](https://github.com/ant-design/babel-plugin-import) is a babel plugin for importing components on demand（[How does it work?](https://ant.design/docs/react/getting-started#Import-on-Demand)），We are now trying to install it and modify config-overrides.js.
 
 ```bash
-yarn add babel-plugin-import --dev
+npm install babel-plugin-import --save-dev
 ```
 
 ```diff
-+ const { injectBabelPlugin } = require('react-app-rewired');
-  module.exports = function override(config, env) {
-+   config = injectBabelPlugin(['import', { libraryName: 'antd-mobile', style: 'css' }], config);
-    return config;
-  };
++ const { override, fixBabelImports } = require('customize-cra');
+
+- module.exports = function override(config, env) {
+-   // do stuff with the webpack config...
+-   return config;
+- };
++ module.exports = override(
++   fixBabelImports('import', {
++     libraryName: 'antd-mobile',
++     style: 'css',
++   }),
++ );
 ```
 
 - change importation like below:
@@ -93,8 +80,6 @@ yarn add babel-plugin-import --dev
 + import { Button } from 'antd-mobile';
 ```
 
-## Complete example
+### Complete example
 
-- Web project( include `css-modules` and `customized theme`) [antd-mobile-sample/create-react-app](https://github.com/ant-design/antd-mobile-samples/tree/master/create-react-app)
-- React-Native project [antd-mobile-sample/create-react-native-app](https://github.com/ant-design/antd-mobile-samples/tree/master/create-react-native-app)
-    - > Note: a method of rewriting part of a single component can be found (1.x): [ant-design-mobile/issues/1174](https://github.com/ant-design/ant-design-mobile/issues/1174#issuecomment-295256831)，(2.x): [ant-design-mobile/pull/1629](https://github.com/ant-design/ant-design-mobile/pull/1629)
+Include `css-modules` and `customized theme` [antd-mobile-sample/create-react-app](https://github.com/ant-design/antd-mobile-samples/tree/master/create-react-app)

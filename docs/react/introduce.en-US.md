@@ -6,7 +6,7 @@ title: Ant Design Mobile of React
 `antd-mobile` is the React implementation of the [Ant Design](http://ant.design)'s mobile specification, serving the ant and koubei wireless service.
 
 <div class="pic-plus">
-  <img width="160" src="https://zos.alipayobjects.com/rmsportal/wIjMDnsrDoPPcIV.png">
+  <img width="160" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg">
   <span>+</span>
   <img width="160" src="https://t.alipayobjects.com/images/rmsweb/T16xRhXkxbXXXXXXXX.svg">
 </div>
@@ -29,7 +29,7 @@ title: Ant Design Mobile of React
 ## Features and Advantages
 
 - The UI is fully Configurable and Scalable, easily adapt to all kinds of product style.
-- Support Web / iOS / Android platform (Based on React Native), has a wealth of components, can fully cover all kinds of scenes.
+- Support Web / iOS / Android platform (Based on React Native), has a wealth of components, can fully cover all kinds of scenes. (antd-mobile-rn)
 - Provide "Components are loaded on demand" / "Web page HD display" / "SVG Icon" optimization features, integrated development.
 - Use TypeScript to develop, provide type definition files, support type and attribute smart tips for easy business development.
 - Fully compatible with react / preact.
@@ -48,7 +48,7 @@ title: Ant Design Mobile of React
 
 ### 1. Create a New Project
 
-Can be an existing project, or a newly created empty project with [dva](https://github.com/dvajs/dva) / create-react(-native)-app, you can also copy and modify from the official example [scaffolding](https://github.com/ant-design/antd-mobile-samples/tree/master/rn-web).
+Can be an existing project, or a newly created empty project with [dva](https://github.com/dvajs/dva) / create-react-app, you can also copy and modify from the official example [scaffolding](https://github.com/ant-design/antd-mobile-samples/tree/master/rn-web).
 
 > More official [examples](https://github.com/ant-design/antd-mobile-samples).
 > Also, you can use any [scaffold](https://github.com/enaqx/awesome-react#boilerplates) available in React ecosystem.
@@ -60,8 +60,6 @@ $ npm install antd-mobile --save
 ```
 
 ### 3. Usage
-
-### Web usage
 
 Entry html page settings:
 
@@ -104,7 +102,7 @@ And import stylesheets manually:
 import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.less'
 ```
 
-#### Use modularized antd-mobile
+##### Use modularized antd-mobile
 
 **Note: Strongly recommended.**
 
@@ -136,62 +134,9 @@ The following two ways used to load the **only components you used**, select one
    // import 'antd-mobile/lib/date-picker/style';         // that will import less
    ```
 
-#### More enhanced (optional):
+##### More enhanced (optional):
 
-> [Custom theme](https://github.com/ant-design/ant-design-mobile/blob/master/docs/react/theme-config.en-US.md).
 > Your custom UI library based on antd-mobile: [web-custom-ui](https://github.com/ant-design/antd-mobile-samples/tree/master/web-custom-ui) / [web-custom-ui-pro](https://github.com/ant-design/antd-mobile-samples/tree/master/web-custom-ui-pro)
-
-
-### React-Native usage
-
-> Note: `Menu`/`NavBar`/`Range` does not have React-Native implementation.
-
-Example of usage:
-
-```jsx
-import React, { Component } from 'react';
-import { AppRegistry } from 'react-native';
-import Button from 'antd-mobile/lib/button';
-
-class HelloWorldApp extends Component {
-  render() {
-    return <Button>Start</Button>;
-  }
-}
-
-AppRegistry.registerComponent('HelloWorldApp', () => HelloWorldApp);
-```
-
-#### Use modularized antd-mobile
-
-The following two ways used to load the **only components you used**, select one of the ways you like.
-
-- Use [babel-plugin-import](https://github.com/ant-design/babel-plugin-import) (Recommended)
-
-   ```js
-   // .babelrc or babel-loader option
-   {
-     "plugins": [
-       ["import", { libraryName: "antd-mobile" }] // The difference with the Web platform is that you do not need to set the style
-     ]
-   }
-   ```
-
-   Then just change the way of import modules from antd-mobile.
-
-   ```jsx
-   import { Button } from 'antd-mobile';
-   ```
-
-- Manually import
-
-   ```jsx
-   import Button from 'antd-mobile/lib/button';
-   ```
-
-#### More enhanced (optional):
-
-> [Custom theme and single component style](https://github.com/ant-design/antd-mobile-samples/tree/master/rn-custom-ui)
 
 
 ## Version

@@ -97,7 +97,7 @@
     overflow: visible;
     display: block;
     resize: none;
-    word-break: break-all;
+    word-break: break-word;
     word-wrap: break-word;
 
     &::placeholder {
@@ -134,6 +134,10 @@
   .@{textareaPrefixCls}-clear {
     display: block;
   }
+}
+
+.@{textareaPrefixCls}-has-count {
+  padding-bottom: 14px;
 }
 
 .@{textareaPrefixCls}-count {

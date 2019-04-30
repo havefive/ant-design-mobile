@@ -1,30 +1,27 @@
-import React, { ReactNode } from 'react';
-
-export interface ListProps {
-  renderHeader?: Function | JSX.Element;
-  renderFooter?: Function | JSX.Element;
-  children?: JSX.Element | JSX.Element[];
-  style?: React.CSSProperties | {} | Array<{}>;
+import * as React from 'react'
+// export type ListType = JSX.Element
+export interface ListPropsType {
+  renderHeader?: () => React.ReactNode | React.ReactNode;
+  renderFooter?: () => React.ReactNode | React.ReactNode;
+  children?: React.ReactNode;
 }
 
-export interface ListItemProps {
+export interface ListItemPropsType {
   align?: 'top' | 'middle' | 'bottom';
   disabled?: boolean;
   multipleLine?: boolean;
-  children?: ReactNode;
-  thumb?: ReactNode | null;
-  extra?: ReactNode;
+  children?: React.ReactNode;
+  thumb?: React.ReactNode | null;
+  extra?: React.ReactNode;
   arrow?: 'horizontal' | 'down' | 'up' | 'empty' | '';
   wrap?: boolean;
-  onClick?: (e?: any) => void;
-  style?: React.CSSProperties | {} | Array<{}>;
   activeStyle?: React.CSSProperties;
   error?: boolean;
   platform?: 'android' | 'ios';
 }
 
 export interface BriefProps {
-  children?: ReactNode;
+  children?: React.ReactNode;
   wrap?: boolean;
-  style?: React.CSSProperties | {} | Array<{}>;
+  style?: React.CSSProperties;
 }

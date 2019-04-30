@@ -2,7 +2,12 @@
 /* eslint no-console:0 */
 
 import React from 'react';
-import { List, Icon } from 'antd-mobile';
+
+import List from 'antd-mobile/lib/list';
+import 'antd-mobile/lib/list/style';
+import Icon from 'antd-mobile/lib/icon';
+import 'antd-mobile/lib/icon/style';
+
 import { addLocaleData, IntlProvider, FormattedMessage } from 'react-intl';
 import '../../static/style';
 import enLocale from '../../en-US';

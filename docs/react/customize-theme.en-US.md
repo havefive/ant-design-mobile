@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 3
 title: Customize Theme
 ---
 
@@ -7,13 +7,11 @@ Ant Design Mobile allows to customize some basic design aspects in order to meet
 
 ![](https://gw.alipayobjects.com/zos/rmsportal/bvJhBmAfTWsUixLpGLbL.png)
 
-> This doc only introduce how to customize theme in web project, if you want to know how to do this for react-native components, please see [customize theme and style for react-native components](https://github.com/ant-design/antd-mobile-samples/tree/master/rn-custom-ui#antd-mobile-with-rn-custom-ui)
-
 ## Less variables
 
 We are using [Less](http://lesscss.org/) as the development language of style. A set of less variables are defined for each design aspect that can be customized to your needs.
 
-- [the default style variable](https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less)
+- [the default style variable](https://github.com/ant-design/ant-design-mobile/blob/master/components/style/themes/default.less)
 
 Please report an issue if the existing list of variables is not enough for you.
 
@@ -42,7 +40,7 @@ we can use the way of [modifyVars](http://lesscss.org/usage/#using-less-in-the-b
 }
 ```
 
-- Then，add the 'theme' in `package.json` file, [the default style variable](https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less)
+- Then，add the 'theme' in `package.json` file, [the default style variable](https://github.com/ant-design/ant-design-mobile/blob/master/components/style/themes/default.less)
 
 ```js
 {

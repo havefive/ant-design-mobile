@@ -1,14 +1,11 @@
 ---
-order: 6
+order: 3
 title: 定制主题
 ---
 
 antd-mobile 设计规范上支持一定程度的样式定制，以满足业务和品牌上多样化的视觉需求，包括但不限于主色、圆角、边框和部分组件的视觉定制。
 
 ![](https://gw.alipayobjects.com/zos/rmsportal/bvJhBmAfTWsUixLpGLbL.png)
-
-
-> 本文档仅介绍 web 下如何自定义 theme，如需了解 react-native 组件定义 theme 和 style，请参照 [react-native 组件自定义 theme 和样式](https://github.com/ant-design/antd-mobile-samples/tree/master/rn-custom-ui#antd-mobile-with-rn-custom-ui)
 
 ## 样式变量
 

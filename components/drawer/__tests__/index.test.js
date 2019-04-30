@@ -1,26 +1,8 @@
 import React from 'react';
-import { render, shallow } from 'enzyme';
-import { renderToJson } from 'enzyme-to-json';
+import { shallow } from 'enzyme';
 import Drawer from '../index';
 
 describe('Drawer', () => {
-  it('match snapshot', () => {
-    const wrapper = render(
-      <Drawer
-        className="my-drawer"
-        style={{ minHeight: document.documentElement.clientHeight - 200 }}
-        dragHandleStyle={{ display: 'none' }}
-        contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 42 }}
-        sidebar={<span>sidebar content</span>}
-        position="left"
-        open={false}
-      >
-        Click upper-left corner icon
-      </Drawer>,
-    );
-    expect(renderToJson(wrapper)).toMatchSnapshot();
-  });
-
   it('renders correctly', () => {
     const wrapper = shallow(
       <Drawer
@@ -50,7 +32,7 @@ describe('Drawer', () => {
   //     expect(arg).toBe(false);
   //   }
   //   // 注意：如果用 enzyme 的 shallow 方法、setProps 不起作用，
-  //   // 也许是代码都是在 rc-drawer 里的缘故？（比如 Button 组件 shallow + setProps 是正常的）
+  //   // 也许是代码都是在 rmc-drawer 里的缘故？（比如 Button 组件 shallow + setProps 是正常的）
   //   const wrapper = mount(
   //     <Drawer
   //       sidebar={<span>sidebar content</span>}

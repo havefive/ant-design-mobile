@@ -12,7 +12,7 @@ import { Picker, List, WhiteSpace } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import arrayTreeFilter from 'array-tree-filter';
 
-import { district, provinceLite as province } from 'antd-mobile-demo-data';
+import { district, provinceLite } from 'antd-mobile-demo-data';
 
 // 如果不是使用 List.Item 作为 children
 const CustomChildren = props => (
@@ -50,6 +50,47 @@ const seasons = [
   ],
 ];
 
+const colorStyle = {
+  display: 'inline-block',
+  verticalAlign: 'middle',
+  width: '16px',
+  height: '16px',
+  marginRight: '10px',
+};
+
+const colors = [
+  {
+    label:
+    (<div>
+      <span
+        style={{ ...colorStyle, backgroundColor: '#FF0000' }}
+      />
+      <span>红色</span>
+    </div>),
+    value: '#FF0000',
+  },
+  {
+    label:
+    (<div>
+      <span
+        style={{ ...colorStyle, backgroundColor: '#00FF00' }}
+      />
+      <span>绿色</span>
+    </div>),
+    value: '#00FF00',
+  },
+  {
+    label:
+    (<div>
+      <span
+        style={{ ...colorStyle, backgroundColor: '#0000FF' }}
+      />
+      <span>蓝色</span>
+    </div>),
+    value: '#0000FF',
+  },
+];
+
 class Test extends React.Component {
   state = {
     data: [],
@@ -58,11 +99,12 @@ class Test extends React.Component {
     asyncValue: [],
     sValue: ['2013', '春'],
     visible: false,
+    colorValue: ['#00FF00'],
   };
   onClick = () => {
     setTimeout(() => {
       this.setState({
-        data: province,
+        data: provinceLite,
       });
     }, 120);
   };
@@ -120,6 +162,13 @@ class Test extends React.Component {
   //     district: ['340000', '340800', '340822'],
   //   });
   // },
+
+  onChangeColor = (color) => {
+    this.setState({
+      colorValue: color,
+    });
+  };
+
   render() {
     const { getFieldProps } = this.props.form;
     return (<div>
@@ -180,6 +229,14 @@ class Test extends React.Component {
           <List.Item extra={this.getSel()} onClick={() => this.setState({ visible: true })}>
             Visible state
           </List.Item>
+        </Picker>
+        <Picker
+          data={colors}
+          value={this.state.colorValue}
+          cols={1}
+          onChange={this.onChangeColor}
+        >
+          <List.Item arrow="horizontal">Complex Labels</List.Item>
         </Picker>
       </List>
     </div>);

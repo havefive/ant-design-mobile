@@ -11,8 +11,6 @@ Used to select a date range.
 
 ## API
 
-Support WEB.
-
 Properties | Descrition | Type | Default | Required
 -----------|------------|------|--------|--------
 enterDirection|enter direction |'horizontal' \| 'vertical'| vertical|false
@@ -20,7 +18,7 @@ locale|locale|Models.Locale||false
 onCancel|on cancel|() => void||false
 onConfirm|on confirm|(startDateTime?: Date, endDateTime?: Date) => void||false
 pickTime|pick time|boolean| false|false
-prefixCls|(web only) prefix class|string| rmc-calendar|false
+prefixCls| prefix class|string| rmc-calendar|false
 renderShortcut|replace shortcut. need showShortcut: true|(select: (startDate?: Date, endDate?: Date) => void) => React.ReactNode||false
 renderHeader|replace header|() => React.ReactNode||false
 showShortcut|show shortcut|boolean| false|false
@@ -33,7 +31,7 @@ infiniteOpt|infinite scroll optimize|boolean| false|false
 initalMonths|inital months|number| 6|false
 maxDate|max date|Date||false
 minDate|min date|Date||false
-onSelect | on select dates callback | (date: \[Date, Date\] \| \[Date\]) => \[Date, Date\] \| \[Date\] \| void | | false
+onSelect | on select dates callback | | (date: Date, state?: \[Date | undefined, Date | undefined\]) => \[Date, Date\] \| \[Date\] \| void | | false
 onSelectHasDisableDate|on select has disable date|(date: Date[]) => void||false
 rowSize|row size|'normal' \| 'xl'||false
 defaultValue | default date select value | \[Date, Date\] \| \[Date\] | | false

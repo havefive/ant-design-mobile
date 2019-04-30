@@ -1,29 +1,52 @@
-import React from 'react';
 import classnames from 'classnames';
-import { SearchBarProps as BasePropsType, SearchBarState, defaultProps } from './PropsType';
-import getDataAttr from '../_util/getDataAttr';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import TouchFeedback from 'rmc-feedback';
+import getDataAttr from '../_util/getDataAttr';
 import { getComponentLocale } from '../_util/getLocale';
+import { defaultProps, SearchBarPropsType, SearchBarState } from './PropsType';
 
-export interface SearchBarProps extends BasePropsType {
-  prefixCls?: string;
-  className?: string;
+function onNextFrame(cb: () => void) {
+  if (window.requestAnimationFrame) {
+    return window.requestAnimationFrame(cb);
+  }
+  return window.setTimeout(cb, 1);
+}
+function clearNextFrameAction(nextFrameId: number) {
+  if (window.cancelAnimationFrame) {
+    window.cancelAnimationFrame(nextFrameId);
+  } else {
+    window.clearTimeout(nextFrameId);
+  }
 }
 
-export default class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
-  static defaultProps = defaultProps;
-  rightBtnInitMarginleft: any;
-  firstFocus: any;
-  scrollIntoViewTimeout: any;
-  blurFromOnClear: any;
-  onBlurTimeout: any;
-  inputRef: any;
-  private rightBtnRef: any;
-  private syntheticPhContainerRef: any;
-  private syntheticPhRef: any;
-  private inputContainerRef: any;
+export interface SearchBarProps extends SearchBarPropsType {
+  prefixCls?: string;
+  className?: string;
+  style?: React.CSSProperties;
+}
 
-  constructor(props) {
+export default class SearchBar extends React.Component<
+  SearchBarProps,
+  SearchBarState
+> {
+  static defaultProps = defaultProps;
+
+  static contextTypes = {
+    antLocale: PropTypes.object,
+  };
+
+  rightBtnInitMarginleft: string | null;
+  firstFocus: boolean;
+  blurFromOnClear: boolean;
+  onBlurTimeout: number | null;
+  inputRef: HTMLInputElement | null;
+  private rightBtnRef: HTMLDivElement | null;
+  private syntheticPhContainerRef: HTMLSpanElement | null;
+  private syntheticPhRef: HTMLDivElement | null;
+  private inputContainerRef: HTMLFormElement | null;
+
+  constructor(props: SearchBarProps) {
     super(props);
     let value;
     if ('value' in props) {
@@ -40,30 +63,45 @@ export default class SearchBar extends React.Component<SearchBarProps, SearchBar
   }
 
   componentDidMount() {
-    const initBtn = window.getComputedStyle(this.rightBtnRef);
-    this.rightBtnInitMarginleft = initBtn['margin-left'];
+    if (this.rightBtnRef) {
+      const initBtn = window.getComputedStyle(this.rightBtnRef);
+      this.rightBtnInitMarginleft = initBtn.marginLeft;
+    }
     this.componentDidUpdate();
   }
 
   componentDidUpdate() {
-    // 检测是否包含名为 ${this.props.prefixCls}-start 样式，生成动画
-    // offsetWidth 某些时候是向上取整，某些时候是向下取整，不能用
-    const realWidth = this.syntheticPhContainerRef.getBoundingClientRect().width; // 包含小数
-    if (this.inputContainerRef.className.indexOf(`${this.props.prefixCls}-start`) > -1) {
-      this.syntheticPhRef.style.width = `${Math.ceil(realWidth)}px`;
-      if (!this.props.showCancelButton) {
-        this.rightBtnRef.style.marginRight = 0;
-      }
-    } else {
-      this.syntheticPhRef.style.width = '100%';
-      if (!this.props.showCancelButton) {
-        this.rightBtnRef.style.marginRight =
-          `-${this.rightBtnRef.offsetWidth + parseInt(this.rightBtnInitMarginleft, 10)}px`;
+    if (this.syntheticPhRef) {
+      if (
+        this.inputContainerRef &&
+        this.inputContainerRef.className.indexOf(
+          `${this.props.prefixCls}-start`,
+        ) > -1
+      ) {
+        // 检测是否包含名为 ${this.props.prefixCls}-start 样式，生成动画
+        // offsetWidth 某些时候是向上取整，某些时候是向下取整，不能用
+        if (this.syntheticPhContainerRef) {
+          const realWidth = this.syntheticPhContainerRef.getBoundingClientRect()
+            .width; // 包含小数
+          this.syntheticPhRef.style.width = `${Math.ceil(realWidth)}px`;
+        }
+        if (!this.props.showCancelButton && this.rightBtnRef) {
+          this.rightBtnRef.style.marginRight = '0';
+        }
+      } else {
+        this.syntheticPhRef.style.width = '100%';
+        if (!this.props.showCancelButton && this.rightBtnRef) {
+          this.rightBtnRef.style.marginRight = `-${this.rightBtnRef
+            .offsetWidth +
+            (this.rightBtnInitMarginleft != null
+              ? parseInt(this.rightBtnInitMarginleft, 10)
+              : 0)}px`;
+        }
       }
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: SearchBarProps) {
     if ('value' in nextProps && nextProps.value !== this.state.value) {
       this.setState({
         value: nextProps.value,
@@ -72,25 +110,23 @@ export default class SearchBar extends React.Component<SearchBarProps, SearchBar
   }
 
   componentWillUnmount() {
-    if (this.scrollIntoViewTimeout) {
-      clearTimeout(this.scrollIntoViewTimeout);
-      this.scrollIntoViewTimeout = null;
-    }
     if (this.onBlurTimeout) {
-      clearTimeout(this.onBlurTimeout);
+      clearNextFrameAction(this.onBlurTimeout);
       this.onBlurTimeout = null;
     }
   }
 
-  onSubmit = (e) => {
+  onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (this.props.onSubmit) {
-      this.props.onSubmit(this.state.value);
+      this.props.onSubmit(this.state.value || '');
     }
-    this.inputRef.blur();
+    if (this.inputRef) {
+      this.inputRef.blur();
+    }
   }
 
-  onChange = (e) => {
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!this.state.focus) {
       this.setState({
         focus: true,
@@ -114,18 +150,10 @@ export default class SearchBar extends React.Component<SearchBarProps, SearchBar
     if (this.props.onFocus) {
       this.props.onFocus();
     }
-
-    if (document.activeElement.tagName.toLowerCase() === 'input') {
-      this.scrollIntoViewTimeout = setTimeout(() => {
-        try {
-          (document.activeElement as any).scrollIntoViewIfNeeded();
-        } catch (e) { }
-      }, 100);
-    }
   }
 
   onBlur = () => {
-    this.onBlurTimeout = setTimeout(() => {
+    this.onBlurTimeout = onNextFrame(() => {
       if (!this.blurFromOnClear) {
         if (document.activeElement !== this.inputRef) {
           this.setState({
@@ -134,8 +162,15 @@ export default class SearchBar extends React.Component<SearchBarProps, SearchBar
         }
       }
       this.blurFromOnClear = false;
-    }, 50);
+    });
     if (this.props.onBlur) {
+      // fix autoFocus item blur with flash
+      setTimeout(() => {
+        // fix ios12 wechat browser click failure after input
+        if (document.body) {
+          document.body.scrollTop = document.body.scrollTop;
+        }
+      },100);
       this.props.onBlur();
     }
   }
@@ -161,26 +196,40 @@ export default class SearchBar extends React.Component<SearchBarProps, SearchBar
 
   onCancel = () => {
     if (this.props.onCancel) {
-      this.props.onCancel(this.state.value);
+      this.props.onCancel(this.state.value || '');
     } else {
       this.doClear(false);
     }
   }
   focus = () => {
-    this.inputRef.focus();
+    if (this.inputRef) {
+      this.inputRef.focus();
+    }
   }
   render() {
     const {
-      prefixCls, showCancelButton, disabled, placeholder, className, style, maxLength,
+      prefixCls,
+      showCancelButton,
+      disabled,
+      placeholder,
+      className,
+      style,
+      maxLength,
     } = this.props;
 
-    const _locale = getComponentLocale(this.props, this.context, 'SearchBar', () => require('./locale/zh_CN'));
+    // tslint:disable-next-line:variable-name
+    const _locale = getComponentLocale(
+      this.props,
+      this.context,
+      'SearchBar',
+      () => require('./locale/zh_CN'),
+    );
     const { cancelText } = _locale;
 
     const { value, focus } = this.state;
 
     const wrapCls = classnames(prefixCls, className, {
-      [`${prefixCls}-start`]: !!(focus || value && value.length > 0),
+      [`${prefixCls}-start`]: !!(focus || (value && value.length > 0)),
     });
 
     const clearCls = classnames(`${prefixCls}-clear`, {
@@ -188,7 +237,11 @@ export default class SearchBar extends React.Component<SearchBarProps, SearchBar
     });
 
     const cancelCls = classnames(`${prefixCls}-cancel`, {
-      [`${prefixCls}-cancel-show`]: showCancelButton || focus || value && value.length > 0,
+      [`${prefixCls}-cancel-show`]: !!(
+        showCancelButton ||
+        focus ||
+        (value && value.length > 0)
+      ),
       [`${prefixCls}-cancel-anim`]: this.firstFocus,
     });
 
@@ -197,16 +250,25 @@ export default class SearchBar extends React.Component<SearchBarProps, SearchBar
         onSubmit={this.onSubmit}
         className={wrapCls}
         style={style}
-        ref={el => this.inputContainerRef = el}
+        ref={el => (this.inputContainerRef = el)}
         action="#"
       >
         <div className={`${prefixCls}-input`}>
-          <div className={`${prefixCls}-synthetic-ph`} ref={el => this.syntheticPhRef = el}>
-            <span className={`${prefixCls}-synthetic-ph-container`} ref={el => this.syntheticPhContainerRef = el}>
+          <div
+            className={`${prefixCls}-synthetic-ph`}
+            ref={el => (this.syntheticPhRef = el)}
+          >
+            <span
+              className={`${prefixCls}-synthetic-ph-container`}
+              ref={el => (this.syntheticPhContainerRef = el)}
+            >
               <i className={`${prefixCls}-synthetic-ph-icon`} />
               <span
                 className={`${prefixCls}-synthetic-ph-placeholder`}
-                style={{ visibility: placeholder && !value ? 'visible' : 'hidden' }}
+                // tslint:disable-next-line:jsx-no-multiline-js
+                style={{
+                  visibility: placeholder && !value ? 'visible' : 'hidden',
+                }}
               >
                 {placeholder}
               </span>
@@ -221,7 +283,7 @@ export default class SearchBar extends React.Component<SearchBarProps, SearchBar
             onChange={this.onChange}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
-            ref={el => this.inputRef = el}
+            ref={el => (this.inputRef = el)}
             maxLength={maxLength}
             {...getDataAttr(this.props)}
           />
@@ -229,7 +291,11 @@ export default class SearchBar extends React.Component<SearchBarProps, SearchBar
             <a onClick={this.onClear} className={clearCls} />
           </TouchFeedback>
         </div>
-        <div className={cancelCls} onClick={this.onCancel} ref={el => this.rightBtnRef = el}>
+        <div
+          className={cancelCls}
+          onClick={this.onCancel}
+          ref={el => (this.rightBtnRef = el)}
+        >
           {this.props.cancelText || cancelText}
         </div>
       </form>
